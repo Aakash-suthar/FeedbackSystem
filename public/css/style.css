@@ -1,11 +1,24 @@
 a{
     font-size: 17px;
 }
+.content{
+    padding:10px 25px 10px 25px;
+}
+#myBtn{
+    float:right;
+    margin:17px 20px 10px 10px;
+}
+.container-fluid{
+    margin:0px;
+    padding:0px;
+}
 #titleheader{
-	/*padding: 0px;*/
     font-family:serif;
     align-content:center;
     margin-bottom: 15px;
+}
+.navbar-brand {
+    font-size : 30px !important; 
 }
 h3{
     margin: 0px;
@@ -13,12 +26,15 @@ h3{
     font-family: cursive
 }
 .tab-content{
-   background-color: #337ab7;
+    margin:0px;
+    padding:0px;
+    height:100px;
+   background-color: #3097D1 !important;
 }
-#ty{
+/* #ty{
     margin: 0px;
     padding: 0px;
-}
+} */
 .tabslink{
     color:antiquewhite;
     cursor:pointer;
@@ -31,9 +47,9 @@ h3{
 
     
 }
-.tabsclass{
+/* .tabsclass{
     padding: 10px;
-}
+} */
 .tab-content{
     border-radius: 7px;
     border-top-left-radius: 0px;
@@ -114,6 +130,7 @@ textarea{
     font-size: 28px;
     font-weight: bold;
     margin-top: 50px;
+    margin-top: 17px!important;
 }
 
 .close:hover,
@@ -125,7 +142,7 @@ textarea{
 
 .modal-header {
     padding: 2px 16px;
-    background-color: #5cb85c;
+    background-color: #222222;
     color: white;
 }
 

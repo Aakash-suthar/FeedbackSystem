@@ -22,20 +22,42 @@ Route::get('/users/{id}{name}', function ($id,$name) {
 // });
 
 Route::get('/','WelcomeController@index');
+Route::get('/students/aboutcollage','WelcomeController@Saboutcollage');
+Route::get('/facultys/aboutcollage','WelcomeController@Faboutcollage');
+Route::get('/alumini/aboutcollage','WelcomeController@Aaboutcollage');
+
 
 //students forms
-Route::get('/students/aboutcollage','WelcomeController@Saboutcollage');
-Route::get('/students/aboutfacultys','WelcomeController@Saboutfacultys');
-Route::get('/students/aboutcurriculum','WelcomeController@Saboutcurriculum');
+Route::get('/students/login','StudentsController@login');
 Route::post('/Scollage','StudentsController@Scollage');
-Route::post('/Scurriculum','StudentsController@Scurriculum');
+Route::post('/students/logincheck','StudentsController@logincheck');
+
 
 
 // facultys form
-Route::get('/facultys/aboutcollage','WelcomeController@Faboutcollage');
-Route::get('/facultys/aboutcurriculum','WelcomeController@Faboutcurriculum');
 Route::post('/Fcollage','FacultysController@Fcollage');
-Route::post('/Fcurriculum','FacultysController@Fcurriculum');
+
+
+
+
+
+Route::post('/register','AdminController@register');
+Route::post('/login','AdminController@login');
+Route::get('/signup','AdminController@signup');
+Route::get('/dashboard','AdminController@dashboard');
+Route::get('/dashboard/course','AdminController@course');
+Route::get('/dashboard/teacher','AdminController@teacher');
+Route::get('/dashboard/subject','AdminController@subject');
+Route::get('/dashboard/question','AdminController@question');
+Route::post('/dashboard/addcourse','AdminController@addcourse');
+Route::post('/dashboard/addteacher','AdminController@addteacher');
+Route::post('/dashboard/addsubject','AdminController@addsubject');
+Route::post('/dashboard/addquestion','AdminController@addquestion');
+
+
+
+
+
 
 
 
