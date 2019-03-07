@@ -54,35 +54,32 @@
 				    </div><!-- End of Parents tab-->
                 
 				    <div id="employers" class="tab-pane fade">
-				       <div class="row">
+              <div class="row">
+                <div class="col-xs-6 col-md-3 tabsclass">
+                  <i class="fa fa-caret-right"  aria-hidden="true"></i>
+                    <a class="tabslink"  href="/Fromemployers/Aboutemployee.php">  
+                  About Employee</a>
+                </div>
+              </div>
+            </div><!-- End of Employers-->
+
+            <div id="management" class="tab-pane fade">
+                <div class="row">
+                    <div class="col-xs-6 col-md-3 tabsclass">
+                      <i class="fa fa-caret-right"  aria-hidden="true"></i>
+                        <a class="tabslink"  href="/Fromemployers/Aboutemployee.php">  
+                      About Local Management</a></div>
+                </div>
+            </div><!-- End of management-->    
+
+            <div id="alumini" class="tab-pane fade">
+                    <div class="row">
                         <div class="col-xs-6 col-md-3 tabsclass">
-                             <i class="fa fa-caret-right"  aria-hidden="true"></i>
-                           <a class="tabslink"  href="/Fromemployers/Aboutemployee.php">  
-                             About Employee</a></div>
-                        </div>
-                    </div><!-- End of Employers-->
-
-                    <div id="management" class="tab-pane fade">
-                        <div class="row">
-                            <div class="col-xs-6 col-md-3 tabsclass">
-                              <i class="fa fa-caret-right"  aria-hidden="true"></i>
-                                <a class="tabslink"  href="/Fromemployers/Aboutemployee.php">  
-                              About Local Management</a></div>
-                        </div>
-                    </div><!-- End of management-->    
-
-                    <div id="alumini" class="tab-pane fade">
-                            <div class="row">
-                                <div class="col-xs-6 col-md-3 tabsclass">
-                                  <i class="fa fa-caret-right"  aria-hidden="true"></i>
-                                    <a class="tabslink"  href="/alumini/aboutcollage">  
-                                  About Collage</a></div>
-                                  <div class="col-xs-6 col-md-3 tabsclass">
-                                    <i class="fa fa-caret-right"  aria-hidden="true"></i>
-                                      <a class="tabslink"  href="/alumini/aboutcurriculum">  
-                                    About Curiculum</a></div>
-                            </div>
-                    </div>  <!-- End of alumini-->               
+                          <i class="fa fa-caret-right"  aria-hidden="true"></i>
+                            <a class="tabslink"  href="/alumini/aboutcollage">  
+                          About Collage</a></div>
+                    </div>
+            </div>  <!-- End of alumini-->               
   </div><!--end of main wrapper-->
       {{-- @if (Route::has('login'))
                 <div class="top-right links">

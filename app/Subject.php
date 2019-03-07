@@ -8,11 +8,11 @@ class Subject extends Model
 {
     public  $primaryKey = 'id';
 
-    // public function teacher(){
-    //     return $this->hasOne('App\Teacher');      
-    // }
+    public function teacher(){
+        return $this->belongsTo('App\Teacher');      
+    }
 
-    // public function course(){
-    //     return $this->hasOne('App\Course');      
-    // }
+    public function course(){
+        return $this->belongsTo('App\Course');      
+    }
 }

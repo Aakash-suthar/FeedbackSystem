@@ -24,10 +24,10 @@
 @php
 $i = 1
 @endphp
-@foreach($questions as $q)
+@foreach($q as $qu)
 {{-- {{$i++}} {{$q->question}}<br> --}}
 <div class="form-group col-xs-12" style="margin: 10px">
-    {{Form::label('',$q->question,['class'=>'control-label col-xs-12'])}}
+    {{Form::label('',$qu->question,['class'=>'control-label col-xs-12'])}}
     <label style="margin: 5px 0px 7px 20px"
 class="radio-inline"><input type="radio" name="Q{{$i}}" value="Strongly Agree" required>Strongly Agree</label>
     <label class="radio-inline"><input type="radio" name="Q{{$i}}" value="Agree">Agree</label>

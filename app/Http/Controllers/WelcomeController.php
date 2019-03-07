@@ -8,16 +8,17 @@ use App\Question;
 class WelcomeController extends Controller
 {
     public function index(){
-        return view("pages.welcome");
+        return view("index");
     }
 
     //students forms
     public function Saboutcollage(){
-        $s = Question::where('type','collage')->get();
+        $q = Question::where('type','collage')->get();
+        // $s = "/Scollage";
         // $data = arrray(
         //     'question'=> $s
         // );
-        return view("students.aboutcollageform")->with('questions',$s);
+        return view("students.aboutcollageform",compact('q'));
         // $s = Question::all();
         // echo $s;
     } 

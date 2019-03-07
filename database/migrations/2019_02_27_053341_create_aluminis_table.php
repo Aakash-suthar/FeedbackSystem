@@ -13,7 +13,7 @@ class CreateAluminisTable extends Migration
      */
     public function up()
     {
-        Schema::create('aluminis', function (Blueprint $table) {
+        Schema::create('acollages', function (Blueprint $table) {
             $table->increments('id');
             $table->timestamps();
         });

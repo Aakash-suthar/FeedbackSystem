@@ -20,9 +20,13 @@ class AdminController extends Controller
         $password=$request->input('password');
         $check = new Admin; 
         $check= Admin::find($username);
+        if($check!=null){
+            if(Hash::check($request->input('password'),$check->password))
+                return view('admin.dashboard');
+            else echo "wring password";
+        }
+        else { echo "Wrong Username";}
 
-        if(Hash::check($request->input('password'),$check->password))
-            {return view('admin.dashboard');}
     }
 
     public function register(Request $request)
@@ -53,7 +57,7 @@ class AdminController extends Controller
     }
 
     public function dashboard(){
-        return view('admin.dashboard');
+        return view('admin.dashboard2');
     }
     
     public function teacher(){
@@ -119,7 +123,7 @@ class AdminController extends Controller
             $s->name=$request->input('name');
             $s->sem=$request->input('sem');
             $s->course_id=$request->input('course_id');
-            $s->techer_id=$request->input('teacher_id');
+            $s->teacher_id=$request->input('teacher_id');
             $s->save();
             return view('admin.dashboard');
             }

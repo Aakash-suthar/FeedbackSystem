@@ -40,16 +40,24 @@ h3{
     cursor:pointer;
     font-size: 15px;
     font-family:'Lato', sans-serif;
+    margin:10px;
 }
 .row{
     padding: 15px;
     margin: 0px;
-
-    
 }
-/* .tabsclass{
+/* remove arrow from input number  */
+input[type=number] ::-webkit-inner-spin-button,
+input[type=number] ::-webkit-outer-spin-button{
+    -webkit-appearance: none;
+    -moz-appearance :none;
+    appearance: none;
+    margin: 0;
+}
+/* close  */
+    .tabsclass{
     padding: 10px;
-} */
+}
 .tab-content{
     border-radius: 7px;
     border-top-left-radius: 0px;

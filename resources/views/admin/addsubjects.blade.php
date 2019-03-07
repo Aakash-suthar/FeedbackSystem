@@ -1,17 +1,17 @@
-@extends('layouts.app')
+@extends('layouts.admin')
 
 @section('content')
 
 {!! Form::open(['url' => '/dashboard/addsubject','method'=>'POST','autocomplete'=>'off']) !!}    
-<label>id</label>
+<label class="control-label">id</label>
 <input type="text" name="id"/><br>
-<label>name</label>
+<label class="control-label">name</label>
 <input type="text" name="name"/><br>
-<label>sem</label>
+<label class="control-label">sem</label>
 <input type="text" name="sem"/><br>
-<label>course_id</label>
+<label class="control-label">course_id</label>
 <input type="text" name="course_id"/><br>
-<label>teacher_id</label>
+<label class="control-label">teacher_id</label>
 <input type="text" name="teacher_id"/><br>
 <input type="submit" value="submit"/><br>
 {!! Form::close() !!}<!--End of Form-->

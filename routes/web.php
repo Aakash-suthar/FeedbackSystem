@@ -34,11 +34,12 @@ Route::post('/students/logincheck','StudentsController@logincheck');
 
 
 
-// facultys form
+// facultys form submission
 Route::post('/Fcollage','FacultysController@Fcollage');
 
 
-
+//Alumini form submission
+Route::post('/Acollage','AluminiController@Acollage');
 
 
 Route::post('/register','AdminController@register');
@@ -55,16 +56,9 @@ Route::post('/dashboard/addsubject','AdminController@addsubject');
 Route::post('/dashboard/addquestion','AdminController@addquestion');
 
 
-
-
-
-
-
-
-
-Route::get('/',function(){
-    // $title = 'hello';
-    // return view('welcome',compact('title'));
-    // return view('welcome')->with('title',$title);
-    return view('welcome');
-});
+// Route::get('/',function(){
+//     // $title = 'hello';
+//     // return view('welcome',compact('title'));
+//     // return view('welcome')->with('title',$title);
+//     return view('welcome');
+// });
