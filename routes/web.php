@@ -31,7 +31,11 @@ Route::get('/alumini/aboutcollage','WelcomeController@Aaboutcollage');
 Route::get('/students/login','StudentsController@login');
 Route::post('/Scollage','StudentsController@Scollage');
 Route::post('/students/logincheck','StudentsController@logincheck');
-
+Route::post('/students/tcsubmit','StudentsController@tcsubmit');
+Route::get('/students/teacherandcurriculum/{id}','StudentsController@teachercurriculum');
+// Route::get('/students/teacherandcurriculum/{id}', function($id){
+//     echo $id;
+// });
 
 
 // facultys form submission

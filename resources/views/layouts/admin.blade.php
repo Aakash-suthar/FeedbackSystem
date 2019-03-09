@@ -1,652 +1,420 @@
-<html lang="en">
-  <head>
-    <base href="./">
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
-    <meta name="description" content="CoreUI - Open Source Bootstrap Admin Template">
-    <meta name="author" content="Łukasz Holeczek">
-    <meta name="keyword" content="Bootstrap,Admin,Template,Open,Source,jQuery,CSS,HTML,RWD,Dashboard">
-    <title>Dashboard</title>
-    <!-- Icons-->
-    <link rel="stylesheet" href="{{asset('css/admin/css/style.css')}}">
-    {{-- <link rel="stylesheet" href="{{asset('css/app.css')}}"> --}}
-    {{-- <link href="{{asset('css/admin/icons/coreui-icons.min.css')}}" rel="stylesheet">
-    <link href="{{asset('css/admin/icons/flag-icons.min.css')}}" rel="stylesheet">
-    <link href="{{asset('css/admin/icons/font-awesome-icons.min.css')}}" rel="stylesheet"> --}}
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="csrf-token" content="{{ csrf_token() }}">
+        <title>Collapsible sidebar using Bootstrap 3</title>
 
-    {{-- <link href="icons/font-awesome/css/font-awesome.min.css" rel="stylesheet"> --}}
-    {{-- <link href="icons/simple-line-icons/css/simple-line-icons.css" rel="stylesheet"> --}}
-    <!-- Main styles for this application-->
-    {{-- <link href="css/style.css" rel="stylesheet"> --}}
-    <link rel="stylesheet" href="{{asset('css/admin/css/admin.min.css')}}">
-    {{-- <link href="vendors/pace-progress/css/pace.min.css" rel="stylesheet"> --}}
-    <!-- Global site tag (gtag.js) - Google Analytics-->
-    {{-- <script async="" src="https://www.googletagmanager.com/gtag/js?id=UA-118965717-3"></script>--}}
-    <script> 
-      window.dataLayer = window.dataLayer || [];
+        <!-- Bootstrap CSS CDN -->
+        {{-- <link rel="stylesheet" href="{{asset('css/bootstrap.min.css')}}"> --}}
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+        <!-- Our Custom CSS -->
+    <link rel="stylesheet" href="{{asset('css/admin.css')}}">
+        <!-- Scrollbar Custom CSS -->
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/malihu-custom-scrollbar-plugin/3.1.5/jquery.mCustomScrollbar.min.css">
+        
+    </head>
+    <body>
+            {{-- @include('inc.messages')
+            @include('flash::message') --}}
+            {{-- <div class="alert alert-danger">
+                </div>
+                <div class="alert alert-success" id="success">
+                    </div> --}}
+            <!-- The Modal1 -->
+            <div id="myModal1" class="modal">
+                <!-- Modal content -->
+                <div class="modal-content">
+                        <div class="modal-header">
+                          <span id="gg1" class="close">&times;</span>
+                          <h2 align="center">Add Course</h2>
+                        </div>
+                        <div class="modal-body row">
+                                {{-- {!! Form::open(['id'=>'form1','class'=>'form-vertical','autocomplete'=>'off']) !!}     --}}
+                               <form id="form1" class="form-vertical" method="POST" autocomplete="off">
+                                <div style="padding:12px;padding-bottom: 0px;margin-bottom: 0px" class="form-group col-xs-12">
+                                <label for="name" class="col-xs-12" style="margin-bottom: 10px;">Course Id :*  </label>
+                                <input type="text" name="id"  class="form-control" required/>
+                                </div>
+                                 <div class="form-group col-xs-12" style="padding:12px">
+                                <label for="username" class="col-xs-12" style="margin-bottom: 10px;">Course Name :*  </label>
+                                <input type="text" name="name" class="form-control" required/>
+                                </div>
+                                 <div class="form-group col-xs-12" style="margin-top:10px;">
+                                    <div style="margin: 0px;padding: 0px;" class="row">
+                                        <div class="col-xs-6" style="padding: 0px;">
+                                        <input type="Submit" class="btn btn-success col-xs-6" style="float: right;width: 80px;" value="Submit"/></div>
+                                        <div style="padding: 0px;margin-left: 10px;" class="col-xs-5">
+                                        <input style="margin: 0px;width: 80px" type="Reset" class="btn btn-warning col-xs-6" value="Reset"/>  
+                                        </div>
+                                         
+                                    </div>
+                                </div>
+                                <span id="success" class="text-success"></span>
+                                <span id="danger" class="text-danger"></span>
+                                {{-- {!! Form::close() !!} --}}
+                            </form>
+        
+                        </div>
+                      </div>
+        
+            </div>
+             <!-- The Modal2 -->
+             <div id="myModal2" class="modal">
+                <!-- Modal content -->
+                <div class="modal-content">
+                        <div class="modal-header">
+                          <span id="gg2" class="close">&times;</span>
+                          <h2 align="center">Add Teacher</h2>
+                        </div>
+                        <div class="modal-body row">
+                                {!! Form::open(['url' => '/dashboard/addteacher','method'=>'POST','class'=>'form-vertical','autocomplete'=>'off']) !!}  
+                                <div style="padding:12px;padding-bottom: 0px;margin-bottom: 0px" class="form-group col-xs-12">
+                                <label for="name" class="col-xs-12" style="margin-bottom: 10px;"> Teacher Id :*  </label>
+                                <input type="text" name="id"  class="form-control" required/>
+                                </div>
+                                 <div class="form-group col-xs-12" style="padding:12px">
+                                <label for="username" class="col-xs-12" style="margin-bottom: 10px;">Teacher Name :*  </label>
+                                <input type="password" name="name" class="form-control" required/>
+                                </div>
+                                 <div class="form-group col-xs-12" style="margin-top:10px;">
+                                    <div style="margin: 0px;padding: 0px;" class="row">
+                                        <div class="col-xs-6" style="padding: 0px;">
+                                        <input type="Submit" class="btn btn-success col-xs-6" style="float: right;width: 80px;" value="Submit"/></div>
+                                        <div style="padding: 0px;margin-left: 10px;" class="col-xs-5">
+                                        <input style="margin: 0px;width: 80px" type="Reset" class="btn btn-warning col-xs-6" value="Reset"/>  
+                                        </div>
+                                         
+                                    </div>
+                                </div>
+                                {!! Form::close() !!}
+        
+                        </div>
+                      </div>
+        
+            </div>
+              <!-- The Modal 3 -->
+              <div id="myModal3" class="modal">
+                  <!-- Modal content -->
+                  <div class="modal-content">
+                          <div class="modal-header">
+                            <span id="gg3" class="close">&times;</span>
+                            <h2 align="center">Add Subject</h2>
+                          </div>
+                          <div class="modal-body row">
+                                  {!! Form::open(['url' => '/dashboard/addsubject','method'=>'POST','class'=>'form-vertical','autocomplete'=>'off']) !!}  
+                                  <div style="padding:12px;padding-bottom: 0px;margin-bottom: 0px" class="form-group col-xs-12">
+                                  <label for="name" class="col-xs-12" style="margin-bottom: 10px;">Subject Id :*  </label>
+                                  <input type="text" name="id"  class="form-control" required/>
+                                  </div>
+                                   <div class="form-group col-xs-12" style="padding:12px">
+                                    <label for="username" class="col-xs-12" style="margin-bottom: 10px;">Name :*  </label>
+                                    <input type="password" name="name" class="form-control" required/>
+                                  </div>
+                                  <div class="form-group col-xs-12" style="padding:12px">
+                                        <label for="username" class="col-xs-12" style="margin-bottom: 10px;">Sem :*  </label>
+                                        <input type="password" name="sem" class="form-control" required/>
+                                      </div>
+                                      <div class="form-group col-xs-12" style="padding:12px">
+                                            <label for="username" class="col-xs-12" style="margin-bottom: 10px;">Course Id :*  </label>
+                                            <input type="password" name="course_id" class="form-control" required/>
+                                          </div>
+                                          <div class="form-group col-xs-12" style="padding:12px">
+                                                <label for="username" class="col-xs-12" style="margin-bottom: 10px;">Teacher Id :*  </label>
+                                                <input type="password" name="teacher_id" class="form-control" required/>
+                                              </div>
+                                   <div class="form-group col-xs-12" style="margin-top:10px;">
+                                      <div style="margin: 0px;padding: 0px;" class="row">
+                                          <div class="col-xs-6" style="padding: 0px;">
+                                          <input type="Submit" class="btn btn-success col-xs-6" style="float: right;width: 80px;" value="Submit"/></div>
+                                          <div style="padding: 0px;margin-left: 10px;" class="col-xs-5">
+                                          <input style="margin: 0px;width: 80px" type="Reset" class="btn btn-warning col-xs-6" value="Reset"/>  
+                                          </div>
+                                           
+                                      </div>
+                                  </div>
+                                  {!! Form::close() !!}
+          
+                          </div>
+                        </div>
+          
+              </div>
+                <!-- The Modal 4-->
+             <div id="myModal4" class="modal">
+                <!-- Modal content -->
+                <div class="modal-content">
+                        <div class="modal-header">
+                          <span id="gg4" class="close">&times;</span>
+                          <h2 align="center">Add Question</h2>
+                        </div>
+                        <div class="modal-body row">
+                                {!! Form::open(['url' => '/dashboard/addquestion','method'=>'POST','class'=>'form-vertical','autocomplete'=>'off']) !!}  
+                                <div style="padding:12px;padding-bottom: 0px;margin-bottom: 0px" class="form-group col-xs-12">
+                                <label for="name" class="col-xs-12" style="margin-bottom: 10px;">Question :*  </label>
+                                <input type="text" name="question"  class="form-control" required/>
+                                </div>
+                                 <div class="form-group col-xs-12" style="padding:12px">
+                                <label for="username" class="col-xs-12" style="margin-bottom: 10px;">Type :*  </label>
+                                {{Form::select('type',['collage'=>'About Collage','currriculum'=>'About Currriculum','teacher'=>'About Teacher'],null,['class'=>'form-control'])}}                                </div>
+                                 <div class="form-group col-xs-12" style="margin-top:10px;">
+                                    <div style="margin: 0px;padding: 0px;" class="row">
+                                        <div class="col-xs-6" style="padding: 0px;">
+                                        <input type="Submit" class="btn btn-success col-xs-6" style="float: right;width: 80px;" value="Submit"/></div>
+                                        <div style="padding: 0px;margin-left: 10px;" class="col-xs-5">
+                                        <input style="margin: 0px;width: 80px" type="Reset" class="btn btn-warning col-xs-6" value="Reset"/>  
+                                        </div>
+                                         
+                                    </div>
+                                </div>
+                                {!! Form::close() !!}
+        
+                        </div>
+                      </div>
+        
+            </div>
+        <div class="wrapper">
+            <!-- Sidebar Holder -->
+            <nav id="sidebar">
+                <div id="dismiss">
+                    <i class="glyphicon glyphicon-arrow-left"></i>
+                </div>
 
-      function gtag() {
-        dataLayer.push(arguments);
-      }
-      gtag('js', new Date());
-      // Shared ID
-      gtag('config', 'UA-118965717-3');
-      // Bootstrap ID
-      gtag('config', 'UA-118965717-5');
-    </script>
-  </head>
-  <body class="app header-fixed sidebar-fixed aside-menu-fixed sidebar-lg-show">
-        @include('inc.messages')
-        @include('flash::message')
-    <header class="app-header navbar">
-      <button class="navbar-toggler sidebar-toggler d-lg-none mr-auto" type="button" data-toggle="sidebar-show">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-      <a class="navbar-brand" href="#">
-        {{-- <img class="navbar-brand-full" src="img/brand/logo.svg" width="89" height="25" alt="CoreUI Logo"> --}}
-        {{-- <img class="navbar-brand-minimized" src="img/brand/sygnet.svg" width="30" height="30" alt="CoreUI Logo"> --}}
-      </a>
-      <button class="navbar-toggler sidebar-toggler d-md-down-none" type="button" data-toggle="sidebar-lg-show">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-      <ul class="nav navbar-nav d-md-down-none">
-        <li class="nav-item px-3">
-          <a class="nav-link" href="#">Dashboard</a>
-        </li>
-        <li class="nav-item px-3">
-          <a class="nav-link" href="#">Users</a>
-        </li>
-        <li class="nav-item px-3">
-          <a class="nav-link" href="#">Settings</a>
-        </li>
-      </ul>
-      <ul class="nav navbar-nav ml-auto">
-        <li class="nav-item d-md-down-none">
-          <a class="nav-link" href="#">
-            <i class="icon-bell"></i>
-            <span class="badge badge-pill badge-danger">5</span>
-          </a>
-        </li>
-        <li class="nav-item d-md-down-none">
-          <a class="nav-link" href="#">
-            <i class="icon-list"></i>
-          </a>
-        </li>
-        <li class="nav-item d-md-down-none">
-          <a class="nav-link" href="#">
-            <i class="icon-location-pin"></i>
-          </a>
-        </li>
-        <li class="nav-item dropdown">
-          <a class="nav-link" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
-            {{-- <img class="img-avatar" src="img/avatars/6.jpg" alt="admin@bootstrapmaster.com"> --}}
-          </a>
-          <div class="dropdown-menu dropdown-menu-right">
-            <div class="dropdown-header text-center">
-              <strong>Account</strong>
-            </div>
-            <a class="dropdown-item" href="#">
-              <i class="fa fa-bell-o"></i> Updates
-              <span class="badge badge-info">42</span>
-            </a>
-            <a class="dropdown-item" href="#">
-              <i class="fa fa-envelope-o"></i> Messages
-              <span class="badge badge-success">42</span>
-            </a>
-            <a class="dropdown-item" href="#">
-              <i class="fa fa-tasks"></i> Tasks
-              <span class="badge badge-danger">42</span>
-            </a>
-            <a class="dropdown-item" href="#">
-              <i class="fa fa-comments"></i> Comments
-              <span class="badge badge-warning">42</span>
-            </a>
-            <div class="dropdown-header text-center">
-              <strong>Settings</strong>
-            </div>
-            <a class="dropdown-item" href="#">
-              <i class="fa fa-user"></i> Profile</a>
-            <a class="dropdown-item" href="#">
-              <i class="fa fa-wrench"></i> Settings</a>
-            <a class="dropdown-item" href="#">
-              <i class="fa fa-usd"></i> Payments
-              <span class="badge badge-secondary">42</span>
-            </a>
-            <a class="dropdown-item" href="#">
-              <i class="fa fa-file"></i> Projects
-              <span class="badge badge-primary">42</span>
-            </a>
-            <div class="dropdown-divider"></div>
-            <a class="dropdown-item" href="#">
-              <i class="fa fa-shield"></i> Lock Account</a>
-            <a class="dropdown-item" href="#">
-              <i class="fa fa-lock"></i> Logout</a>
-          </div>
-        </li>
-      </ul>
-      <button class="navbar-toggler aside-menu-toggler d-md-down-none" type="button" data-toggle="aside-menu-lg-show">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-      <button class="navbar-toggler aside-menu-toggler d-lg-none" type="button" data-toggle="aside-menu-show">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-    </header>
-    <div class="app-body">
-      <div class="sidebar">
-        <nav class="sidebar-nav">
-          <ul class="nav">
-            <li class="nav-item">
-              <a class="nav-link" href="index.html">
-                <i class="nav-icon icon-speedometer"></i> Dashboard
-                {{-- <span class="badge badge-primary">NEW</span> --}}
-              </a>
-            </li>
-            <li class="nav-title">Actions</li>
-            <li class="nav-item">
-              <a class="nav-link" href="/dashboard/question">
-                <i class="nav-icon icon-drop"></i> Add Questions</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="/dashboard/subject">
-                <i class="nav-icon icon-drop"></i> Add Subjects</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="/dashboard/teacher">
-                <i class="nav-icon icon-drop"></i> Add Teachers</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="/dashboard/course">
-                <i class="nav-icon icon-drop"></i> Add Course</a>
-            </li>
-           {{--  <li class="nav-item">
-              <a class="nav-link" href="typography.html">
-                <i class="nav-icon icon-pencil"></i> Typography</a>
-            </li> --}}
-            {{-- <li class="nav-title">Components</li>
-            <li class="nav-item nav-dropdown">
-              <a class="nav-link nav-dropdown-toggle" href="#">
-                <i class="nav-icon icon-puzzle"></i> Base</a>
-              <ul class="nav-dropdown-items">
-                <li class="nav-item">
-                  <a class="nav-link" href="base/breadcrumb.html">
-                    <i class="nav-icon icon-puzzle"></i> Breadcrumb</a>
-                </li>
-                <li class="nav-item">
-                  <a class="nav-link" href="base/cards.html">
-                    <i class="nav-icon icon-puzzle"></i> Cards</a>
-                </li>
-                <li class="nav-item">
-                  <a class="nav-link" href="base/carousel.html">
-                    <i class="nav-icon icon-puzzle"></i> Carousel</a>
-                </li>
-                <li class="nav-item">
-                  <a class="nav-link" href="base/collapse.html">
-                    <i class="nav-icon icon-puzzle"></i> Collapse</a>
-                </li>
-                <li class="nav-item">
-                  <a class="nav-link" href="base/forms.html">
-                    <i class="nav-icon icon-puzzle"></i> Forms</a>
-                </li>
-                <li class="nav-item">
-                  <a class="nav-link" href="base/jumbotron.html">
-                    <i class="nav-icon icon-puzzle"></i> Jumbotron</a>
-                </li>
-                <li class="nav-item">
-                  <a class="nav-link" href="base/list-group.html">
-                    <i class="nav-icon icon-puzzle"></i> List group</a>
-                </li>
-                <li class="nav-item">
-                  <a class="nav-link" href="base/navs.html">
-                    <i class="nav-icon icon-puzzle"></i> Navs</a>
-                </li>
-                <li class="nav-item">
-                  <a class="nav-link" href="base/pagination.html">
-                    <i class="nav-icon icon-puzzle"></i> Pagination</a>
-                </li>
-                <li class="nav-item">
-                  <a class="nav-link" href="base/popovers.html">
-                    <i class="nav-icon icon-puzzle"></i> Popovers</a>
-                </li>
-                <li class="nav-item">
-                  <a class="nav-link" href="base/progress.html">
-                    <i class="nav-icon icon-puzzle"></i> Progress</a>
-                </li>
-                <li class="nav-item">
-                  <a class="nav-link" href="base/scrollspy.html">
-                    <i class="nav-icon icon-puzzle"></i> Scrollspy</a>
-                </li>
-                <li class="nav-item">
-                  <a class="nav-link" href="base/switches.html">
-                    <i class="nav-icon icon-puzzle"></i> Switches</a>
-                </li>
-                <li class="nav-item">
-                  <a class="nav-link" href="base/tables.html">
-                    <i class="nav-icon icon-puzzle"></i> Tables</a>
-                </li>
-                <li class="nav-item">
-                  <a class="nav-link" href="base/tabs.html">
-                    <i class="nav-icon icon-puzzle"></i> Tabs</a>
-                </li>
-                <li class="nav-item">
-                  <a class="nav-link" href="base/tooltips.html">
-                    <i class="nav-icon icon-puzzle"></i> Tooltips</a>
-                </li>
-              </ul>
-            </li>
-            <li class="nav-item nav-dropdown">
-              <a class="nav-link nav-dropdown-toggle" href="#">
-                <i class="nav-icon icon-cursor"></i> Buttons</a>
-              <ul class="nav-dropdown-items">
-                <li class="nav-item">
-                  <a class="nav-link" href="buttons/buttons.html">
-                    <i class="nav-icon icon-cursor"></i> Buttons</a>
-                </li>
-                <li class="nav-item">
-                  <a class="nav-link" href="buttons/button-group.html">
-                    <i class="nav-icon icon-cursor"></i> Buttons Group</a>
-                </li>
-                <li class="nav-item">
-                  <a class="nav-link" href="buttons/dropdowns.html">
-                    <i class="nav-icon icon-cursor"></i> Dropdowns</a>
-                </li>
-                <li class="nav-item">
-                  <a class="nav-link" href="buttons/brand-buttons.html">
-                    <i class="nav-icon icon-cursor"></i> Brand Buttons</a>
-                </li>
-              </ul>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="charts.html">
-                <i class="nav-icon icon-pie-chart"></i> Charts</a>
-            </li>
-            <li class="nav-item nav-dropdown">
-              <a class="nav-link nav-dropdown-toggle" href="#">
-                <i class="nav-icon icon-star"></i> Icons</a>
-              <ul class="nav-dropdown-items">
-                <li class="nav-item">
-                  <a class="nav-link" href="icons/coreui-icons.html">
-                    <i class="nav-icon icon-star"></i> CoreUI Icons
-                    <span class="badge badge-success">NEW</span>
-                  </a>
-                </li>
-                <li class="nav-item">
-                  <a class="nav-link" href="icons/flags.html">
-                    <i class="nav-icon icon-star"></i> Flags</a>
-                </li>
-                <li class="nav-item">
-                  <a class="nav-link" href="icons/font-awesome.html">
-                    <i class="nav-icon icon-star"></i> Font Awesome
-                    <span class="badge badge-secondary">4.7</span>
-                  </a>
-                </li>
-                <li class="nav-item">
-                  <a class="nav-link" href="icons/simple-line-icons.html">
-                    <i class="nav-icon icon-star"></i> Simple Line Icons</a>
-                </li>
-              </ul>
-            </li>
-            <li class="nav-item nav-dropdown">
-              <a class="nav-link nav-dropdown-toggle" href="#">
-                <i class="nav-icon icon-bell"></i> Notifications</a>
-              <ul class="nav-dropdown-items">
-                <li class="nav-item">
-                  <a class="nav-link" href="notifications/alerts.html">
-                    <i class="nav-icon icon-bell"></i> Alerts</a>
-                </li>
-                <li class="nav-item">
-                  <a class="nav-link" href="notifications/badge.html">
-                    <i class="nav-icon icon-bell"></i> Badge</a>
-                </li>
-                <li class="nav-item">
-                  <a class="nav-link" href="notifications/modals.html">
-                    <i class="nav-icon icon-bell"></i> Modals</a>
-                </li>
-              </ul>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="widgets.html">
-                <i class="nav-icon icon-calculator"></i> Widgets
-                <span class="badge badge-primary">NEW</span>
-              </a>
-            </li> --}}
-            {{-- <li class="divider"></li>
-            <li class="nav-title">Extras</li>
-            <li class="nav-item nav-dropdown">
-              <a class="nav-link nav-dropdown-toggle" href="#">
-                <i class="nav-icon icon-star"></i> Pages</a>
-              <ul class="nav-dropdown-items" id="drop">
-                <li class="nav-item">
-                  <a class="nav-link" href="login.html" target="_top">
-                    <i class="nav-icon icon-star"></i> Login</a>
-                </li>
-                <li class="nav-item">
-                  <a class="nav-link" href="register.html" target="_top">
-                    <i class="nav-icon icon-star"></i> Register</a>
-                </li>
-                <li class="nav-item">
-                  <a class="nav-link" href="404.html" target="_top">
-                    <i class="nav-icon icon-star"></i> Error 404</a>
-                </li>
-                <li class="nav-item">
-                  <a class="nav-link" href="500.html" target="_top">
-                    <i class="nav-icon icon-star"></i> Error 500</a>
-                </li>
-              </ul>
-            </li> --}}
-          </ul>
-        </nav>
-        <button class="sidebar-minimizer brand-minimizer" type="button"></button>
-      </div>
-        <main class="main">
-            @yield('content')
-        </main>
-      <aside class="aside-menu">
-        <ul class="nav nav-tabs" role="tablist">
-          <li class="nav-item">
-            <a class="nav-link active" data-toggle="tab" href="#timeline" role="tab">
-              <i class="icon-list"></i>
-            </a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" data-toggle="tab" href="#messages" role="tab">
-              <i class="icon-speech"></i>
-            </a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" data-toggle="tab" href="#settings" role="tab">
-              <i class="icon-settings"></i>
-            </a>
-          </li>
-        </ul>
-        <!-- Tab panes-->
-        <div class="tab-content">
-          <div class="tab-pane active" id="timeline" role="tabpanel">
-            <div class="list-group list-group-accent">
-              <div class="list-group-item list-group-item-accent-secondary bg-light text-center font-weight-bold text-muted text-uppercase small">Today</div>
-              <div class="list-group-item list-group-item-accent-warning list-group-item-divider">
-                <div class="avatar float-right">
-                  <img class="img-avatar" src="img/avatars/7.jpg" alt="admin@bootstrapmaster.com">
+                <div class="sidebar-header">
+                    <h3>Dashboard</h3>
                 </div>
-                <div>Meeting with
-                  <strong>Lucas</strong>
+
+                <ul class="list-unstyled components">
+                    <p>Dummy Heading</p>
+                    <li class="active">
+                        <a href="#homeSubmenu" data-toggle="collapse" aria-expanded="false">Home</a>
+                        <ul class="collapse list-unstyled" id="homeSubmenu">
+                            <li><a href="#">Add Course</a></li>
+                            <li><a href="#">Add Question</a></li>
+                            <li><a href="#">Add Subject</a></li>
+                            <li><a href="#">Add Teacher</a></li>
+                        </ul>
+                    </li>
+                    <li>
+                        <a href="#actions" data-toggle="pill">Action</a>
+                        <a href="#pageSubmenu" data-toggle="collapse" aria-expanded="false">Pages</a>
+                        <ul class="collapse list-unstyled" id="pageSubmenu">
+                            <li><a href="#students">Add</a></li>
+                            <li><a href="#">Page 2</a></li>
+                            <li><a href="#">Page 3</a></li>
+                        </ul>
+                    </li>
+                    <li>
+                        <a href="#">Portfolio</a>
+                    </li>
+                    <li>
+                        <a href="#">Contact</a>
+                    </li>
+                </ul>
+
+                <ul class="list-unstyled CTAs6" style="position:fixed;bottom:0px;left:10px">
+                    <li><a href="https://codezyprojects.in">CodEzy Solutions .In @2018</a></li>
+                    <li><a href="https://bootstrapious.com/tutorial/files/sidebar.zip" class="download">Developed by <u>CodEzy</u></a></li>
+                </ul>
+            </nav>
+
+            <!-- Page Content Holder -->
+            <div id="content">
+
+                <nav class="navbar navbar-dark">
+                    <div class="container-fluid">
+
+                        <div class="navbar-header">
+                            <button type="button" id="sidebarCollapse" class="btn btn-info navbar-btn">
+                                <i class="glyphicon glyphicon-align-left"></i>
+                                <span>Open</span>
+                            </button>
+                        </div>
+
+                        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                            <ul class="nav navbar-nav navbar-right">
+                                <li><a href="#students">Page</a></li>
+                                <li><a href="#">Page</a></li>
+                                <li><a href="#">Page</a></li>
+                                <li><a href="#">Page</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </nav>
+                {{-- main content --}}
+                <div class="container-fluid">
+                    <div class="tab-content" style="min-height: 20vh; ">
+                        <div id="actions" class="tab-pane fade in">
+                            <div class="row">
+                              <div class="col-xs-3">  
+                                  <button class="btn btn-lg btn-info" style="margin:40px;width:200px;height:120px;" id="myBtn1">Add Course</button>
+                              </div>
+                              <div class="col-xs-3">
+                                  <button  class="btn btn-lg btn-warning" style="margin:40px;width:200px;height:120px;" id="myBtn2">Add Teacher</button>
+                              </div>
+                              <div class="col-xs-3">
+                                  <button class="btn btn-lg btn-danger" style="margin:40px;width:200px;height:120px;"  id="myBtn3">Add Subject</button>
+                              </div>
+                              <div class="col-xs-3">
+                                  <button  class="btn btn-lg btn-success" style="margin:40px;width:200px;height:120px;"  id="myBtn4">Add Question</button>
+                              </div>
+                          </div>
+                        </div>
+                    </div>
                 </div>
-                <small class="text-muted mr-3">
-                  <i class="icon-calendar"></i>  1 - 3pm</small>
-                <small class="text-muted">
-                  <i class="icon-location-pin"></i>  Palo Alto, CA</small>
-              </div>
-              <div class="list-group-item list-group-item-accent-info">
-                <div class="avatar float-right">
-                  <img class="img-avatar" src="img/avatars/4.jpg" alt="admin@bootstrapmaster.com">
-                </div>
-                <div>Skype with
-                  <strong>Megan</strong>
-                </div>
-                <small class="text-muted mr-3">
-                  <i class="icon-calendar"></i>  4 - 5pm</small>
-                <small class="text-muted">
-                  <i class="icon-social-skype"></i>  On-line</small>
-              </div>
-              <div class="list-group-item list-group-item-accent-secondary bg-light text-center font-weight-bold text-muted text-uppercase small">Tomorrow</div>
-              <div class="list-group-item list-group-item-accent-danger list-group-item-divider">
-                <div>New UI Project -
-                  <strong>deadline</strong>
-                </div>
-                <small class="text-muted mr-3">
-                  <i class="icon-calendar"></i>  10 - 11pm</small>
-                <small class="text-muted">
-                  <i class="icon-home"></i>  creativeLabs HQ</small>
-                <div class="avatars-stack mt-2">
-                  <div class="avatar avatar-xs">
-                    <img class="img-avatar" src="img/avatars/2.jpg" alt="admin@bootstrapmaster.com">
-                  </div>
-                  <div class="avatar avatar-xs">
-                    <img class="img-avatar" src="img/avatars/3.jpg" alt="admin@bootstrapmaster.com">
-                  </div>
-                  <div class="avatar avatar-xs">
-                    <img class="img-avatar" src="img/avatars/4.jpg" alt="admin@bootstrapmaster.com">
-                  </div>
-                  <div class="avatar avatar-xs">
-                    <img class="img-avatar" src="img/avatars/5.jpg" alt="admin@bootstrapmaster.com">
-                  </div>
-                  <div class="avatar avatar-xs">
-                    <img class="img-avatar" src="img/avatars/6.jpg" alt="admin@bootstrapmaster.com">
-                  </div>
-                </div>
-              </div>
-              <div class="list-group-item list-group-item-accent-success list-group-item-divider">
-                <div>
-                  <strong>#10 Startups.Garden</strong> Meetup</div>
-                <small class="text-muted mr-3">
-                  <i class="icon-calendar"></i>  1 - 3pm</small>
-                <small class="text-muted">
-                  <i class="icon-location-pin"></i>  Palo Alto, CA</small>
-              </div>
-              <div class="list-group-item list-group-item-accent-primary list-group-item-divider">
-                <div>
-                  <strong>Team meeting</strong>
-                </div>
-                <small class="text-muted mr-3">
-                  <i class="icon-calendar"></i>  4 - 6pm</small>
-                <small class="text-muted">
-                  <i class="icon-home"></i>  creativeLabs HQ</small>
-                <div class="avatars-stack mt-2">
-                  <div class="avatar avatar-xs">
-                    <img class="img-avatar" src="img/avatars/2.jpg" alt="admin@bootstrapmaster.com">
-                  </div>
-                  <div class="avatar avatar-xs">
-                    <img class="img-avatar" src="img/avatars/3.jpg" alt="admin@bootstrapmaster.com">
-                  </div>
-                  <div class="avatar avatar-xs">
-                    <img class="img-avatar" src="img/avatars/4.jpg" alt="admin@bootstrapmaster.com">
-                  </div>
-                  <div class="avatar avatar-xs">
-                    <img class="img-avatar" src="img/avatars/5.jpg" alt="admin@bootstrapmaster.com">
-                  </div>
-                  <div class="avatar avatar-xs">
-                    <img class="img-avatar" src="img/avatars/6.jpg" alt="admin@bootstrapmaster.com">
-                  </div>
-                  <div class="avatar avatar-xs">
-                    <img class="img-avatar" src="img/avatars/7.jpg" alt="admin@bootstrapmaster.com">
-                  </div>
-                  <div class="avatar avatar-xs">
-                    <img class="img-avatar" src="img/avatars/8.jpg" alt="admin@bootstrapmaster.com">
-                  </div>
-                </div>
-              </div>
+                {{-- close main content --}}
             </div>
-          </div>
-          <div class="tab-pane p-3" id="messages" role="tabpanel">
-            <div class="message">
-              <div class="py-3 pb-5 mr-3 float-left">
-                <div class="avatar">
-                  <img class="img-avatar" src="img/avatars/7.jpg" alt="admin@bootstrapmaster.com">
-                  <span class="avatar-status badge-success"></span>
-                </div>
-              </div>
-              <div>
-                <small class="text-muted">Lukasz Holeczek</small>
-                <small class="text-muted float-right mt-1">1:52 PM</small>
-              </div>
-              <div class="text-truncate font-weight-bold">Lorem ipsum dolor sit amet</div>
-              <small class="text-muted">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt...</small>
-            </div>
-            <hr>
-            <div class="message">
-              <div class="py-3 pb-5 mr-3 float-left">
-                <div class="avatar">
-                  <img class="img-avatar" src="img/avatars/7.jpg" alt="admin@bootstrapmaster.com">
-                  <span class="avatar-status badge-success"></span>
-                </div>
-              </div>
-              <div>
-                <small class="text-muted">Lukasz Holeczek</small>
-                <small class="text-muted float-right mt-1">1:52 PM</small>
-              </div>
-              <div class="text-truncate font-weight-bold">Lorem ipsum dolor sit amet</div>
-              <small class="text-muted">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt...</small>
-            </div>
-            <hr>
-            <div class="message">
-              <div class="py-3 pb-5 mr-3 float-left">
-                <div class="avatar">
-                  <img class="img-avatar" src="img/avatars/7.jpg" alt="admin@bootstrapmaster.com">
-                  <span class="avatar-status badge-success"></span>
-                </div>
-              </div>
-              <div>
-                <small class="text-muted">Lukasz Holeczek</small>
-                <small class="text-muted float-right mt-1">1:52 PM</small>
-              </div>
-              <div class="text-truncate font-weight-bold">Lorem ipsum dolor sit amet</div>
-              <small class="text-muted">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt...</small>
-            </div>
-            <hr>
-            <div class="message">
-              <div class="py-3 pb-5 mr-3 float-left">
-                <div class="avatar">
-                  <img class="img-avatar" src="img/avatars/7.jpg" alt="admin@bootstrapmaster.com">
-                  <span class="avatar-status badge-success"></span>
-                </div>
-              </div>
-              <div>
-                <small class="text-muted">Lukasz Holeczek</small>
-                <small class="text-muted float-right mt-1">1:52 PM</small>
-              </div>
-              <div class="text-truncate font-weight-bold">Lorem ipsum dolor sit amet</div>
-              <small class="text-muted">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt...</small>
-            </div>
-            <hr>
-            <div class="message">
-              <div class="py-3 pb-5 mr-3 float-left">
-                <div class="avatar">
-                  <img class="img-avatar" src="img/avatars/7.jpg" alt="admin@bootstrapmaster.com">
-                  <span class="avatar-status badge-success"></span>
-                </div>
-              </div>
-              <div>
-                <small class="text-muted">Lukasz Holeczek</small>
-                <small class="text-muted float-right mt-1">1:52 PM</small>
-              </div>
-              <div class="text-truncate font-weight-bold">Lorem ipsum dolor sit amet</div>
-              <small class="text-muted">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt...</small>
-            </div>
-          </div>
-          <div class="tab-pane p-3" id="settings" role="tabpanel">
-            <h6>Settings</h6>
-            <div class="aside-options">
-              <div class="clearfix mt-4">
-                <small>
-                  <b>Option 1</b>
-                </small>
-                <label class="switch switch-label switch-pill switch-success switch-sm float-right">
-                  <input class="switch-input" type="checkbox" checked="">
-                  <span class="switch-slider" data-checked="On" data-unchecked="Off"></span>
-                </label>
-              </div>
-              <div>
-                <small class="text-muted">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</small>
-              </div>
-            </div>
-            <div class="aside-options">
-              <div class="clearfix mt-3">
-                <small>
-                  <b>Option 2</b>
-                </small>
-                <label class="switch switch-label switch-pill switch-success switch-sm float-right">
-                  <input class="switch-input" type="checkbox">
-                  <span class="switch-slider" data-checked="On" data-unchecked="Off"></span>
-                </label>
-              </div>
-              <div>
-                <small class="text-muted">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</small>
-              </div>
-            </div>
-            <div class="aside-options">
-              <div class="clearfix mt-3">
-                <small>
-                  <b>Option 3</b>
-                </small>
-                <label class="switch switch-label switch-pill switch-success switch-sm float-right">
-                  <input class="switch-input" type="checkbox">
-                  <span class="switch-slider" data-checked="On" data-unchecked="Off"></span>
-                </label>
-              </div>
-            </div>
-            <div class="aside-options">
-              <div class="clearfix mt-3">
-                <small>
-                  <b>Option 4</b>
-                </small>
-                <label class="switch switch-label switch-pill switch-success switch-sm float-right">
-                  <input class="switch-input" type="checkbox" checked="">
-                  <span class="switch-slider" data-checked="On" data-unchecked="Off"></span>
-                </label>
-              </div>
-            </div>
-            <hr>
-            <h6>System Utilization</h6>
-            <div class="text-uppercase mb-1 mt-4">
-              <small>
-                <b>CPU Usage</b>
-              </small>
-            </div>
-            <div class="progress progress-xs">
-              <div class="progress-bar bg-info" role="progressbar" style="width: 25%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
-            </div>
-            <small class="text-muted">348 Processes. 1/4 Cores.</small>
-            <div class="text-uppercase mb-1 mt-2">
-              <small>
-                <b>Memory Usage</b>
-              </small>
-            </div>
-            <div class="progress progress-xs">
-              <div class="progress-bar bg-warning" role="progressbar" style="width: 70%" aria-valuenow="70" aria-valuemin="0" aria-valuemax="100"></div>
-            </div>
-            <small class="text-muted">11444GB/16384MB</small>
-            <div class="text-uppercase mb-1 mt-2">
-              <small>
-                <b>SSD 1 Usage</b>
-              </small>
-            </div>
-            <div class="progress progress-xs">
-              <div class="progress-bar bg-danger" role="progressbar" style="width: 95%" aria-valuenow="95" aria-valuemin="0" aria-valuemax="100"></div>
-            </div>
-            <small class="text-muted">243GB/256GB</small>
-            <div class="text-uppercase mb-1 mt-2">
-              <small>
-                <b>SSD 2 Usage</b>
-              </small>
-            </div>
-            <div class="progress progress-xs">
-              <div class="progress-bar bg-success" role="progressbar" style="width: 10%" aria-valuenow="10" aria-valuemin="0" aria-valuemax="100"></div>
-            </div>
-            <small class="text-muted">25GB/256GB</small>
-          </div>
         </div>
-      </aside>
-    </div>
-    <footer class="app-footer">
-      <div>
-        <a href="https://codezyprojects.in">CodEzy</a>
-        <span>&copy; 2018 CodezyLabs.</span>
-      </div>
-      <div class="ml-auto">
-        <span>Powered by</span>
-        <a href="https://codezyprojects.in">CodEzy</a>
-      </div>
-    </footer>
-    <!-- CoreUI and necessary plugins-->
-    <script src="node_modules/jquery/dist/jquery.min.js"></script>
-    <script src="node_modules/popper.js/dist/umd/popper.min.js"></script>
-    <script src="node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
-    <script src="node_modules/pace-progress/pace.min.js"></script>
-    <script src="node_modules/perfect-scrollbar/dist/perfect-scrollbar.min.js"></script>
-    <script src="node_modules/@coreui/coreui/dist/js/coreui.min.js"></script>
-    <!-- Plugins and scripts required by this view-->
-    <script src="node_modules/chart.js/dist/Chart.min.js"></script>
-    <script src="node_modules/@coreui/coreui-plugin-chartjs-custom-tooltips/dist/js/custom-tooltips.min.js"></script>
-    <script src="js/main.js"></script>
-  </body>
+
+
+
+        <div class="overlay"></div>
+
+
+        <!-- jQuery CDN -->
+        {{-- <script src="https://code.jquery.com/jquery-1.12.0.min.js"></script> --}}
+        <!-- Bootstrap Js CDN -->
+        <script src="{{asset('js/app.js')}}"></script>
+        <!-- jQuery Custom Scroller CDN -->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/malihu-custom-scrollbar-plugin/3.1.5/jquery.mCustomScrollbar.concat.min.js"></script>
+
+        <script type="text/javascript">
+            $(document).ready(function () {
+                $("#sidebar").mCustomScrollbar({
+                    theme: "minimal"
+                });
+
+                $('#dismiss, .overlay').on('click', function () {
+                    $('#sidebar').removeClass('active');
+                    $('.overlay').fadeOut();
+                });
+
+                $('#sidebarCollapse').on('click', function () {
+                    $('#sidebar').addClass('active');
+                    $('.overlay').fadeIn();
+                    $('.collapse.in').toggleClass('in');
+                    $('a[aria-expanded=true]').attr('aria-expanded', 'false');
+                });
+            });
+        </script>
+          <script type="text/javascript">
+            // Get the modal
+            var modal1 = document.getElementById('myModal1');
+            var modal2 = document.getElementById('myModal2');
+            var modal3 = document.getElementById('myModal3');
+             var modal4 = document.getElementById('myModal4');
+
+    
+            // Get the button that opens the modal
+            var btn1 = document.getElementById("myBtn1");
+            var btn2 = document.getElementById("myBtn2");
+             var btn3 = document.getElementById("myBtn3");
+             var btn4 = document.getElementById("myBtn4");
+
+            
+    
+            // Get the <span> element that closes the modal
+            // var span1 = document.getElementsByClassName("close")[0];
+            var span1 = document.getElementById("gg1");
+            var span2 = document.getElementById("gg2");
+             var span3 = document.getElementById("gg3");
+             var span4 = document.getElementById("gg4");
+
+    
+            // When the user clicks the button, open the modal 
+            btn1.onclick = function() {
+                modal1.style.display = "block";
+            }
+            btn2.onclick = function() {
+                modal2.style.display = "block";
+            }
+             btn3.onclick = function() {
+                 modal3.style.display = "block";
+             }
+            btn4.onclick = function() {
+                modal4.style.display = "block";
+             }
+            // function check() {
+            //     console.log(modal1);
+            //                      modal1.style.display = "block";
+            //             }
+            // When the user clicks on <span> (x), close the modal
+            span1.onclick = function() {
+                modal1.style.display = "none";
+            }
+            span2.onclick = function() {
+                modal2.style.display = "none";
+            }
+             span3.onclick = function() {
+                 modal3.style.display = "none";
+             }
+             span4.onclick = function() {
+                 modal4.style.display = "none";
+             }
+            
+            
+            // When the user clicks anywhere outside of the modal, close it
+            window.onclick = function(event) {
+                if (event.target == modal1) {
+                    modal1.style.display = "none";
+                }
+                if (event.target == modal2) {
+                    modal2.style.display = "none";
+                }
+                if (event.target == modal3) {
+                    modal3.style.display = "none";
+                }
+                if (event.target == modal4) {
+                    modal4.style.display = "none";
+                }
+            }
+        </script>
+        <script>
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
+                });
+            $("#form1").submit(function(e){
+                e.preventDefault();
+                var form = $(this);
+                // alert('bwejkf');
+                $.ajax({
+                url      : "/dashboard/addcourse",
+                type     : 'POST',
+                cache    : false,
+                data     : form.serialize(),
+                // dataType : 'html',
+                success  : function(data) {
+                  //console.log(data['success']); 
+                        $("#form1").trigger("reset");
+                        $("#success").fadeIn().html(data['success']);
+                        setTimeout(() => {
+                        $("#success").fadeOut('slow');  
+                        }, 2000); 
+                    },
+                error: function (reject) {
+                     var error;
+                    if( reject.status === 422 ) {
+                        var errors = $.parseJSON(reject.responseText);
+                        // $.each(errors, function(key,val){
+                        //     error = error + val[0); 
+                        // })
+                        // $.each(errors, function (key, val) {
+
+                        //    error = error + val[0);
+                        // });
+                        // $("#danger").fadeIn().html(error);
+                        // setTimeout(() => {
+                        // $("#danger").fadeOut('slow');  
+                        // }, 2000);
+                        console.log(errors);
+                    }
+                }
+                });
+                
+            });
+        </script>
+    </body>
 </html>

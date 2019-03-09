@@ -8,6 +8,8 @@ use App\Subject;
 use App\Course;
 use App\Teacher;
 use App\Question;
+use Session;
+use View;
 
 class AdminController extends Controller
 {
@@ -22,7 +24,7 @@ class AdminController extends Controller
         $check= Admin::find($username);
         if($check!=null){
             if(Hash::check($request->input('password'),$check->password))
-                return view('admin.dashboard');
+                return redirect('/dashboard');
             else echo "wring password";
         }
         else { echo "Wrong Username";}
@@ -57,7 +59,7 @@ class AdminController extends Controller
     }
 
     public function dashboard(){
-        return view('admin.dashboard2');
+        return view('layouts.admin');
     }
     
     public function teacher(){
@@ -78,18 +80,37 @@ class AdminController extends Controller
     
     public function addcourse(Request $request)
     {
-
-        $this->validate($request,[
+        $Response   = array(
+            'success' => 'Succesfully Added!!',
+        );
+        if($request->ajax()){
+               $this->validate($request,[
             'id'=>'required|unique:courses,id',
             'name'=>'required',
         ]);
         
         $s = new Course;
         $s->id=$request->input('id');
-       $s->name=$request->input('name');
+        $s->name=$request->input('name');
         $s->save();
-        return view('admin.dashboard');
-        }
+            return response($Response);
+                }
+
+                // return response($request->all();
+        
+        // $this->validate($request,[
+        //     'id'=>'required|unique:courses,id',
+        //     'name'=>'required',
+        // ]);
+        
+        // $s = new Course;
+        // $s->id=$request->input('id');
+        // $s->name=$request->input('name');
+        // $s->save();
+       
+        // Session::flash('success', 'File has been uploaded successfully!');
+        // return json(['success'=>'Succesfully Added!!']);
+    }
 
     public function addteacher(Request $request)
     {

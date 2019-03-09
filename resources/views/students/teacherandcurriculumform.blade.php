@@ -4,7 +4,7 @@
 <div class="container-fluid" style="margin: 20px;min-width:505px;">
     <div class="container-fluid" style="background-color: whitesmoke; box-shadow: 4px 5px 8px 2px rgba(0, 0, 0, 0.2), -3px -2px 8px 2px rgba(0, 0, 0, 0.2);border-radius: 10px;">
         <div class="content">
-{!! Form::open(['url' => '/students/login','method'=>'POST','autocomplete'=>'off']) !!}    
+{!! Form::open(['url' => '/students/tcsubmit','method'=>'POST','autocomplete'=>'off']) !!}    
     <h3 align="center" style="margin-top: 20px;">About Teacher and Curriulum Form </h3>
     <p style="margin-top: 30px;">Dear Students,</p>
     <p>This form has been designed to get feedback from you to strengthen the quality of teaching-learning environment, to provide best possible facilities and modern infrastructure. The information provided by you will be kept confidential.</p>    
@@ -14,7 +14,7 @@
     <div class="col-xs-12" style="height:150px;">
             <p style="margin-bottom: 10px;margin-top: 10px" class="col-xs-12"><b><i>Directions:</i></b></p>
             <p class="col-xs-12">For each item please indicate your level of agreement with the following statements by selecting providing appropiate number between range 1 to 5 option.</p>                
-        <p style="margin:10px"><strong>1. Strongly Agree.  2. Agree  3. Not Sure  4. Disagree  5. Strongly Disagree </strong></p>
+        <p style="margin:10px"><strong>1. Strongly Disagree.  2. Disagree  3.Satisfactory  4. Agree  5. Strongly Agree </strong></p>
     </div>
         {{-- <div style="margin:10px;margin-left:0px" class="form-group col-xs-6">
             <label> Id : </label> <button type="button" class="btn btn-primary" disabled>{{$studentid}}</button>
@@ -30,8 +30,11 @@
         <div style="margin:10px;margin-left:0px" class="col-xs-2">
         <label> Sem : </label> <button type="button" class="btn btn-primary" disabled>{{$sem}}</button>
         </div>
-      
-
+        @php
+        $Q = 1;
+        $S = 1;
+        $C = 1;
+        @endphp
         <div style="margin:10px;margin-left:0px" class="form-group col-xs-12">
             <table class="table">
                 <thead>
@@ -43,17 +46,19 @@
                 @endif
                 </thead>
                 <tbody>
+                        {{-- {{Form::select('Q1', ['B.Com'=>'Bachelor Of Commerce(B.Com)','BAF'=>'Bachelor Of Commerce in Accounting and Finance(BAF)','BBI'=>'Bachelor Of Commerce in Banking and Insurance(BBI)','BFM'=>'Bachelor Of Commerce in Financial Markets(BFM)','B.Sc. (Animation)'=>'B.Sc. (Animation)'  ,'BMM' => 'Bachelor in Mass Media(BMM)', 'BOA' => 'Bachelor Of Arts','BSC-IT'=>'Bachelor of Science in Information Technology(Bsc.IT)'],null,['class'=>'form-control','style'=>'cursor:pointer'])}} --}}
                         @if(!$tquestions->isEmpty())
                         @foreach($tquestions as $q)
                         <tr>
                             <td>{{$q->question}}</td>
                             @foreach($subjects as $subject)
-                            <td><input type="number" min="1" max="5" required/></td>
+                            <td>{!!Form::select("S$S$Q", ['1'=>'1','2'=>'2','3'=>'3','4'=>'4','5'=>'5'],null,['class'=>'form-control','style'=>'cursor:pointer'])!!}</td>                            @php $S = $S+1; @endphp
                         @endforeach
+                            @php $S = 1; $Q=$Q+1; @endphp
                         @endforeach
                     </tr>
                         @endif
-
+                        @php $S = 1; $Q = 1; @endphp
                 </tbody>
 
                 <table class="table">
@@ -71,9 +76,12 @@
                             <tr>
                                 <td>{{$q->question}}</td>
                                 @foreach($subjects as $subject)
-                                <td><input type="number" min="1" max="5" required/></td>
+                                <td>{!!Form::select("S$S$C", ['1'=>'1','2'=>'2','3'=>'3','4'=>'4','5'=>'5'],null,['class'=>'form-control','style'=>'cursor:pointer'])!!}</td>
+                                @php $S = $S+1; @endphp
+                                @endforeach
+                                @php $S = 1; $C=$C+1; @endphp
                             @endforeach
-                            @endforeach
+
                         </tr>
                             @endif
                             

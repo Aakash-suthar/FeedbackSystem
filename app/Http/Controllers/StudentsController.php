@@ -62,24 +62,49 @@ class StudentsController extends Controller
             // 'suggestion' => 'required',
         ]);
         // through course and sem find all subjects
-        $cquestions = Question::where('type','currriculum')->get();
-        $tquestions = Question::where('type','teacher')->get();
-        // $course_id = 'B01';
-        $sem = '6';
-        $subjects = Subject::where('course_id','B01')->where('sem','6')->get();
-        $studentid = 'TDIT01';
-        $course = Course::find('B01');
+        // $cquestions = Question::where('type','currriculum')->get();
+        // $tquestions = Question::where('type','teacher')->get();
+        // // $course_id = 'B01';
+        // $sem = '6';
+        // $subjects = Subject::where('course_id','B01')->where('sem','6')->get();
+         $studentid = 'TDIT01';
+        // $course = Course::find('B01');
         // $data = array(
         //     'studentid'=>'TDIT01',
         //     'course' => 'Bsc-IT',
         //     'sem' => '6',
         //     'subjects' => ['bis','gis','tis','tc','pc'],
         // );
-        return view('students.teacherandcurriculumform',compact('cquestions','subjects','tquestions','sem','course','studentid'));
+        return redirect('/students/teacherandcurriculum/'.$studentid);
+        // ,compact('cquestions','subjects','tquestions','sem','course','studentid')
         // return view('tp',compact('cquestions','subjects','tquestions','sem','course'));
 
         // return redirect()->route('students.teacherandcurriculumform')->with(['cquestions'=>$cquestions])->with(['sem'=>$sem])->with(['subjects'=>$subjects])->with(['studentid'=>$studentid])->with(['course'=>$course])->with(['tquestions'=>$tquestions]);
                                                                         
+    }
+
+    public function teachercurriculum($id){
+        
+        $cquestions = Question::where('type','currriculum')->get();
+        $tquestions = Question::where('type','teacher')->get();
+        // $course_id = 'B01';
+        $sem = '6';
+        $subjects = Subject::where('course_id','B01')->where('sem','6')->get();
+        $studentid = $id;
+        $course = Course::find('B01');
+        return view('students.teacherandcurriculumform',compact('cquestions','subjects','tquestions','sem','course','studentid'));
+    }
+
+
+    public function tcsubmit(Request $request){
+        $this->validate($request,[
+            "studentid"=>'required|exists:users,id',
+            "subject"=>'required|exists:subjects,id',
+            'sem'=>'required',
+            'course_id'=>'required|exists:courses,id',
+            'teacher_id'=>'required|exists:teachers,id',
+        ]);
+        echo $request->all();
     }
 
 }
