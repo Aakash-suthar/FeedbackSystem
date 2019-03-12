@@ -1,12 +1,14 @@
-<!DOCTYPE html>
-<html>
+<!doctype html>
+<html lang="{{ app()->getLocale() }}">
     <head>
         <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+        <meta http-equiv="Pragma" content="no-cache" />
+        <meta http-equiv="Expires" content="0" />
         <meta name="csrf-token" content="{{ csrf_token() }}">
-        <title>Collapsible sidebar using Bootstrap 3</title>
-
+        <title>Dashboard</title>
         <!-- Bootstrap CSS CDN -->
         {{-- <link rel="stylesheet" href="{{asset('css/bootstrap.min.css')}}"> --}}
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
@@ -32,8 +34,8 @@
                           <h2 align="center">Add Course</h2>
                         </div>
                         <div class="modal-body row">
-                                {{-- {!! Form::open(['id'=>'form1','class'=>'form-vertical','autocomplete'=>'off']) !!}     --}}
-                               <form id="form1" class="form-vertical" method="POST" autocomplete="off">
+                                {!! Form::open(['id'=>'form1','class'=>'form-vertical','autocomplete'=>'off']) !!}    
+                               {{-- <form id="form1" class="form-vertical" method="POST" autocomplete="off"> --}}
                                 <div style="padding:12px;padding-bottom: 0px;margin-bottom: 0px" class="form-group col-xs-12">
                                 <label for="name" class="col-xs-12" style="margin-bottom: 10px;">Course Id :*  </label>
                                 <input type="text" name="id"  class="form-control" required/>
@@ -52,10 +54,12 @@
                                          
                                     </div>
                                 </div>
-                                <span id="success" class="text-success"></span>
-                                <span id="danger" class="text-danger"></span>
-                                {{-- {!! Form::close() !!} --}}
-                            </form>
+                                <div align="center">
+                                <span id="success1" class="text-success"></span>
+                                <span id="danger1" class="text-danger"></span>
+                                </div>
+                                {!! Form::close() !!}
+                            {{-- </form> --}}
         
                         </div>
                       </div>
@@ -70,7 +74,7 @@
                           <h2 align="center">Add Teacher</h2>
                         </div>
                         <div class="modal-body row">
-                                {!! Form::open(['url' => '/dashboard/addteacher','method'=>'POST','class'=>'form-vertical','autocomplete'=>'off']) !!}  
+                                {!! Form::open(['id'=>'form2','class'=>'form-vertical','autocomplete'=>'off']) !!}  
                                 <div style="padding:12px;padding-bottom: 0px;margin-bottom: 0px" class="form-group col-xs-12">
                                 <label for="name" class="col-xs-12" style="margin-bottom: 10px;"> Teacher Id :*  </label>
                                 <input type="text" name="id"  class="form-control" required/>
@@ -89,6 +93,10 @@
                                          
                                     </div>
                                 </div>
+                                <div align="center">
+                                <span id="success2" class="text-success"></span>
+                                <span id="danger2" class="text-danger"></span>
+                                </div>
                                 {!! Form::close() !!}
         
                         </div>
@@ -104,7 +112,7 @@
                             <h2 align="center">Add Subject</h2>
                           </div>
                           <div class="modal-body row">
-                                  {!! Form::open(['url' => '/dashboard/addsubject','method'=>'POST','class'=>'form-vertical','autocomplete'=>'off']) !!}  
+                                  {!! Form::open(['id'=>'form3','class'=>'form-vertical','autocomplete'=>'off']) !!}  
                                   <div style="padding:12px;padding-bottom: 0px;margin-bottom: 0px" class="form-group col-xs-12">
                                   <label for="name" class="col-xs-12" style="margin-bottom: 10px;">Subject Id :*  </label>
                                   <input type="text" name="id"  class="form-control" required/>
@@ -135,6 +143,10 @@
                                            
                                       </div>
                                   </div>
+                                  <div align="center">
+                                  <span id="success3" class="text-success"></span>
+                                  <span id="danger3" class="text-danger"></span>
+                                  </div>
                                   {!! Form::close() !!}
           
                           </div>
@@ -150,7 +162,7 @@
                           <h2 align="center">Add Question</h2>
                         </div>
                         <div class="modal-body row">
-                                {!! Form::open(['url' => '/dashboard/addquestion','method'=>'POST','class'=>'form-vertical','autocomplete'=>'off']) !!}  
+                                {!! Form::open(['id'=>'form4','class'=>'form-vertical','autocomplete'=>'off']) !!}  
                                 <div style="padding:12px;padding-bottom: 0px;margin-bottom: 0px" class="form-group col-xs-12">
                                 <label for="name" class="col-xs-12" style="margin-bottom: 10px;">Question :*  </label>
                                 <input type="text" name="question"  class="form-control" required/>
@@ -168,6 +180,11 @@
                                          
                                     </div>
                                 </div>
+                                <div align="center">
+                                    <span id="success4" class="text-success"></span>
+                                    <span id="danger4" class="text-danger"></span>
+                                </div>
+                               
                                 {!! Form::close() !!}
         
                         </div>
@@ -182,28 +199,27 @@
                 </div>
 
                 <div class="sidebar-header">
-                    <h3>Dashboard</h3>
+                    <h3><a href="/dashboard">Dashboard</a></h3>
                 </div>
-
+                        <a href="#reports" data-toggle="pill">Reports</a>
                 <ul class="list-unstyled components">
-                    <p>Dummy Heading</p>
                     <li class="active">
-                        <a href="#homeSubmenu" data-toggle="collapse" aria-expanded="false">Home</a>
+                        <a href="#homeSubmenu" data-toggle="collapse" aria-expanded="false">Reports</a>
                         <ul class="collapse list-unstyled" id="homeSubmenu">
-                            <li><a href="#">Add Course</a></li>
-                            <li><a href="#">Add Question</a></li>
-                            <li><a href="#">Add Subject</a></li>
-                            <li><a href="#">Add Teacher</a></li>
+                            <li><a href="#">Course</a></li>
+                            <li><a href="#">Question</a></li>
+                            <li><a href="#">Subject</a></li>
+                            <li><a href="#">Teacher</a></li>
                         </ul>
                     </li>
                     <li>
                         <a href="#actions" data-toggle="pill">Action</a>
-                        <a href="#pageSubmenu" data-toggle="collapse" aria-expanded="false">Pages</a>
+                        {{-- <a href="#pageSubmenu" data-toggle="collapse" aria-expanded="false">Pages</a>
                         <ul class="collapse list-unstyled" id="pageSubmenu">
-                            <li><a href="#students">Add</a></li>
+                            <li><a href="#">Add</a></li>
                             <li><a href="#">Page 2</a></li>
                             <li><a href="#">Page 3</a></li>
-                        </ul>
+                        </ul> --}}
                     </li>
                     <li>
                         <a href="#">Portfolio</a>
@@ -260,6 +276,9 @@
                                   <button  class="btn btn-lg btn-success" style="margin:40px;width:200px;height:120px;"  id="myBtn4">Add Question</button>
                               </div>
                           </div>
+                        </div>
+                        <div id="reports">
+                            
                         </div>
                     </div>
                 </div>
@@ -370,6 +389,7 @@
                 }
             }
         </script>
+        {{-- add course --}}
         <script>
             $.ajaxSetup({
                 headers: {
@@ -378,38 +398,152 @@
                 });
             $("#form1").submit(function(e){
                 e.preventDefault();
-                var form = $(this);
-                // alert('bwejkf');
+                var form1 = $(this);
                 $.ajax({
                 url      : "/dashboard/addcourse",
                 type     : 'POST',
                 cache    : false,
-                data     : form.serialize(),
-                // dataType : 'html',
+                data     : form1.serialize(),
                 success  : function(data) {
-                  //console.log(data['success']); 
                         $("#form1").trigger("reset");
-                        $("#success").fadeIn().html(data['success']);
+                        $("#success1").fadeIn().html(data['success']);
                         setTimeout(() => {
-                        $("#success").fadeOut('slow');  
+                        $("#success1").fadeOut('slow');  
                         }, 2000); 
                     },
                 error: function (reject) {
-                     var error;
+                     var error1;
                     if( reject.status === 422 ) {
-                        var errors = $.parseJSON(reject.responseText);
-                        // $.each(errors, function(key,val){
-                        //     error = error + val[0); 
-                        // })
-                        // $.each(errors, function (key, val) {
-
-                        //    error = error + val[0);
-                        // });
-                        // $("#danger").fadeIn().html(error);
-                        // setTimeout(() => {
-                        // $("#danger").fadeOut('slow');  
-                        // }, 2000);
-                        console.log(errors);
+                        var errors1 = $.parseJSON(reject.responseText);
+                        $.each(errors1, function(key,val){
+                        
+                        error1  = error1 + (val[0]);
+                    })
+                    $("#danger1").fadeIn().html(error1);
+                    setTimeout(() => {
+                    $("#danger1").fadeOut('slow');  
+                    }, 5000);
+                    }
+                }
+                });
+                
+            });
+        </script>
+        {{-- add teacher --}}
+         <script>
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
+                });
+            $("#form2").submit(function(e){
+                e.preventDefault();
+                var form2 = $(this);
+                $.ajax({
+                url      : "/dashboard/addteacher",
+                type     : 'POST',
+                cache    : false,
+                data     : form2.serialize(),
+                success  : function(data) {
+                        $("#form2").trigger("reset");
+                        $("#success2").fadeIn().html(data['success']);
+                        setTimeout(() => {
+                        $("#success2").fadeOut('slow');  
+                        }, 2000); 
+                    },
+                error: function (reject) {
+                     var error2;
+                    if( reject.status === 422 ) {
+                        var errors2 = $.parseJSON(reject.responseText);
+                        $.each(errors2, function(key,val){
+                        
+                        error2  = error2 + (val[0]);
+                    })
+                    $("#danger2").fadeIn().html(error2);
+                    setTimeout(() => {
+                    $("#danger2").fadeOut('slow');  
+                    }, 5000);
+                    }
+                }
+                });
+                
+            });
+        </script>
+        {{-- add subject  --}}
+        <script>
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
+                });
+            $("#form3").submit(function(e){
+                e.preventDefault();
+                var form3 = $(this);
+                $.ajax({
+                url      : "/dashboard/addsubject",
+                type     : 'POST',
+                cache    : false,
+                data     : form3.serialize(),
+                success  : function(data) {
+                        $("#form3").trigger("reset");
+                        $("#success3").fadeIn().html(data['success']);
+                        setTimeout(() => {
+                        $("#success3").fadeOut('slow');  
+                        }, 2000); 
+                    },
+                error: function (reject) {
+                    var error3=" ";
+                    if( reject.status === 422 ) {
+                        var errors3 = $.parseJSON(reject.responseText);
+                        $.each(errors3, function(key,val){
+                        
+                            error3  = error3 + (val[0]);
+                        })
+                        $("#danger3").fadeIn().html(error3);
+                        setTimeout(() => {
+                        $("#danger3").fadeOut('slow');  
+                        }, 5000);
+                        //console.log(errors);
+                    }
+                }
+                });
+                
+            });
+        </script>
+        {{--  add question --}}
+        <script>
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
+                });
+            $("#form4").submit(function(e){
+                e.preventDefault();
+                var form4 = $(this);
+                $.ajax({
+                url      : "/dashboard/addquestion",
+                type     : 'POST',
+                cache    : false,
+                data     : form4.serialize(),
+                success  : function(data) {
+                        $("#form4").trigger("reset");
+                        $("#success4").fadeIn().html(data['success']);
+                        setTimeout(() => {
+                        $("#success4").fadeOut('slow');  
+                        }, 2000); 
+                    },
+                error: function (reject) {
+                    var error4;
+                    if( reject.status === 422 ) {
+                        var errors4 = $.parseJSON(reject.responseText);
+                        $.each(errors4, function(key,val){
+                        
+                        error4  = error4 + (val[0]);
+                    })
+                    $("#danger4").fadeIn().html(error4);
+                    setTimeout(() => {
+                    $("#danger4").fadeOut('slow');  
+                    }, 5000);
                     }
                 }
                 });

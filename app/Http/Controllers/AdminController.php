@@ -94,28 +94,16 @@ class AdminController extends Controller
         $s->name=$request->input('name');
         $s->save();
             return response($Response);
-                }
-
-                // return response($request->all();
-        
-        // $this->validate($request,[
-        //     'id'=>'required|unique:courses,id',
-        //     'name'=>'required',
-        // ]);
-        
-        // $s = new Course;
-        // $s->id=$request->input('id');
-        // $s->name=$request->input('name');
-        // $s->save();
-       
-        // Session::flash('success', 'File has been uploaded successfully!');
-        // return json(['success'=>'Succesfully Added!!']);
+        }
     }
 
     public function addteacher(Request $request)
     {
-
-        $this->validate($request,[
+        $Response   = array(
+            'success' => 'Succesfully Added!!',
+        );
+        if($request->ajax()){
+               $this->validate($request,[
             'id'=>'required|unique:teachers,id',
             'name'=>'required',
         ]);
@@ -124,43 +112,52 @@ class AdminController extends Controller
         $s->id=$request->input('id');
         $s->name=$request->input('name');
         $s->save();
-        return view('admin.dashboard');
+        return response($Response);
         }
+    }
 
-        public function addsubject(Request $request)
-        {
-    
-            $this->validate($request,[
-                'id'=>'required|unique:subjects,id',
-                'name'=>'required',
-                'sem'=>'required',
-                'course_id'=>'required|exists:courses,id',
-                'teacher_id'=>'required|exists:teachers,id',
+    public function addsubject(Request $request)
+    {
+        $Response   = array(
+            'success' => 'Succesfully Added!!',
+        );
+        if($request->ajax()){
+        $this->validate($request,[
+            'id'=>'required|unique:subjects,id',
+            'name'=>'required',
+            'sem'=>'required',
+            'course_id'=>'required|exists:courses,id',
+            'teacher_id'=>'required|exists:teachers,id',
 
-            ]);
-            
-            $s = new Subject;
-            $s->id=$request->input('id');
-            $s->name=$request->input('name');
-            $s->sem=$request->input('sem');
-            $s->course_id=$request->input('course_id');
-            $s->teacher_id=$request->input('teacher_id');
-            $s->save();
-            return view('admin.dashboard');
-            }
-            public function addquestion(Request $request)
-            {
+        ]);
         
-                $this->validate($request,[
-                    'question'=>'required',
-                    'type'=>'required',
-    
-                ]);
-                
-                $s = new Question;
-                $s->question=$request->input('question');
-                $s->type=$request->input('type');
-                $s->save();
-                return view('admin.addquestions');
-                }
+        $s = new Subject;
+        $s->id=$request->input('id');
+        $s->name=$request->input('name');
+        $s->sem=$request->input('sem');
+        $s->course_id=$request->input('course_id');
+        $s->teacher_id=$request->input('teacher_id');
+        $s->save();
+        return response($Response);
+        }
+    }
+    public function addquestion(Request $request)
+    {
+        $Response   = array(
+            'success' => 'Succesfully Added!!',
+        );
+        if($request->ajax()){
+        $this->validate($request,[
+            'question'=>'required',
+            'type'=>'required',
+
+        ]);
+        
+        $s = new Question;
+        $s->question=$request->input('question');
+        $s->type=$request->input('type');
+        $s->save();
+        return response($Response);
+        }
+    }
 }

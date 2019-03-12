@@ -34,7 +34,6 @@ class CreateFeedbackTable extends Migration
             $table->string('Q12');
             $table->string('Q13');
             $table->string('Q14');
-            $table->string('type');
             $table->foreign('teacher_id')->references('id')->on('teachers');
             $table->foreign('course_id')->references('id')->on('courses');
             $table->foreign('subject_id')->references('id')->on('subjects');
