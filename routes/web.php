@@ -21,6 +21,8 @@ Route::get('/users/{id}{name}', function ($id,$name) {
 //     return view('pages.about');
 // });
 
+Auth::routes();
+
 Route::get('/','WelcomeController@index');
 Route::get('/students/aboutcollage','WelcomeController@Saboutcollage');
 Route::get('/facultys/aboutcollage','WelcomeController@Faboutcollage');
@@ -47,7 +49,7 @@ Route::post('/Acollage','AluminiController@Acollage');
 
 
 Route::post('/register','AdminController@register');
-Route::post('/login','AdminController@login');
+Route::post('/login', 'Auth\LoginController@showAdminLoginForm');
 Route::get('/signup','AdminController@signup');
 Route::get('/dashboard','AdminController@dashboard');
 Route::get('/dashboard/course','AdminController@course');
