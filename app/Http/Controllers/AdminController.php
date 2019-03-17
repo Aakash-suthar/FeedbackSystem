@@ -13,6 +13,11 @@ use View;
 
 class AdminController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+    
     public function login(Request $request){
         $this->validate($request,[
             'username'=>'required',

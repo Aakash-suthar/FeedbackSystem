@@ -20,10 +20,7 @@ Route::get('/users/{id}{name}', function ($id,$name) {
 // Route::get('/about', function () {
 //     return view('pages.about');
 // });
-
-Auth::routes();
-
-Route::get('/','WelcomeController@index');
+// Route::get('/','WelcomeController@index');
 Route::get('/students/aboutcollage','WelcomeController@Saboutcollage');
 Route::get('/facultys/aboutcollage','WelcomeController@Faboutcollage');
 Route::get('/alumini/aboutcollage','WelcomeController@Aaboutcollage');
@@ -32,9 +29,9 @@ Route::get('/alumini/aboutcollage','WelcomeController@Aaboutcollage');
 //students forms
 Route::get('/students/login','StudentsController@login');
 Route::post('/Scollage','StudentsController@Scollage');
-Route::post('/students/logincheck','StudentsController@logincheck');
+Route::post('/students/login','Auth\LoginController@login');
 Route::post('/students/tcsubmit','StudentsController@tcsubmit');
-Route::get('/students/teacherandcurriculum/{id}','StudentsController@teachercurriculum');
+Route::get('/students/teacherandcurriculum','StudentsController@teachercurriculum')->middleware('auth');
 // Route::get('/students/teacherandcurriculum/{id}', function($id){
 //     echo $id;
 // });
@@ -71,3 +68,4 @@ Route::post('/dashboard/addquestion','AdminController@addquestion');
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
+Route::get('/','WelcomeController@index')->name('/');

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use AuthenticatesUsers;
 use Illuminate\Http\Request;
 use App\students\Scollage;
 use App\students\Scurriculum;
@@ -15,7 +16,6 @@ use Session;
 
 class StudentsController extends Controller
 {
-
     public function Scollage(Request $request){    
 
         $this->validate($request,[
@@ -51,12 +51,7 @@ class StudentsController extends Controller
         // Session::flash('success', "Special message goes here");
         return redirect('/');
     }
-
-    public function login(){
-        return view('students.login');
-    }
-
-    public function logincheck(Request $request){
+    public function login(Request $request){
 
         $this->validate($request,[
             'id'=>'required|exists:users,id',
@@ -77,7 +72,7 @@ class StudentsController extends Controller
         //     'sem' => '6',
         //     'subjects' => ['bis','gis','tis','tc','pc'],
         // );
-        return redirect('/students/teacherandcurriculum/'.$studentid);
+        return redirect('/students/teacherandcurriculum');
         // ,compact('cquestions','subjects','tquestions','sem','course','studentid')
         // return view('tp',compact('cquestions','subjects','tquestions','sem','course'));
 
@@ -85,14 +80,14 @@ class StudentsController extends Controller
                                                                         
     }
 
-    public function teachercurriculum($id){
+    public function teachercurriculum(Request $request){
         
         $cquestions = Question::where('type','currriculum')->get();
         $tquestions = Question::where('type','teacher')->get();
         $course_id = 'B01';
         $sem = '6';
         $subjects = Subject::where('course_id','B01')->where('sem','6')->get();
-        $student_id = $id;
+        $student_id = '1';
          return view('students.teacherandcurriculumform',compact('cquestions','subjects','tquestions','sem','course_id','student_id'));
     }
 
