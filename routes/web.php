@@ -61,10 +61,13 @@ Route::post('/dashboard/addteacher','AdminController@addteacher');
 Route::post('/dashboard/addsubject','AdminController@addsubject');
 Route::post('/dashboard/addquestion','AdminController@addquestion');
 
-
 // Route::get('/',function(){
 //     // $title = 'hello';
 //     // return view('welcome',compact('title'));
 //     // return view('welcome')->with('title',$title);
 //     return view('welcome');
 // });
+
+Auth::routes();
+
+Route::get('/home', 'HomeController@index')->name('home');
