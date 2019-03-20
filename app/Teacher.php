@@ -8,6 +8,10 @@ class Teacher extends Model
 {
     public  $primaryKey = 'id';
     public $incrementing = false;
+
+    protected $fillable = [
+        'id', 'name',
+    ];
     // public function subjects(){
     //     return hasMany('App\Subject');
     // }

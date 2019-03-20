@@ -19,8 +19,8 @@
         
     </head>
     <body>
-            {{-- @include('inc.messages')
-            @include('flash::message') --}}
+            @include('inc.messages')
+            @include('flash::message')
             {{-- <div class="alert alert-danger">
                 </div>
                 <div class="alert alert-success" id="success">
@@ -81,7 +81,7 @@
                                 </div>
                                  <div class="form-group col-xs-12" style="padding:12px">
                                 <label for="username" class="col-xs-12" style="margin-bottom: 10px;">Teacher Name :*  </label>
-                                <input type="password" name="name" class="form-control" required/>
+                                <input type="text" name="name" class="form-control" required/>
                                 </div>
                                  <div class="form-group col-xs-12" style="margin-top:10px;">
                                     <div style="margin: 0px;padding: 0px;" class="row">
@@ -119,19 +119,19 @@
                                   </div>
                                    <div class="form-group col-xs-12" style="padding:12px">
                                     <label for="username" class="col-xs-12" style="margin-bottom: 10px;">Name :*  </label>
-                                    <input type="password" name="name" class="form-control" required/>
+                                    <input type="text" name="name" class="form-control" required/>
                                   </div>
                                   <div class="form-group col-xs-12" style="padding:12px">
                                         <label for="username" class="col-xs-12" style="margin-bottom: 10px;">Sem :*  </label>
-                                        <input type="password" name="sem" class="form-control" required/>
+                                        <input type="text" name="sem" class="form-control" required/>
                                       </div>
                                       <div class="form-group col-xs-12" style="padding:12px">
                                             <label for="username" class="col-xs-12" style="margin-bottom: 10px;">Course Id :*  </label>
-                                            <input type="password" name="course_id" class="form-control" required/>
+                                            <input type="text" name="course_id" class="form-control" required/>
                                           </div>
                                           <div class="form-group col-xs-12" style="padding:12px">
                                                 <label for="username" class="col-xs-12" style="margin-bottom: 10px;">Teacher Id :*  </label>
-                                                <input type="password" name="teacher_id" class="form-control" required/>
+                                                <input type="text" name="teacher_id" class="form-control" required/>
                                               </div>
                                    <div class="form-group col-xs-12" style="margin-top:10px;">
                                       <div style="margin: 0px;padding: 0px;" class="row">
@@ -201,8 +201,7 @@
                 <div class="sidebar-header">
                     <h3><a href="/dashboard">Dashboard</a></h3>
                 </div>
-                        <a href="#reports" data-toggle="pill">Reports</a>
-                <ul class="list-unstyled components">
+                  <ul class="list-unstyled components">
                     <li class="active">
                         <a href="#homeSubmenu" data-toggle="collapse" aria-expanded="false">Reports</a>
                         <ul class="collapse list-unstyled" id="homeSubmenu">
@@ -222,7 +221,7 @@
                         </ul> --}}
                     </li>
                     <li>
-                        <a href="#">Portfolio</a>
+                        <a href="#">Reports</a>
                     </li>
                     <li>
                         <a href="#">Contact</a>
@@ -250,10 +249,30 @@
 
                         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                             <ul class="nav navbar-nav navbar-right">
-                                <li><a href="#students">Page</a></li>
-                                <li><a href="#">Page</a></li>
-                                <li><a href="#">Page</a></li>
-                                <li><a href="#">Page</a></li>
+                                <li>
+                                    <a href="{{ route('adminlogout') }}"">
+                                        Logout
+                                    </a>
+                                </li>
+                                
+                                {{-- <li class="dropdown">
+                                    <a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+                                        {{-- <span class="caret">{{ Auth::user()->name }} </span>
+                                    </a> --}}
+    
+                                    {{--<ul class="dropdown-menu" role="menu">
+                                        <li>
+                                            <a href="{{ route('adminlogout')}}">
+                                                Logout
+                                            </a>
+    
+                                             <form id="logout-form" action="{{ route('adminlogout') }}" method="GET" style="display: none;">
+                                                {{ csrf_field() }}
+                                            </form>
+                                        </li>
+                                    </ul>
+                                    
+                                </li>--}}
                             </ul>
                         </div>
                     </div>
@@ -521,7 +540,7 @@
                 e.preventDefault();
                 var form4 = $(this);
                 $.ajax({
-                url      : "/dashboard/addquestion",
+                url      : '/dashboard/addquestion',
                 type     : 'POST',
                 cache    : false,
                 data     : form4.serialize(),

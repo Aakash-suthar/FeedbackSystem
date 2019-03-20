@@ -40,10 +40,11 @@
                                   <h2 align="center">Admin Login</h2>
                                 </div>
                                 <div class="modal-body row">
-                                        {!! Form::open(['url' => '/login','method'=>'POST','class'=>'form-vertical','autocomplete'=>'off']) !!}  
+                                        {!! Form::open(['url'=>'/dashboard/login','method'=>'POST','class'=>'form-vertical','autocomplete'=>'off']) !!}  
+                                        {{ csrf_field() }}
                                         <div style="padding:12px;padding-bottom: 0px;margin-bottom: 0px" class="form-group col-xs-12">
-                                        <label for="name" class="col-xs-12" style="margin-bottom: 10px;">Username :*  </label>
-                                        <input type="text" name="username"  class="form-control" required/>
+                                        <label for="name" class="col-xs-12" style="margin-bottom: 10px;">Admin Email :*  </label>
+                                        <input type="email" name="email"  class="form-control" required/>
                                         </div>
                                          <div class="form-group col-xs-12" style="padding:12px">
                                         <label for="username" class="col-xs-12" style="margin-bottom: 10px;">Password :*  </label>
@@ -59,6 +60,9 @@
                                                  
                                             </div>
                                         </div>
+                                        <div align="center">
+                                            <span id="danger1" class="text-danger"></span>
+                                        </div>
                                         {!! Form::close() !!}
                 
                                 </div>
@@ -73,7 +77,7 @@
                             <h2 align="center">Student Login</h2>
                       </div>
                       <div class="modal-body row">
-                              {!! Form::open(['url' => '/students/login','method'=>'POST','class'=>'form-vertical','autocomplete'=>'off']) !!}    
+                              {!! Form::open(['url'=>'/students/login','method'=>'POST','class'=>'form-vertical','autocomplete'=>'off']) !!}    
                               {{ csrf_field() }}
                               <form class="form-vertical" method="post" action="" style="margin-top: 5px" autocomplete="off">
                               <div style="padding:12px;padding-bottom: 0px;margin-bottom: 0px" class="form-group col-xs-12">
@@ -94,6 +98,9 @@
                                        
                                   </div>
                               </div>
+                              <div align="center">
+                                <span id="danger2" class="text-danger"></span>
+                            </div>
                               {!! Form::close() !!}
                          </form>
       

@@ -30,7 +30,7 @@ Route::get('/alumini/aboutcollage','WelcomeController@Aaboutcollage');
 Route::get('/students/login','StudentsController@login');
 Route::post('/Scollage','StudentsController@Scollage');
 Route::post('/students/login','Auth\LoginController@login');
-Route::post('/students/tcsubmit','StudentsController@tcsubmit');
+Route::post('/students/tcsubmit','StudentsController@tcsubmit')->middleware('auth');
 Route::get('/students/teacherandcurriculum','StudentsController@teachercurriculum')->middleware('auth');
 // Route::get('/students/teacherandcurriculum/{id}', function($id){
 //     echo $id;
@@ -45,19 +45,17 @@ Route::post('/Fcollage','FacultysController@Fcollage');
 Route::post('/Acollage','AluminiController@Acollage');
 
 
-Route::post('/register','AdminController@register');
-Route::post('/login', 'Auth\LoginController@showAdminLoginForm');
-Route::get('/signup','AdminController@signup');
-Route::get('/dashboard','AdminController@dashboard');
-Route::get('/dashboard/course','AdminController@course');
-Route::get('/dashboard/teacher','AdminController@teacher');
-Route::get('/dashboard/subject','AdminController@subject');
-Route::get('/dashboard/question','AdminController@question');
-Route::post('/dashboard/addcourse','AdminController@addcourse');
-Route::post('/dashboard/addteacher','AdminController@addteacher');
-Route::post('/dashboard/addsubject','AdminController@addsubject');
-Route::post('/dashboard/addquestion','AdminController@addquestion');
 
+
+Route::prefix('dashboard')->group(function () {
+    Route::post('/login', 'Auth\AdminLoginController@Login');
+    Route::get('/logout','Auth\AdminLoginController@Logout')->name('adminlogout');
+    Route::post('/addcourse','AdminController@addcourse');
+    Route::post('/addteacher','AdminController@addteacher');
+    Route::post('/addsubject','AdminController@addsubject');
+    Route::post('/addquestion','AdminController@addquestion');
+    Route::get('','AdminController@dashboard')->name('dashboard');
+});
 // Route::get('/',function(){
 //     // $title = 'hello';
 //     // return view('welcome',compact('title'));
@@ -67,5 +65,7 @@ Route::post('/dashboard/addquestion','AdminController@addquestion');
 
 Auth::routes();
 
-Route::get('/home', 'HomeController@index')->name('home');
+Route::get('/home', 'StudentsController@teachercurriculum')->name('home');
 Route::get('/','WelcomeController@index')->name('/');
+// Route::get('/home', 'HomeController@index')->name('home');
+

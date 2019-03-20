@@ -13,119 +13,71 @@ use View;
 
 class AdminController extends Controller
 {
+    public $Response   = array(
+        'success' => 'Succesfully Added!!',
+    );
+
     public function __construct()
     {
-        $this->middleware('auth');
-    }
-    
-    public function login(Request $request){
-        $this->validate($request,[
-            'username'=>'required',
-            'password'=>'required',        
-        ]);
-        $username=$request->input('username');
-        $password=$request->input('password');
-        $check = new Admin; 
-        $check= Admin::find($username);
-        if($check!=null){
-            if(Hash::check($request->input('password'),$check->password))
-                return redirect('/dashboard');
-            else echo "wring password";
-        }
-        else { echo "Wrong Username";}
-
+        $this->middleware('auth:admin');
     }
 
-    public function register(Request $request)
-    {
+    // public function register(Request $request)
+    // {
 
-        $this->validate($request,[
-            'firstname'=>'required',
-            'lastname'=>'required',
-            'username'=>'required|unique:admins,username',
-            'password'=>'required',
-            'email'=>'required|unique:admins,email',
-            // 'suggestion' => 'required',
-        ]);
+    //     $this->validate($request,[
+    //         'firstname'=>'required',
+    //         'lastname'=>'required',
+    //         'username'=>'required|unique:admins,username',
+    //         'password'=>'required',
+    //         'email'=>'required|unique:admins,email',
+    //         // 'suggestion' => 'required',
+    //     ]);
         
-        $s = new Admin;
-        $s->firstname=$request->input('firstname');
-       $s->lastname=$request->input('lastname');
-       $s->username=$request->input('username');
-       $s->email=$request->input('email');
-       $s->password=Hash::make($request->input('password'));
-        $s->save();
-        return view('welcome');
-    }
-
-    public function signup()
-    {
-        return view('register');
-    }
+    //     $s = new Admin;
+    //     $s->firstname=$request->input('firstname');
+    //    $s->lastname=$request->input('lastname');
+    //    $s->username=$request->input('username');
+    //    $s->email=$request->input('email');
+    //    $s->password=Hash::make($request->input('password'));
+    //     $s->save();
+    //     return view('welcome');
+    // }
 
     public function dashboard(){
         return view('layouts.admin');
     }
     
-    public function teacher(){
-        return view('admin.addteachers');
-    }
-    
-    public function course(){
-        return view('admin.addcourses');
-    }
-
-    public function subject(){
-        return view('admin.addsubjects');
-    }
-
-    public function question(){
-        return view('admin.addquestions');
-    }
-    
     public function addcourse(Request $request)
     {
-        $Response   = array(
-            'success' => 'Succesfully Added!!',
-        );
         if($request->ajax()){
                $this->validate($request,[
             'id'=>'required|unique:courses,id',
             'name'=>'required',
         ]);
         
-        $s = new Course;
-        $s->id=$request->input('id');
-        $s->name=$request->input('name');
+        $s = Course::create($request->all());
         $s->save();
-            return response($Response);
+        return response($this->Response);
         }
     }
 
     public function addteacher(Request $request)
     {
-        $Response   = array(
-            'success' => 'Succesfully Added!!',
-        );
         if($request->ajax()){
                $this->validate($request,[
             'id'=>'required|unique:teachers,id',
             'name'=>'required',
         ]);
         
-        $s = new Teacher;
-        $s->id=$request->input('id');
-        $s->name=$request->input('name');
+        $s = Teacher::create($request->all());
         $s->save();
-        return response($Response);
+        return response($this->Response);
         }
     }
 
     public function addsubject(Request $request)
     {
-        $Response   = array(
-            'success' => 'Succesfully Added!!',
-        );
         if($request->ajax()){
         $this->validate($request,[
             'id'=>'required|unique:subjects,id',
@@ -136,21 +88,13 @@ class AdminController extends Controller
 
         ]);
         
-        $s = new Subject;
-        $s->id=$request->input('id');
-        $s->name=$request->input('name');
-        $s->sem=$request->input('sem');
-        $s->course_id=$request->input('course_id');
-        $s->teacher_id=$request->input('teacher_id');
+        $s = Subject::create($request->all());
         $s->save();
-        return response($Response);
+        return response($this->Response);
         }
     }
     public function addquestion(Request $request)
     {
-        $Response   = array(
-            'success' => 'Succesfully Added!!',
-        );
         if($request->ajax()){
         $this->validate($request,[
             'question'=>'required',
@@ -158,11 +102,9 @@ class AdminController extends Controller
 
         ]);
         
-        $s = new Question;
-        $s->question=$request->input('question');
-        $s->type=$request->input('type');
+        $s = Question::create($request->all());
         $s->save();
-        return response($Response);
+        return response($this->Response);
         }
     }
 }

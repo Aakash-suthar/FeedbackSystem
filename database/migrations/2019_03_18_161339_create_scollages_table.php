@@ -15,12 +15,6 @@ class CreateScollagesTable extends Migration
     {
         Schema::create('scollages', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('fname');
-            $table->string('lname');
-            $table->string('email')->unique();
-            $table->string('course');
-            $table->string('year');
-            $table->string('academicyear');
             $table->string('Q1');
             $table->string('Q2');
             $table->string('Q3');
@@ -28,7 +22,6 @@ class CreateScollagesTable extends Migration
             $table->string('Q5');
             $table->string('Q6');
             $table->string('Q7');
-            $table->string('suggestion')->nullable();
             $table->timestamps('created_at');
         });
     }
@@ -40,6 +33,6 @@ class CreateScollagesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('scollages');
+        //
     }
 }
