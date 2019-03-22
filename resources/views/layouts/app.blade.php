@@ -77,7 +77,7 @@
                             <h2 align="center">Student Login</h2>
                       </div>
                       <div class="modal-body row">
-                              {!! Form::open(['url'=>'/students/login','method'=>'POST','class'=>'form-vertical','autocomplete'=>'off']) !!}    
+                              {!! Form::open(['url'=>'/student/login','method'=>'POST','class'=>'form-vertical','autocomplete'=>'off']) !!}    
                               {{ csrf_field() }}
                               <form class="form-vertical" method="post" action="" style="margin-top: 5px" autocomplete="off">
                               <div style="padding:12px;padding-bottom: 0px;margin-bottom: 0px" class="form-group col-xs-12">
@@ -138,8 +138,8 @@
         }
         function check() {
             console.log(modal1);
-                             modal1.style.display = "block";
-                    }
+                    modal1.style.display = "block";
+                }
         // When the user clicks on <span> (x), close the modal
         span.onclick = function() {
             modal.style.display = "none";

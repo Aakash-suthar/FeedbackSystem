@@ -8,7 +8,7 @@
     <h3 align="center" style="margin-top: 20px;">About Teacher and Curriculum Form </h3>
     <p style="margin-top: 30px;">Dear Students,</p>
     <p>This form has been designed to get feedback from you to strengthen the quality of teaching-learning environment, to provide best possible facilities and modern infrastructure. The information provided by you will be kept confidential.</p>    
-   {{Form::hidden('student_id',$student_id)}}
+   {{Form::hidden('student_id',Auth::user()->id)}}
    {{Form::hidden('course_id',$course_id)}}
    {{Form::hidden('sem',$sem)}}
 <div class="row">
@@ -27,7 +27,7 @@
         </div> --}}
         <div class="row" style="margin-top:20px;">
         <div style="margin:10px;margin-left:0px;" class="col-xs-2">
-            <label> Student Id : </label> <button type="button" class="btn btn-primary" disabled>{{$student_id}}</button>
+            <label> Student Name : </label> <button type="button" class="btn btn-primary" disabled>{{Auth::user()->name}}</button>
             </div>
 
         <div style="margin:10px;margin-left:0px" class="col-xs-2">

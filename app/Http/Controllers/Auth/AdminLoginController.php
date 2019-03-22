@@ -28,7 +28,7 @@ class AdminLoginController extends Controller
         if(Auth::guard('admin')->attempt(['email'=> $request->email,'password'=>$request->password])){
             return redirect()->intended(route('dashboard'));
         }
-        flash('Wrong Username or password')->success();
+        flash('Wrong Username or password')->error();
         return redirect()->back();
     }
 

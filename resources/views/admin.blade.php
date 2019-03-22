@@ -1,4 +1,4 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="{{ app()->getLocale() }}">
     <head>
         <meta charset="utf-8">
@@ -9,22 +9,18 @@
         <meta http-equiv="Expires" content="0" />
         <meta name="csrf-token" content="{{ csrf_token() }}">
         <title>Dashboard</title>
+
         <!-- Bootstrap CSS CDN -->
-        {{-- <link rel="stylesheet" href="{{asset('css/bootstrap.min.css')}}"> --}}
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-        <!-- Our Custom CSS -->
-    <link rel="stylesheet" href="{{asset('css/admin.css')}}">
         <!-- Scrollbar Custom CSS -->
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/malihu-custom-scrollbar-plugin/3.1.5/jquery.mCustomScrollbar.min.css">
-        
+               <!-- Our Custom CSS -->
+        <link rel="stylesheet" href="{{asset('css/admin.css')}}">
+
     </head>
     <body>
             @include('inc.messages')
             @include('flash::message')
-            {{-- <div class="alert alert-danger">
-                </div>
-                <div class="alert alert-success" id="success">
-                    </div> --}}
             <!-- The Modal1 -->
             <div id="myModal1" class="modal">
                 <!-- Modal content -->
@@ -199,45 +195,46 @@
                 </div>
 
                 <div class="sidebar-header">
-                    <h3><a href="/dashboard">Dashboard</a></h3>
-                </div>
-                  <ul class="list-unstyled components">
-                    <li class="active">
-                        <a href="#homeSubmenu" data-toggle="collapse" aria-expanded="false">Reports</a>
+                        <h3><a href="/dashboard">Dashboard</a></h3>
+                    </div>
+
+                <ul class="list-unstyled components">
+                    <li class="active"> <a href="#home" data-toggle="pill">Home</a></li> 
+                    {{-- <li class="active">
+                        <a href="#homeSubmenu" data-toggle="collapse" aria-expanded="false">Home</a>
                         <ul class="collapse list-unstyled" id="homeSubmenu">
-                            <li><a href="#">Course</a></li>
-                            <li><a href="#">Question</a></li>
-                            <li><a href="#">Subject</a></li>
-                            <li><a href="#">Teacher</a></li>
+                            <li><a href="#">Home 1</a></li>
+                            <li><a href="#">Home 2</a></li>
+                            <li><a href="#">Home 3</a></li>
+                        </ul>
+                    </li> --}}
+                    <li><a href="#actions" data-toggle="pill">Action</a></li>
+                    <li>
+                        <a href="#pageSubmenu" data-toggle="collapse" aria-expanded="false">Pages</a>
+                        <ul class="collapse list-unstyled" id="pageSubmenu">
+                            <li><a href="#">Page 1</a></li>
+                            <li><a href="#">Page 2</a></li>
+                            <li><a href="#">Page 3</a></li>
                         </ul>
                     </li>
                     <li>
-                        <a href="#actions" data-toggle="pill">Action</a>
-                        {{-- <a href="#pageSubmenu" data-toggle="collapse" aria-expanded="false">Pages</a>
-                        <ul class="collapse list-unstyled" id="pageSubmenu">
-                            <li><a href="#">Add</a></li>
-                            <li><a href="#">Page 2</a></li>
-                            <li><a href="#">Page 3</a></li>
-                        </ul> --}}
+                        <a href="#reports" data-toggle="pill">Reports</a>
                     </li>
                     <li>
-                        <a href="#">Reports</a>
-                    </li>
-                    <li>
-                        <a href="#">Contact</a>
+                        <a href="#profile" data-toggle="pill">Profile</a>
                     </li>
                 </ul>
 
-                <ul class="list-unstyled CTAs6" style="position:fixed;bottom:0px;left:10px">
-                    <li><a href="https://codezyprojects.in">CodEzy Solutions .In @2018</a></li>
-                    <li><a href="https://bootstrapious.com/tutorial/files/sidebar.zip" class="download">Developed by <u>CodEzy</u></a></li>
-                </ul>
+                <ul class="list-unstyled CTAs">
+                        <li><a href="https://codezyprojects.in">CodEzy Solutions .In @2018</a></li>
+                        <li><a href="https://codezyprojects.in" class="download">Developed by <u>CodEzy</u></a></li>        
+              </ul>
             </nav>
 
             <!-- Page Content Holder -->
             <div id="content">
 
-                <nav class="navbar navbar-dark">
+                <nav class="navbar navbar-default">
                     <div class="container-fluid">
 
                         <div class="navbar-header">
@@ -247,71 +244,108 @@
                             </button>
                         </div>
 
+                        
                         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                             <ul class="nav navbar-nav navbar-right">
                                 <li>
-                                    <a href="{{ route('adminlogout') }}"">
-                                        Logout
-                                    </a>
-                                </li>
-                                
-                                {{-- <li class="dropdown">
-                                    <a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-                                        {{-- <span class="caret">{{ Auth::user()->name }} </span>
-                                    </a> --}}
-    
-                                    {{--<ul class="dropdown-menu" role="menu">
-                                        <li>
-                                            <a href="{{ route('adminlogout')}}">
-                                                Logout
-                                            </a>
-    
-                                             <form id="logout-form" action="{{ route('adminlogout') }}" method="GET" style="display: none;">
-                                                {{ csrf_field() }}
-                                            </form>
-                                        </li>
+                                <div class="btn-group" >
+                                    <button type="button" class="btn btn-info dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    {{Auth::user()->name}} <span class="caret"></span>
+                                    </button>
+                                    <ul class="dropdown-menu">
+                                    <li role="separator" class="divider"></li>
+                                    <li><a  style="background-color:white;" href="{{ route('adminlogout')}}">Logout</a></li>
                                     </ul>
-                                    
-                                </li>--}}
+                                </div>
+                            </li>
                             </ul>
                         </div>
                     </div>
                 </nav>
-                {{-- main content --}}
+                {{-- tab content --}}
                 <div class="container-fluid">
-                    <div class="tab-content" style="min-height: 20vh; ">
-                        <div id="actions" class="tab-pane fade in">
-                            <div class="row">
-                              <div class="col-xs-3">  
-                                  <button class="btn btn-lg btn-info" style="margin:40px;width:200px;height:120px;" id="myBtn1">Add Course</button>
+                        <div class="tab-content" style="min-height: 20vh; ">
+                            <div id="home"  class="tab-pane fade in active">
+                                <h1>Welcome to Feedback</h1>
+                            </div>
+                            <div id="actions" class="tab-pane fade in">
+                                <div class="row">
+                                  <div class="col-xs-3">  
+                                      <button class="btn btn-lg btn-info" style="margin:40px;width:200px;height:120px;" id="myBtn1">Add Course</button>
+                                  </div>
+                                  <div class="col-xs-3">
+                                      <button  class="btn btn-lg btn-warning" style="margin:40px;width:200px;height:120px;" id="myBtn2">Add Teacher</button>
+                                  </div>
+                                  <div class="col-xs-3">
+                                      <button class="btn btn-lg btn-danger" style="margin:40px;width:200px;height:120px;"  id="myBtn3">Add Subject</button>
+                                  </div>
+                                  <div class="col-xs-3">
+                                      <button  class="btn btn-lg btn-success" style="margin:40px;width:200px;height:120px;"  id="myBtn4">Add Question</button>
+                                  </div>
                               </div>
-                              <div class="col-xs-3">
-                                  <button  class="btn btn-lg btn-warning" style="margin:40px;width:200px;height:120px;" id="myBtn2">Add Teacher</button>
-                              </div>
-                              <div class="col-xs-3">
-                                  <button class="btn btn-lg btn-danger" style="margin:40px;width:200px;height:120px;"  id="myBtn3">Add Subject</button>
-                              </div>
-                              <div class="col-xs-3">
-                                  <button  class="btn btn-lg btn-success" style="margin:40px;width:200px;height:120px;"  id="myBtn4">Add Question</button>
-                              </div>
-                          </div>
-                        </div>
-                        <div id="reports">
-                            
+                            </div>
+                            <div id="reports"  class="tab-pane fade in">
+                                    {{-- <ul class="nav navbar-nav navbar-right">
+                                            <li>
+                                            <div class="btn-group" >
+                                                <button type="button" class="btn btn-info dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                Course <span class="caret"></span>
+                                                </button>
+                                                
+                                                <ul class="dropdown-menu">
+                                                    @if(!$courses->isEmpty())
+                                                        @foreach($courses as $course)
+                                                            <li>
+                                                                    <form id="{{$course->id}}" style="display: none;">
+                                                                            {{ csrf_field() }}
+                                                                            {{Form::hidden('course_id',$course->id)}}
+                                                                        </form>     
+                                                                 <a onclick="event.preventDefault();
+                                                                     document.getElementById('#{{$course->id}}').submit();">{{$course->name}}
+                                                                </a> 
+                                                            <a class="{{$course->id}}">{{$course->name}}</a>
+                                                               
+                                                            </li>                                                           
+                                                         @endforeach
+                                                    @endif
+                                                         <li role="separator" class="divider"></li>
+                                                <li><a  style="background-color:white;" href="{{ route('adminlogout')}}">Logout</a></li>
+                                                </ul>
+                                            </div>
+                                        </li>
+                                        </ul> --}}
+                                        @if(!$courses->isEmpty())
+                                        @foreach($courses as $course)
+                                            {{-- <li> --}}
+                                                    <form id="{{$course->id}}" style="display: block;">
+                                                            {{ csrf_field() }}
+                                                            {{Form::hidden('course_id',$course->id)}}
+                                                            <input type="submit" value="submit">
+                                                        </form>     
+                                                 {{-- <a onclick="event.preventDefault();
+                                                     document.getElementById('#{{$course->id}}').submit();">{{$course->name}}
+                                                </a>  --}}
+                                            {{-- <a class="{{$course->id}}">{{$course->name}}</a> --}}
+                                               
+                                            {{-- </li>                                                            --}}
+                                         @endforeach
+                                    @endif
+                            </div>
+                            <div id="profile"  class="tab-pane fade in">
+                                <h1>Welcome to profile</h1>
+                            </div>
                         </div>
                     </div>
-                </div>
-                {{-- close main content --}}
-            </div>
+                    {{-- close tab content --}}
+             </div>
         </div>
 
 
 
         <div class="overlay"></div>
 
-
         <!-- jQuery CDN -->
-        {{-- <script src="https://code.jquery.com/jquery-1.12.0.min.js"></script> --}}
+        <script src="https://code.jquery.com/jquery-1.12.0.min.js"></script>
         <!-- Bootstrap Js CDN -->
         <script src="{{asset('js/app.js')}}"></script>
         <!-- jQuery Custom Scroller CDN -->
@@ -373,11 +407,6 @@
             btn4.onclick = function() {
                 modal4.style.display = "block";
              }
-            // function check() {
-            //     console.log(modal1);
-            //                      modal1.style.display = "block";
-            //             }
-            // When the user clicks on <span> (x), close the modal
             span1.onclick = function() {
                 modal1.style.display = "none";
             }
@@ -447,14 +476,6 @@
                 });
                 
             });
-        </script>
-        {{-- add teacher --}}
-         <script>
-            $.ajaxSetup({
-                headers: {
-                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                }
-                });
             $("#form2").submit(function(e){
                 e.preventDefault();
                 var form2 = $(this);
@@ -487,14 +508,6 @@
                 });
                 
             });
-        </script>
-        {{-- add subject  --}}
-        <script>
-            $.ajaxSetup({
-                headers: {
-                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                }
-                });
             $("#form3").submit(function(e){
                 e.preventDefault();
                 var form3 = $(this);
@@ -528,14 +541,6 @@
                 });
                 
             });
-        </script>
-        {{--  add question --}}
-        <script>
-            $.ajaxSetup({
-                headers: {
-                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                }
-                });
             $("#form4").submit(function(e){
                 e.preventDefault();
                 var form4 = $(this);
@@ -569,5 +574,31 @@
                 
             });
         </script>
+      
+      @if(!$courses->isEmpty())
+        @foreach($courses as $course)
+            <script>         
+                    $("#{{$course->id}}").submit(function(e){
+                        e.preventDefault();
+                        var form1 = $(this);
+                        $.ajax({
+                        url      : "/dashboard/getdata",
+                        type     : 'POST',
+                        cache    : false,
+                        data     : form1.serialize(),
+                        success  : function(data) {
+                           console.log(data);
+                            },
+                        error: function (reject) {
+                            console.log(reject);
+                            }
+                        });
+                        });
+            </script>
+        @endforeach
+      @endif
+      
+ 
+
     </body>
 </html>

@@ -4,22 +4,22 @@
   <div class="container-fluid" style="margin:30px;margin-top:50px;">
 		<div class="container-fluid">
                 <ul class="nav nav-pills nav-justified">
-                    <li class="active" ><a data-toggle="pill" href="#students">From Students</a></li>
-                    <li><a data-toggle="pill" href="#facultys">From Faculty</a></li>
+                    <li class="active" ><a data-toggle="pill" href="#student">From Student</a></li>
+                    <li><a data-toggle="pill" href="#faculty">From Faculty</a></li>
                     <li><a data-toggle="pill" href="#management">From Management</a></li>
-                    <li><a data-toggle="pill" href="#parents">From Parents</a></li>
-                    <li><a data-toggle="pill" href="#employers">From Employee</a></li>
+                    <li><a data-toggle="pill" href="#parent">From Parent</a></li>
+                    <li><a data-toggle="pill" href="#employer">From Employee</a></li>
                     <li><a data-toggle="pill" href="#alumini">From Alumini</a></li>
 
                 </ul>
     </div>
 
 		<div class="tab-content" style="min-height: 20vh; ">
-				    <div id="students" class="tab-pane fade in active">
+				    <div id="student" class="tab-pane fade in active">
                         <div class="row">
                         <div class="col-xs-6 col-md-3 tabsclass">
                              <i class="fa fa-caret-right"  aria-hidden="true"></i>
-                        <a class="tabslink" href="/students/aboutcollage">  
+                        <a class="tabslink" href="/student/aboutcollage">  
                                About College</a></div>
                                <div class="col-xs-6 col-md-3 tabsclass">
                                 <i class="fa fa-caret-right"  aria-hidden="true"></i>
@@ -29,31 +29,26 @@
                         </div>  <!-- End of row -->                    
 				    </div> <!--End of students tab-->
                 
-				    <div id="facultys" class="tab-pane fade">
+				    <div id="faculty" class="tab-pane fade">
 				       <div class="row">
                             <div class="col-xs-6 col-md-3 tabsclass">
                              <i class="fa fa-caret-right"  aria-hidden="true"></i>
-                                <a class="tabslink" href="/facultys/aboutcollage">  
+                                <a class="tabslink" href="/faculty/aboutcollage">  
                                About College</a>
                             </div>
-                            <div class="col-xs-6 col-md-3 tabsclass">
-                                <i class="fa fa-caret-right"  aria-hidden="true"></i>
-                                   <a class="tabslink" href="/facultys/aboutcurriculum">  
-                                  About Teachers/Curriculum</a>
-                               </div>
                         </div>
 				    </div><!-- End of faculty-->
                 
-				    <div id="parents" class="tab-pane fade">
+				    <div id="parent" class="tab-pane fade">
 				      <div class="row">
                         <div class="col-xs-6 col-md-3 tabsclass">
                              <i class="fa fa-caret-right"  aria-hidden="true"></i>
-                           <a class="tabslink"  href="aboutcollage.html">  
-                               About Local Management</a></div>
+                           <a class="tabslink"  href="/parent/aboutcollage">  
+                               About Collage</a></div>
                         </div>
 				    </div><!-- End of Parents tab-->
                 
-				    <div id="employers" class="tab-pane fade">
+				    <div id="employer" class="tab-pane fade">
               <div class="row">
                 <div class="col-xs-6 col-md-3 tabsclass">
                   <i class="fa fa-caret-right"  aria-hidden="true"></i>

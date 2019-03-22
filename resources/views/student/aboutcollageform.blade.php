@@ -13,7 +13,7 @@
 <div class="container-fluid" style="margin: 20px;min-width:505px;">
     <div class="container-fluid" style="background-color: whitesmoke; box-shadow: 4px 5px 8px 2px rgba(0, 0, 0, 0.2), -3px -2px 8px 2px rgba(0, 0, 0, 0.2);border-radius: 10px;">
         <div class="content"> 
-                 {!! Form::open(['url' => '/Scollage','method'=>'POST','autocomplete'=>'off']) !!}
+                 {!! Form::open(['url' => '/student/submit','method'=>'POST','autocomplete'=>'off']) !!}
                  <h3 align="center" style="margin-top: 20px;">About College Form </h3>
                  <p style="margin-top: 30px;">Dear Students,</p>
                  <p>This form has been designed to get feedback from you to strengthen the quality of teaching-learning environment, to provide best possible facilities and modern infrastructure. The information provided by you will be kept confidential.</p>    
@@ -43,7 +43,7 @@ $i = 1
 {!! Form::close() !!}<!--End of Form-->
 </div>
 </div> <!--End of container-->
-</div> --}}
+</div>
 
 {{-- <div class="container-fluid" style="margin: 20px;min-width:505px;">
     <div class="container-fluid" style="background-color: whitesmoke; box-shadow: 4px 5px 8px 2px rgba(0, 0, 0, 0.2), -3px -2px 8px 2px rgba(0, 0, 0, 0.2);border-radius: 10px;">

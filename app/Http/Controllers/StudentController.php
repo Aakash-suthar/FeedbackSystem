@@ -4,8 +4,7 @@ namespace App\Http\Controllers;
 
 use AuthenticatesUsers;
 use Illuminate\Http\Request;
-use App\students\Scollage;
-use App\students\Scurriculum;
+use App\student\Scollage;
 use App\Question;
 use App\Subject;
 use App\Course;
@@ -14,20 +13,10 @@ use App\Teacher;
 use Auth;
 use Session;
 
-class StudentsController extends Controller
+class StudentController extends Controller
 {
-    public function Scollage(Request $request){    
-
-        // $this->validate($request,[
-        //     'fname'=>'required',
-        //     'lname'=>'required',
-        //     'year'=>'required',
-        //     'academicyear'=>'required',
-        //     'course'=>'required',
-        //     'email'=>'required|unique:scollages,email',
-        //     // 'suggestion' => 'required',
-        // ]);
-        //flash('Success Submitted')->success();
+    public function submit(Request $request){    
+        flash('Success Submitted')->success();
          $s = Scollage::create($request->all());
          $s->save();
         //  session()->flash('success','dwadaw');
@@ -35,37 +24,13 @@ class StudentsController extends Controller
         // return redirect('/');
 
         //Session::flash('success', "Special message goes here");
-        return redirect('/');
-    }
-    public function login(Request $request){
-
-        $this->validate($request,[
-            'id'=>'required|exists:users,id',
-            'password'=>'required',
-            // 'suggestion' => 'required',
-        ]);
-        // through course and sem find all subjects
-        // $cquestions = Question::where('type','currriculum')->get();
-        // $tquestions = Question::where('type','teacher')->get();
-        // // $course_id = 'B01';
-        // $sem = '6';
-        // $subjects = Subject::where('course_id','B01')->where('sem','6')->get();
-         $studentid = $request->input('id');
-        // $course = Course::find('B01');
-        // $data = array(
-        //     'studentid'=>'TDIT01',
-        //     'course' => 'Bsc-IT',
-        //     'sem' => '6',
-        //     'subjects' => ['bis','gis','tis','tc','pc'],
-        // );
-        return redirect('/students/teacherandcurriculum');
-        // ,compact('cquestions','subjects','tquestions','sem','course','studentid')
-        // return view('tp',compact('cquestions','subjects','tquestions','sem','course'));
-
-        // return redirect()->route('students.teacherandcurriculumform')->with(['cquestions'=>$cquestions])->with(['sem'=>$sem])->with(['subjects'=>$subjects])->with(['studentid'=>$studentid])->with(['course'=>$course])->with(['tquestions'=>$tquestions]);
-                                                                        
+        return redirect('/')->with('success','Successfully Submited.');
     }
 
+    public function aboutcollage(){
+        $q = Question::where('type','collage')->get();
+        return view("student.aboutcollageform",compact('q'));
+    } 
     public function teachercurriculum(Request $request){
         
         $cquestions = Question::where('type','currriculum')->get();
@@ -73,8 +38,7 @@ class StudentsController extends Controller
         $course_id = 'B01';
         $sem = '6';
         $subjects = Subject::where('course_id','B01')->where('sem','6')->get();
-        $student_id = '2';
-         return view('students.teacherandcurriculumform',compact('cquestions','subjects','tquestions','sem','course_id','student_id'));
+         return view('student.teacherandcurriculumform',compact('cquestions','subjects','tquestions','sem','course_id'));
     }
 
 
@@ -117,5 +81,34 @@ class StudentsController extends Controller
             Auth::guard('web')->logout();
             return redirect('/');
     }
+
+    // public function login(Request $request){
+
+    //     $this->validate($request,[
+    //         'id'=>'required|exists:users,id',
+    //         'password'=>'required',
+    //         // 'suggestion' => 'required',
+    //     ]);
+    //     // through course and sem find all subjects
+    //     // $cquestions = Question::where('type','currriculum')->get();
+    //     // $tquestions = Question::where('type','teacher')->get();
+    //     // // $course_id = 'B01';
+    //     // $sem = '6';
+    //     // $subjects = Subject::where('course_id','B01')->where('sem','6')->get();
+    //      $studentid = $request->input('id');
+    //     // $course = Course::find('B01');
+    //     // $data = array(
+    //     //     'studentid'=>'TDIT01',
+    //     //     'course' => 'Bsc-IT',
+    //     //     'sem' => '6',
+    //     //     'subjects' => ['bis','gis','tis','tc','pc'],
+    //     // );
+    //     return redirect('/students/teacherandcurriculum');
+    //     // ,compact('cquestions','subjects','tquestions','sem','course','studentid')
+    //     // return view('tp',compact('cquestions','subjects','tquestions','sem','course'));
+
+    //     // return redirect()->route('students.teacherandcurriculumform')->with(['cquestions'=>$cquestions])->with(['sem'=>$sem])->with(['subjects'=>$subjects])->with(['studentid'=>$studentid])->with(['course'=>$course])->with(['tquestions'=>$tquestions]);
+                                                                        
+    // }
 
 }

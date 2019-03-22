@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateAluminisTable extends Migration
+class CreateAcollagesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -15,7 +15,14 @@ class CreateAluminisTable extends Migration
     {
         Schema::create('acollages', function (Blueprint $table) {
             $table->increments('id');
-            $table->timestamps();
+            $table->string('Q1');
+            $table->string('Q2');
+            $table->string('Q3');
+            $table->string('Q4');
+            $table->string('Q5');
+            $table->string('Q6');
+            $table->string('Q7');
+            $table->timestamps('created_at');
         });
     }
 
@@ -26,6 +33,6 @@ class CreateAluminisTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('aluminis');
+        Schema::dropIfExists('acollages');
     }
 }
