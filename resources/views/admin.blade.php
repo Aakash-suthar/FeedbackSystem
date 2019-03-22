@@ -19,8 +19,8 @@
 
     </head>
     <body>
-            @include('inc.messages')
-            @include('flash::message')
+            {{-- @include('inc.messages')
+            @include('flash::message') --}}
             <!-- The Modal1 -->
             <div id="myModal1" class="modal">
                 <!-- Modal content -->
@@ -555,21 +555,18 @@
                         setTimeout(() => {
                         $("#success4").fadeOut('slow');  
                         }, 2000); 
+                      //  console.log(data);
                     },
                 error: function (reject) {
-                    var error4;
+                   // var error4;
                     if( reject.status === 422 ) {
-                        var errors4 = $.parseJSON(reject.responseText);
-                        $.each(errors4, function(key,val){
-                        
-                        error4  = error4 + (val[0]);
-                    })
-                    $("#danger4").fadeIn().html(error4);
-                    setTimeout(() => {
-                    $("#danger4").fadeOut('slow');  
-                    }, 5000);
+                         var error = $.parseJSON(reject.responseText);
+                        $("#danger4").fadeIn().html(error['error']);
+                        setTimeout(() => {
+                        $("#danger4").fadeOut('slow');  
+                        }, 5000);
+                        }
                     }
-                }
                 });
                 
             });

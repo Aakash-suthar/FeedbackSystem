@@ -81,34 +81,4 @@ class StudentController extends Controller
             Auth::guard('web')->logout();
             return redirect('/');
     }
-
-    // public function login(Request $request){
-
-    //     $this->validate($request,[
-    //         'id'=>'required|exists:users,id',
-    //         'password'=>'required',
-    //         // 'suggestion' => 'required',
-    //     ]);
-    //     // through course and sem find all subjects
-    //     // $cquestions = Question::where('type','currriculum')->get();
-    //     // $tquestions = Question::where('type','teacher')->get();
-    //     // // $course_id = 'B01';
-    //     // $sem = '6';
-    //     // $subjects = Subject::where('course_id','B01')->where('sem','6')->get();
-    //      $studentid = $request->input('id');
-    //     // $course = Course::find('B01');
-    //     // $data = array(
-    //     //     'studentid'=>'TDIT01',
-    //     //     'course' => 'Bsc-IT',
-    //     //     'sem' => '6',
-    //     //     'subjects' => ['bis','gis','tis','tc','pc'],
-    //     // );
-    //     return redirect('/students/teacherandcurriculum');
-    //     // ,compact('cquestions','subjects','tquestions','sem','course','studentid')
-    //     // return view('tp',compact('cquestions','subjects','tquestions','sem','course'));
-
-    //     // return redirect()->route('students.teacherandcurriculumform')->with(['cquestions'=>$cquestions])->with(['sem'=>$sem])->with(['subjects'=>$subjects])->with(['studentid'=>$studentid])->with(['course'=>$course])->with(['tquestions'=>$tquestions]);
-                                                                        
-    // }
-
 }

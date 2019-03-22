@@ -1,13 +1,3 @@
-
-    {{-- fade message javascript --}}
-    {{--
-         <script type="application/javascript">
-         $(document).ready (function(){
-        $("#success-alert").fadeTo(2000, 500).slideUp(500, function(){
-        $("#success-alert").slideUp(500);
-        });});
-        </script>
-    --}}
 @extends('layouts.app')
 @section('content')
 <div class="container-fluid" style="margin: 20px;min-width:505px;">
@@ -28,11 +18,11 @@ $i = 1
 {{-- {{$i++}} {{$q->question}}<br> --}}
 <div class="form-group col-xs-12" style="margin: 10px">
     {{Form::label('',$qu->question,['class'=>'control-label col-xs-12'])}}
-    <label style="margin: 5px 0px 7px 20px"class="radio-inline"><input type="radio" name="Q{{$i}}" value="Strongly Agree" required>Strongly Agree</label>
-    <label class="radio-inline"><input type="radio" name="Q{{$i}}" value="Agree">Agree</label>
-    <label class="radio-inline"><input type="radio" name="Q{{$i}}"value="Not Sure">Not Sure</label>
-    <label class="radio-inline"><input type="radio" name="Q{{$i++}}" value="Disagree">Disagree</label>
-    <label class="radio-inline" style="margin-left:20px; "><input type="radio" name="Q1" value="Strongly Disagree">Strongly Disagree</label>
+    <label style="margin: 5px 0px 7px 20px"class="radio-inline"><input type="radio" name="Q{{$i}}" value="5" required>Strongly Agree</label>
+    <label class="radio-inline"><input type="radio" name="Q{{$i}}" value="4">Agree</label>
+    <label class="radio-inline"><input type="radio" name="Q{{$i}}"value="3">Not Sure</label>
+    <label class="radio-inline"><input type="radio" name="Q{{$i++}}" value="2">Disagree</label>
+    <label class="radio-inline" style="margin-left:20px; "><input type="radio" name="Q1" value="1">Strongly Disagree</label>
 </div> <!--End of question 1--> 
 @endforeach
  

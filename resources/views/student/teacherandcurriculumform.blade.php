@@ -4,7 +4,7 @@
 <div class="container-fluid" style="margin: 20px;min-width:505px;">
     <div class="container-fluid" style="background-color: whitesmoke; box-shadow: 4px 5px 8px 2px rgba(0, 0, 0, 0.2), -3px -2px 8px 2px rgba(0, 0, 0, 0.2);border-radius: 10px;">
         <div class="content">
-{!! Form::open(['url' => '/students/tcsubmit','method'=>'POST','autocomplete'=>'off']) !!}    
+{!! Form::open(['url' => '/student/tcsubmit','method'=>'POST','autocomplete'=>'off']) !!}    
     <h3 align="center" style="margin-top: 20px;">About Teacher and Curriculum Form </h3>
     <p style="margin-top: 30px;">Dear Students,</p>
     <p>This form has been designed to get feedback from you to strengthen the quality of teaching-learning environment, to provide best possible facilities and modern infrastructure. The information provided by you will be kept confidential.</p>    
@@ -102,7 +102,7 @@
     <div style="margin:10px;margin-left:0px" class="form-group col-xs-12">
         <div align="center">
             <button type="Submit" class="btn btn-primary" style="width:120px;height:40px;">Submit</button>
-            <button type="Reset" class="btn btn-warning" style="width:120px;height:40px;margin-left:20px;">Reset</button>
+            <button type="Reset" value="reset" class="btn btn-warning" style="width:120px;height:40px;margin-left:20px;">Reset</button>
         </div>
     </div>
 {!! Form::close() !!}<!--End of Form-->

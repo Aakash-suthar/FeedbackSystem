@@ -16,7 +16,7 @@ class FacultyController extends Controller
     public function submit(Request $request){    
         $s = Fcollage::create($request->all());
         $s->save();
-       //Session::flash('success', "Special message goes here");
+        flash('Success Submitted')->success();
         return redirect('/')->with('success','Successfully Submited.');
     }
     

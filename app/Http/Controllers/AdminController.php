@@ -90,15 +90,43 @@ class AdminController extends Controller
     public function addquestion(Request $request)
     {
         if($request->ajax()){
-        $this->validate($request,[
-            'question'=>'required',
-            'type'=>'required',
+            $this->validate($request,[
+                'question'=>'required',
+                'type'=>'required',
 
-        ]);
-        
-        $s = Question::create($request->all());
-        $s->save();
-        return response($this->Response);
+            ]);
+            $type = $request->input('type');
+            $s = Question::where('type',$type)->get();
+            if($type=="collage"){
+                if(($s->count())>=7){
+                    return response()->json(['error'=>'Question is full for collage'], 422);     
+                }
+                else{
+                    $s = Question::create($request->all());
+                    $s->save();
+                    return response($this->Response);
+                }
+            }
+            else if($type=="teacher"){
+                if(($s->count())>=10){
+                    return response()->json(['error'=>'Question is full for teacher'], 422);     
+                }
+                else{
+                    $s = Question::create($request->all());
+                    $s->save();
+                    return response($this->Response);
+                }
+            }   
+            else{
+                if(($s->count())>=4){
+                    return response()->json(['error'=>'Question is full for curriculum'], 422);     
+                }
+                else{
+                    $s = Question::create($request->all());
+                    $s->save();
+                    return response($this->Response);
+                }
+            }      
         }
     }
 }
