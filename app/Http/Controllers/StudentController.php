@@ -44,7 +44,7 @@ class StudentController extends Controller
 
     public function tcsubmit(Request $request){
         $this->validate($request,[
-            "student_id"=>'required|exists:users,id|unique:feedbacks,student_id',
+             "student_id"=>'required|exists:users,id|unique:feedbacks,student_id',
             'sem'=>'required',
             'course_id'=>'required|exists:courses,id',
             ]);

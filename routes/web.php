@@ -67,6 +67,7 @@ Route::prefix('dashboard')->group(function () {
     Route::post('/addsubject','AdminController@addsubject');
     Route::post('/addquestion','AdminController@addquestion');
     Route::post('/getdata','AdminController@Getdata');
+    Route::post('/getteacher','AdminController@Getteacher');
     Route::get('','AdminController@dashboard')->name('dashboard');
 });
 // Route::get('/',function(){

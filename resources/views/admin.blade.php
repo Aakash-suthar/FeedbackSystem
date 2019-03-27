@@ -14,7 +14,9 @@
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
         <!-- Scrollbar Custom CSS -->
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/malihu-custom-scrollbar-plugin/3.1.5/jquery.mCustomScrollbar.min.css">
-               <!-- Our Custom CSS -->
+        <!-- Font awesome icons-->
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+        <!-- Our Custom CSS -->
         <link rel="stylesheet" href="{{asset('css/admin.css')}}">
 
     </head>
@@ -314,22 +316,61 @@
                                             </div>
                                         </li>
                                         </ul> --}}
-                                        @if(!$courses->isEmpty())
+                                        {{-- @if(!$courses->isEmpty())
                                         @foreach($courses as $course)
-                                            {{-- <li> --}}
                                                     <form id="{{$course->id}}" style="display: block;">
                                                             {{ csrf_field() }}
                                                             {{Form::hidden('course_id',$course->id)}}
                                                             <input type="submit" value="submit">
                                                         </form>     
-                                                 {{-- <a onclick="event.preventDefault();
-                                                     document.getElementById('#{{$course->id}}').submit();">{{$course->name}}
-                                                </a>  --}}
-                                            {{-- <a class="{{$course->id}}">{{$course->name}}</a> --}}
-                                               
-                                            {{-- </li>                                                            --}}
                                          @endforeach
-                                    @endif
+                                    @endif --}}
+                                    {!! Form::open(['class'=>'form-inline','id'=>'Getform','method'=>'POST','autocomplete'=>'off']) !!}
+                                        <div class="form-group">
+                                            {{Form::label('', 'Course*')}}
+                                            <select id="course_id" name="course_id" class="form-control">
+                                                
+                                            @if(!$courses->isEmpty())
+                                                    @foreach($courses as $course)
+                                                        <option value="{{$course->id}}">{{$course->name}}</option>
+                                                    @endforeach
+                                                @endif
+                                            </select>
+                                        </div>
+
+                                        <div class="form-group">
+                                            {{Form::label('', 'Sem*')}}
+                                            {{Form::select('sem', ['1'=>'1','2'=>'2','3'=>'3','4' => '4', '5' => '5','6'=>'6'],null,['id'=>'sem','class'=>'form-control','style'=>'cursor:pointer'])}}
+                                        </div> <!--End of course select-->
+
+                                        <div class="form-group">
+                                                {{Form::label('', 'Teacher*')}}
+                                                <select id="teacher" name="teacher_id" class="form-control">
+                                                </select>
+                                                <button type="button" id="getteacher" class="btn btn-default">Get Teacher</button>
+                                        </div>
+
+                                        <button type="submit" class="btn btn-default">Submit</button>
+
+                                        <div class="form-group" id="loading" style="display:none;">
+                                            <i class="fa fa-spinner fa-spin" style="font-size:44px;" ></i>
+                                        </div>
+                                    {!! Form::close() !!}<!--End of Form-->
+
+                                    <div id="cont" clas="container"  style = "width: 550px; height: 400px;">
+                                            {{-- <div class="form-group">
+                                            <label>Strongly Agree</label><label id="SA"></label></div>
+                                            <div class="form-group">
+                                            <label>Agree</label><label id="A"></label></div>
+                                            <div class="form-group">
+                                            <label>Not Sure</label><label id="NS"></label></div>
+                                            <div class="form-group">
+                                            <label>Disagree</label><label id="D"></label></div>
+                                            <div class="form-group">
+                                            <label>Strongly Disagree</label><label id="SD"></label></div>
+                                        --}}
+                                    </div>
+                                    
                             </div>
                             <div id="profile"  class="tab-pane fade in">
                                 <h1>Welcome to profile</h1>
@@ -350,6 +391,15 @@
         <script src="{{asset('js/app.js')}}"></script>
         <!-- jQuery Custom Scroller CDN -->
         <script src="https://cdnjs.cloudflare.com/ajax/libs/malihu-custom-scrollbar-plugin/3.1.5/jquery.mCustomScrollbar.concat.min.js"></script>
+        <!-- Google Charts -->
+        <script type = "text/javascript" src = "https://www.gstatic.com/charts/loader.js">
+        </script>
+         <script type = "text/javascript">
+         </script>
+        <script language = "JavaScript">
+            google.charts.load('current', {packages: ['corechart']});     
+        </script>
+
 
         <script type="text/javascript">
             $(document).ready(function () {
@@ -370,7 +420,7 @@
                 });
             });
         </script>
-          <script type="text/javascript">
+        <script type="text/javascript">
             // Get the modal
             var modal1 = document.getElementById('myModal1');
             var modal2 = document.getElementById('myModal2');
@@ -570,9 +620,98 @@
                 });
                 
             });
+
+            $("#Getform").submit(function(e){
+                e.preventDefault();
+                var form1 = $(this);
+                $.ajax({
+                url      : "/dashboard/getdata",
+                type     : 'POST',
+                cache    : false,
+                data     : form1.serialize(),
+                dataType: 'json',
+                beforeSend: function(){
+                    $('#loading').show();
+                },
+                complete: function(){
+                    $('#loading').hide();
+                },
+                success  : function(data1) {
+                    function drawChart(data2) {
+              // Define the chart to be drawn.
+            
+            //   var data = google.visualization.arrayToDataTable([
+            //      ['Year', 'Strongly Disagree', 'Disagree','Not Sure','Agree','Strongly Agree'],
+            //      ['2012',  900,390,1530,540,540],
+            //      ['2013',  1000,400,1530,540,540],
+            //      ['2014',  1170,440,1530,540,540],
+            //      ['2015',  1250,480,1530,540,540],
+            //      ['2016',  1530,540,1530,540,540]
+            //   ]);
+                        var data = google.visualization.arrayToDataTable(data2);
+            
+                        var options = {title: 'Reports (Percentage)','width':1000,
+                                'height':600, isStacked:true};  
+            
+                        // Instantiate and draw the chart.
+                        var chart = new google.visualization.ColumnChart(document.getElementById('cont'));
+                        chart.draw(data, options);
+                    }
+                    // console.log(data1);
+                    //             data1 = [
+                    //                 ['Year', 'Strongly Disagree', 'Disagree','Not Sure','Agree','Strongly Agree'],
+                    //                 ['2012',  900,390,1530,540,540],
+                    //                 ['2013',  1000,400,1530,540,540],
+                    //                 ['2014',  1170,440,1530,540,540],
+                    //                 ['2015',  1250,480,1530,540,540],
+                    //                 ['2016',  1530,540,1530,540,540]
+                    //             ];
+                    google.charts.setOnLoadCallback(drawChart(data1));
+                                 console.log(data1); 
+                
+                    },
+                error: function (reject) {
+                    //  var error1;
+                    // if( reject.status === 422 ) {
+                    //     var errors1 = $.parseJSON(reject.responseText);
+                    //     $.each(errors1, function(key,val){
+                        
+                    //     error1  = error1 + (val[0]);
+                    // })
+                    // $("#danger1").fadeIn().html(error1);
+                    console.log(reject);
+                }
+                });
+                
+            });
+
+            $("#getteacher").click(function(){
+                $.ajax({
+                url      : "/dashboard/getteacher",
+                type     : 'POST',
+                cache    : false,
+                data     : {'course_id':$('#course_id').val() ,
+                             'sem':$('#sem').val()
+                            },
+                dataType: 'json',
+                success  : function(data) {
+                    // console.log(data);
+                    var t =  $('#teacher');
+                    t.empty();
+                   // console.log(data);
+                    $.each(data, function(index){
+                        
+                        t.append('<option value="'+ data[index].id +'">'+data[index].name+'</option>');
+                        })
+                    },
+                error: function (reject) {
+                    console.log(reject);
+                }
+                }); 
+            });
         </script>
       
-      @if(!$courses->isEmpty())
+      {{-- @if(!$courses->isEmpty())
         @foreach($courses as $course)
             <script>         
                     $("#{{$course->id}}").submit(function(e){
@@ -593,9 +732,7 @@
                         });
             </script>
         @endforeach
-      @endif
-      
- 
+      @endif --}}
 
     </body>
 </html>
