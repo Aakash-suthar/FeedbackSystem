@@ -25,7 +25,10 @@ class AdminController extends Controller
     public function dashboard(){
 
         $courses = Course::all();
-        return view('admin',compact('courses'));
+        $subjects = Subject::all();
+        $questions = Question::all();
+        $teachers  = Teacher::all();
+        return view('admin',compact('courses','subjects','questions','teachers'));
     }
     
     public function addcourse(Request $request){
@@ -180,38 +183,6 @@ class AdminController extends Controller
                     $Q104 = number_format((float)(((Feedback::where('course_id',$course_id)->where('sem',$sem)->where('teacher_id',$teacher_id)->where('Q10','4')->count())/$Totatfeedback)*100), 2, '.', '');
                     $Q105 = number_format((float)(((Feedback::where('course_id',$course_id)->where('sem',$sem)->where('teacher_id',$teacher_id)->where('Q10','5')->count())/$Totatfeedback)*100), 2, '.', '');
 
-                    // $Total1 = $Q11 + $Q21 +$Q31 + $Q41 + $Q51 + $Q61 +$Q71 + $Q81+$Q91 + $Q101;
-                    // $Total2 = $Q12 + $Q22 +$Q32 + $Q42 + $Q52 + $Q62 +$Q72 + $Q82+$Q92 + $Q102;
-                    // $Total3 = $Q13 + $Q23 +$Q33 + $Q43 + $Q53 + $Q63 +$Q73 + $Q83+$Q93 + $Q103;
-                    // $Total4 = $Q14 + $Q24 +$Q34 + $Q44 + $Q54 + $Q64 +$Q74 + $Q84+$Q94 + $Q104;
-                    // $Total5 = $Q15 + $Q25 +$Q35 + $Q45 + $Q55 + $Q65 +$Q75 + $Q85+$Q95 + $Q105;
-
-                    //  $Total1 = $Q11 + $Q21 + $Q31 + $Q41 + $Q51 + $Q61 + $Q71 + $Q81 + $Q91 + $Q101;
-                    //  $Total2 = $Q12 + $Q22 + $Q32 + $Q42 + $Q52 + $Q62 + $Q72 + $Q82 + $Q92 + $Q102;
-                    //  $Total3 = $Q13 + $Q23 + $Q33 + $Q43 + $Q53 + $Q63 + $Q73 + $Q83 + $Q93 + $Q103;
-                    //  $Total4 = $Q14 + $Q24 + $Q34 + $Q44 + $Q54 + $Q64 + $Q74 + $Q84 + $Q94 + $Q104;
-                    //  $Total5 = $Q15 + $Q25 + $Q35 + $Q45 + $Q55 + $Q65 + $Q75 + $Q85 + $Q95 + $Q105;
-                    //  10 questions
-                    //  1 teacher 
-                    // 22 rows = q1->22
-                    // $Total2 = $Q12 + $Q22 + $Q32 + $Q42 + $Q52;
-                    // $Total3 = $Q13 + $Q23 + $Q33 + $Q43 + $Q53;
-                    // $Total4 = $Q14 + $Q24 + $Q34 + $Q44 + $Q54;
-                    // $Total5 = $Q51 + $Q52 + $Q53 + $Q54 + $Q55;
-
-                    // $Response = array(
-                    //     ['Q11' => $Q11, 'Q12' => $Q12, 'Q13' => $Q13, 'Q14' => $Q14, 'Q15' => $Q15],
-                    //     ['Q21' => $Q21, 'Q22' => $Q22, 'Q23' => $Q23, 'Q24' => $Q24, 'Q25' => $Q25],
-                    //     ['Q31' => $Q31, 'Q32' => $Q32, 'Q33' => $Q33, 'Q34' => $Q34, 'Q35' => $Q35],
-                    //     ['Q41' => $Q41, 'Q42' => $Q42, 'Q43' => $Q43, 'Q44' => $Q44, 'Q45' => $Q45],
-                    //     ['Q51' => $Q51, 'Q52' => $Q52, 'Q53' => $Q53, 'Q54' => $Q54, 'Q55' => $Q55],
-                    //     ['Q61' => $Q61, 'Q62' => $Q62, 'Q63' => $Q63, 'Q64' => $Q64, 'Q65' => $Q65],
-                    //     ['Q71' => $Q71, 'Q72' => $Q72, 'Q73' => $Q73, 'Q74' => $Q74, 'Q75' => $Q75],
-                    //     ['Q81' => $Q81, 'Q82' => $Q82, 'Q83' => $Q83, 'Q84' => $Q84, 'Q85' => $Q85],
-                    //     ['Q91' => $Q91, 'Q92' => $Q92, 'Q93' => $Q93, 'Q94' => $Q94, 'Q95' => $Q95],
-                    //     ['Q101' => $Q101, 'Q102' => $Q102, 'Q103' => $Q103, 'Q104' => $Q104, 'Q105' => $Q105]
-                    // );
-
                     $Response = [
                         ['Question', 'Strongly Disagree', 'Disagree','Not Sure','Agree','Strongly Agree'],
                         ['1',(float)$Q11,(float)$Q12,(float)$Q13,(float)$Q14,(float)$Q15],
@@ -225,39 +196,25 @@ class AdminController extends Controller
                         ['9',(float)$Q91,(float)$Q92,(float)$Q93,(float)$Q94,(float)$Q95],
                         ['10',(float)$Q101,(float)$Q102,(float)$Q103,(float)$Q104,(float)$Q105]
                     ];
-                    // $Response = [
-                    //     ['Question', 'Strongly Disagree', 'Disagree','Not Sure','Agree','Strongly Agree'],
-                    //     ['1',1,2,4,3,3],
-                    //     ['2',1,2,4,3,4],
-                    //     ['3',1,2,4,3,5],
-                    //     ['4',1,2,4,3,5],
-                    //     ['5',5,3,2,2,5],
-                    //     ['6',5,3,2,1,5],
-                    //     ['7',5,3,2,2,5],
-                    //     ['8',5,3,2,3,5],
-                    //     ['9',2,3,0,3,5],
-                    //     ['10',2,2,3,4,2]
-                    // ];
 
                 //     // $Q1 = Feedback::where('course_id',$request->input('course_id'))->where('sem','6')->where('teacher_id',$subject->teacher_id)->where('Q1','2')->get();
             }
             else {
-                $Response   = [
-                    ['Q11' => 0, 'Q12' => 0, 'Q13' => 0, 'Q14' => 0, 'Q15' => 0],
-                    ['Q21' => 0, 'Q22' => 0, 'Q23' => 0, 'Q24' => 0, 'Q25' => 0],
-                    ['Q31' => 0, 'Q32' => 0, 'Q33' => 0, 'Q34' => 0, 'Q35' => 0],
-                    ['Q41' => 0, 'Q42' => 0, 'Q43' => 0, 'Q44' => 0, 'Q45' => 0],
-                    ['Q51' => 0, 'Q52' => 0, 'Q53' => 0, 'Q54' => 0, 'Q55' => 0],
-                    ['Q61' => 0, 'Q62' => 0, 'Q63' => 0, 'Q64' => 0, 'Q65' => 0],
-                    ['Q71' => 0, 'Q72' => 0, 'Q73' => 0, 'Q74' => 0, 'Q75' => 0],
-                    ['Q81' => 0, 'Q82' => 0, 'Q83' => 0, 'Q84' => 0, 'Q85' => 0],
-                    ['Q91' => 0, 'Q92' => 0, 'Q93' => 0, 'Q94' => 0, 'Q95' => 0],
-                    ['Q101' =>0, 'Q102' =>0, 'Q103' =>0, 'Q104' =>0, 'Q105' =>0]
-                ];
+                // $Response   = [
+                //     ['Q11' => 0, 'Q12' => 0, 'Q13' => 0, 'Q14' => 0, 'Q15' => 0],
+                //     ['Q21' => 0, 'Q22' => 0, 'Q23' => 0, 'Q24' => 0, 'Q25' => 0],
+                //     ['Q31' => 0, 'Q32' => 0, 'Q33' => 0, 'Q34' => 0, 'Q35' => 0],
+                //     ['Q41' => 0, 'Q42' => 0, 'Q43' => 0, 'Q44' => 0, 'Q45' => 0],
+                //     ['Q51' => 0, 'Q52' => 0, 'Q53' => 0, 'Q54' => 0, 'Q55' => 0],
+                //     ['Q61' => 0, 'Q62' => 0, 'Q63' => 0, 'Q64' => 0, 'Q65' => 0],
+                //     ['Q71' => 0, 'Q72' => 0, 'Q73' => 0, 'Q74' => 0, 'Q75' => 0],
+                //     ['Q81' => 0, 'Q82' => 0, 'Q83' => 0, 'Q84' => 0, 'Q85' => 0],
+                //     ['Q91' => 0, 'Q92' => 0, 'Q93' => 0, 'Q94' => 0, 'Q95' => 0],
+                //     ['Q101' =>0, 'Q102' =>0, 'Q103' =>0, 'Q104' =>0, 'Q105' =>0]
+                // ];  
+                return response()->json(['error'=>'No Feedback Found!!!'],423);  
             
             }
-            //  $Q1 = Feedback::where('course_id',$request->input('course_id'))->where('sem','6')->where('Q1','1')->get();
-            // $s->save();
             // $Response1   = array(
             //     'SD' => number_format((float)(($Total1/660)*100), 2, '.', ''),
             //     'D' => number_format((float)(($Total2/660)*100), 2, '.', ''),
@@ -267,7 +224,6 @@ class AdminController extends Controller
             // );
         
               return response(json_encode($Response));
-            //return response(number_format((float)(($Total1/660)*100), 2, '.', ''));
             //return response(($Total4/660)*100);
         }
     }
@@ -289,5 +245,43 @@ class AdminController extends Controller
             }
             return response($teacher);
         }
+    }
+    public function Getcourse(Request $request){
+        if($request->ajax()){
+         $course = Course::all();
+        }
+        return response($course);
+
+    }
+    public function Getteacherdata(Request $request){
+        if($request->ajax()){
+         $teachers = Teacher::all();
+        }
+        return response($teachers);
+
+    }
+    public function Getsubject(Request $request){
+        if($request->ajax()){
+         $subjects = Subject::all();
+         $subarray = array();
+         foreach($subjects as $sub){
+            array_push($subarray,array (
+                'id' => $sub->id,
+                'name'=> $sub->name,
+                'sem'=> $sub->sem,
+                'course' => $sub->course->name,
+                'teacher' => $sub->teacher->name
+            ));
+        }
+        }
+        return response($subarray);
+
+    }
+    public function Getquestion(Request $request){
+        if($request->ajax()){
+         $questions = Question::all();
+        }
+        return response($questions);
+
     }
 }

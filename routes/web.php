@@ -63,11 +63,15 @@ Route::prefix('dashboard')->group(function () {
     Route::post('/login', 'Auth\AdminLoginController@Login');
     Route::get('/logout','Auth\AdminLoginController@Logout')->name('adminlogout');
     Route::post('/addcourse','AdminController@addcourse');
+    Route::post('/getcourse','AdminController@Getcourse');
     Route::post('/addteacher','AdminController@addteacher');
-    Route::post('/addsubject','AdminController@addsubject');
-    Route::post('/addquestion','AdminController@addquestion');
-    Route::post('/getdata','AdminController@Getdata');
+    Route::post('/getteacherdata','AdminController@Getteacherdata');
     Route::post('/getteacher','AdminController@Getteacher');
+    Route::post('/addsubject','AdminController@addsubject');
+    Route::post('/getsubject','AdminController@Getsubject');
+    Route::post('/addquestion','AdminController@addquestion');
+    Route::post('/getquestion','AdminController@Getquestion');
+    Route::post('/getdata','AdminController@Getdata');
     Route::get('','AdminController@dashboard')->name('dashboard');
 });
 // Route::get('/',function(){

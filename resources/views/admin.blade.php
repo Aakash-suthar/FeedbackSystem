@@ -210,13 +210,14 @@
                             <li><a href="#">Home 3</a></li>
                         </ul>
                     </li> --}}
-                    <li><a href="#actions" data-toggle="pill">Action</a></li>
+                    <li><a href="#actions" data-toggle="pill">Not decide</a></li>
                     <li>
-                        <a href="#pageSubmenu" data-toggle="collapse" aria-expanded="false">Pages</a>
+                        <a href="#pageSubmenu" data-toggle="collapse" aria-expanded="false">Actions</a>
                         <ul class="collapse list-unstyled" id="pageSubmenu">
-                            <li><a href="#">Page 1</a></li>
-                            <li><a href="#">Page 2</a></li>
-                            <li><a href="#">Page 3</a></li>
+                            <li><a href="#course" data-toggle="pill">Courses</a></li>
+                            <li><a href="#faculty" data-toggle="pill">Facultys</a></li>
+                            <li><a href="#subject" data-toggle="pill">Subjects</a></li>
+                            <li><a href="#question" data-toggle="pill">Questions</a></li>
                         </ul>
                     </li>
                     <li>
@@ -271,64 +272,13 @@
                                 <h1>Welcome to Feedback</h1>
                             </div>
                             <div id="actions" class="tab-pane fade in">
-                                <div class="row">
-                                  <div class="col-xs-3">  
-                                      <button class="btn btn-lg btn-info" style="margin:40px;width:200px;height:120px;" id="myBtn1">Add Course</button>
-                                  </div>
-                                  <div class="col-xs-3">
-                                      <button  class="btn btn-lg btn-warning" style="margin:40px;width:200px;height:120px;" id="myBtn2">Add Teacher</button>
-                                  </div>
-                                  <div class="col-xs-3">
-                                      <button class="btn btn-lg btn-danger" style="margin:40px;width:200px;height:120px;"  id="myBtn3">Add Subject</button>
-                                  </div>
-                                  <div class="col-xs-3">
-                                      <button  class="btn btn-lg btn-success" style="margin:40px;width:200px;height:120px;"  id="myBtn4">Add Question</button>
-                                  </div>
-                              </div>
                             </div>
                             <div id="reports"  class="tab-pane fade in">
-                                    {{-- <ul class="nav navbar-nav navbar-right">
-                                            <li>
-                                            <div class="btn-group" >
-                                                <button type="button" class="btn btn-info dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                                Course <span class="caret"></span>
-                                                </button>
-                                                
-                                                <ul class="dropdown-menu">
-                                                    @if(!$courses->isEmpty())
-                                                        @foreach($courses as $course)
-                                                            <li>
-                                                                    <form id="{{$course->id}}" style="display: none;">
-                                                                            {{ csrf_field() }}
-                                                                            {{Form::hidden('course_id',$course->id)}}
-                                                                        </form>     
-                                                                 <a onclick="event.preventDefault();
-                                                                     document.getElementById('#{{$course->id}}').submit();">{{$course->name}}
-                                                                </a> 
-                                                            <a class="{{$course->id}}">{{$course->name}}</a>
-                                                               
-                                                            </li>                                                           
-                                                         @endforeach
-                                                    @endif
-                                                         <li role="separator" class="divider"></li>
-                                                <li><a  style="background-color:white;" href="{{ route('adminlogout')}}">Logout</a></li>
-                                                </ul>
-                                            </div>
-                                        </li>
-                                        </ul> --}}
-                                        {{-- @if(!$courses->isEmpty())
-                                        @foreach($courses as $course)
-                                                    <form id="{{$course->id}}" style="display: block;">
-                                                            {{ csrf_field() }}
-                                                            {{Form::hidden('course_id',$course->id)}}
-                                                            <input type="submit" value="submit">
-                                                        </form>     
-                                         @endforeach
-                                    @endif --}}
+                                <div class="container-fluid">
                                     {!! Form::open(['class'=>'form-inline','id'=>'Getform','method'=>'POST','autocomplete'=>'off']) !!}
-                                        <div class="form-group">
+                                        <div class="form-group" style="padding:10px;">
                                             {{Form::label('', 'Course*')}}
-                                            <select id="course_id" name="course_id" class="form-control">
+                                            <select id="course_id" name="course_id" class="form-control" style="cursor:pointer;padding-left:5px;">
                                                 
                                             @if(!$courses->isEmpty())
                                                     @foreach($courses as $course)
@@ -338,42 +288,155 @@
                                             </select>
                                         </div>
 
-                                        <div class="form-group">
+                                        <div class="form-group" style="padding:10px;">
                                             {{Form::label('', 'Sem*')}}
-                                            {{Form::select('sem', ['1'=>'1','2'=>'2','3'=>'3','4' => '4', '5' => '5','6'=>'6'],null,['id'=>'sem','class'=>'form-control','style'=>'cursor:pointer'])}}
+                                            {{Form::select('sem', ['1'=>'1','2'=>'2','3'=>'3','4' => '4', '5' => '5','6'=>'6'],null,['id'=>'sem','class'=>'form-control','style'=>'cursor:pointer;'])}}
                                         </div> <!--End of course select-->
 
-                                        <div class="form-group">
+                                        <div class="form-group" style="padding:10px;">
                                                 {{Form::label('', 'Teacher*')}}
-                                                <select id="teacher" name="teacher_id" class="form-control">
+                                                <select id="teacher" name="teacher_id" class="form-control" style="cursor:pointer;min-width:40px;padding-left:5px;padding-right:5px;">
                                                 </select>
                                                 <button type="button" id="getteacher" class="btn btn-default">Get Teacher</button>
                                         </div>
 
                                         <button type="submit" class="btn btn-default">Submit</button>
 
-                                        <div class="form-group" id="loading" style="display:none;">
+                                        <div class="form-group" id="loading" style="display:none;padding:10px;">
                                             <i class="fa fa-spinner fa-spin" style="font-size:44px;" ></i>
                                         </div>
+                                        <div  class="form-group">
+                                                <span id="getsuccess" class="text-success"></span>
+                                                <span id="getdanger" class="text-danger"></span>
+                                            </div>
                                     {!! Form::close() !!}<!--End of Form-->
-
+                                </div>
                                     <div id="cont" clas="container"  style = "width: 550px; height: 400px;">
-                                            {{-- <div class="form-group">
-                                            <label>Strongly Agree</label><label id="SA"></label></div>
-                                            <div class="form-group">
-                                            <label>Agree</label><label id="A"></label></div>
-                                            <div class="form-group">
-                                            <label>Not Sure</label><label id="NS"></label></div>
-                                            <div class="form-group">
-                                            <label>Disagree</label><label id="D"></label></div>
-                                            <div class="form-group">
-                                            <label>Strongly Disagree</label><label id="SD"></label></div>
-                                        --}}
                                     </div>
                                     
                             </div>
                             <div id="profile"  class="tab-pane fade in">
                                 <h1>Welcome to profile</h1>
+                            </div>
+                            <div id="course"  class="tab-pane fade in">
+                                <div class="row">
+                                    <div class="col-xs-12" >
+                                        <button class="btn btn-lg btn-info" style="margin:10px;width:140px;height:50px;" id="myBtn1">Add Course</button>
+                                        <button class="btn btn-lg btn-warning" id="courserefresh" style="margin:10px;width:140px;height:50px;" id="myBtn1">Refresh</button>
+                                    </div>
+                                    <div class="col-xs-12">
+                                        <table  class="table table-bordered">
+                                                <thead>
+                                                  <tr>
+                                                    <th scope="col">ID</th>
+                                                    <th scope="col">Name</th>
+                                                  </tr>
+                                                </thead>
+                                                <tbody id="coursetable">
+                                                        @if(!$courses->isEmpty())
+                                                        @foreach($courses as $course)
+                                                        <tr>
+                                                            <td>{{$course->id}}</td>
+                                                            <td>{{$course->name}}</td>
+                                                        </tr/>
+                                                        @endforeach
+                                                    @endif
+                                                </tbody>
+                                              </table>
+                                    </div>
+                                </div>
+                            </div>
+                            <div id="faculty"  class="tab-pane fade in">
+                                <div class="row">
+                                        <div class="col-xs-12" >
+                                            <button class="btn btn-lg btn-info" style="margin:10px;width:140px;height:50px;" id="myBtn2">Add</button>
+                                            <button class="btn btn-lg btn-warning" id="teacherrefresh" style="margin:10px;width:140px;height:50px;">Refresh</button>
+                                        </div>
+                                        <div class="col-xs-12">
+                                            <table  class="table table-bordered">
+                                                    <thead>
+                                                      <tr>
+                                                        <th scope="col">ID</th>
+                                                        <th scope="col">Name</th>
+                                                      </tr>
+                                                    </thead>
+                                                    <tbody id="teachertable">
+                                                            @if(!$teachers->isEmpty())
+                                                            @foreach($teachers as $teacher)
+                                                            <tr>
+                                                                <td>{{$teacher->id}}</td>
+                                                                <td>{{$teacher->name}}</td>
+                                                            </tr/>
+                                                            @endforeach
+                                                        @endif
+                                                    </tbody>
+                                                  </table>
+                                        </div>
+                                </div>
+                            </div>
+                            <div id="subject"  class="tab-pane fade in">
+                                <div class="row">
+                                    <div class="col-xs-12" >
+                                        <button class="btn btn-lg btn-info" style="margin:10px;width:140px;height:50px;" id="myBtn3">Add</button>
+                                        <button class="btn btn-lg btn-warning" id="subjectrefresh" style="margin:10px;width:140px;height:50px;">Refresh</button>
+                                    </div>
+                                    <div class="col-xs-12">
+                                        <table  class="table table-bordered">
+                                                <thead>
+                                                    <tr>
+                                                    <th scope="col">ID</th>
+                                                    <th scope="col">Name</th>
+                                                    <th scope="col">Sem</th>
+                                                    <th scope="col">Course</th>
+                                                    <th scope="col">Faculty</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody id="subjecttable">
+                                                        @if(!$subjects->isEmpty())
+                                                        @foreach($subjects as $subject)
+                                                        <tr>
+                                                            <td>{{$subject->id}}</td>
+                                                            <td>{{$subject->name}}</td>
+                                                            <td>{{$subject->sem}}</td>
+                                                            <td>{{$subject->course->name}}</td>
+                                                            <td>{{$subject->teacher->name}}</td>
+                                                        </tr/>
+                                                        @endforeach
+                                                    @endif
+                                                </tbody>
+                                                </table>
+                                    </div>
+                                </div>
+                            </div>
+                            <div id="question"  class="tab-pane fade in">
+                                <div class="row">
+                                    <div class="col-xs-12" >
+                                        <button class="btn btn-lg btn-info" style="margin:10px;width:140px;height:50px;" id="myBtn4">Add</button>
+                                        <button class="btn btn-lg btn-warning" id="questionrefresh" style="margin:10px;width:140px;height:50px;">Refresh</button>
+                                    </div>
+                                    <div class="col-xs-12">
+                                        <table  class="table table-bordered">
+                                                <thead>
+                                                    <tr>
+                                                    <th scope="col">ID</th>
+                                                    <th scope="col">Question</th>
+                                                    <th scope="col">Type</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody id="questiontable">
+                                                        @if(!$questions->isEmpty())
+                                                        @foreach($questions as $q)
+                                                        <tr>
+                                                            <td>{{$q->id}}</td>
+                                                            <td>{{$q->question}}</td>
+                                                            <td>{{$q->type}}</td>
+                                                        </tr/>
+                                                        @endforeach
+                                                    @endif
+                                                </tbody>
+                                                </table>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -399,8 +462,9 @@
         <script language = "JavaScript">
             google.charts.load('current', {packages: ['corechart']});     
         </script>
-
-
+        <!--Close google charts-->
+        
+        <!--Sidebar script-->
         <script type="text/javascript">
             $(document).ready(function () {
                 $("#sidebar").mCustomScrollbar({
@@ -420,6 +484,9 @@
                 });
             });
         </script>
+         <!--Close sidebar--> 
+
+        <!--All modals-->               
         <script type="text/javascript">
             // Get the modal
             var modal1 = document.getElementById('myModal1');
@@ -487,7 +554,9 @@
                 }
             }
         </script>
-        {{-- add course --}}
+        <!--Close modal-->
+
+        <!--All Ajax-->
         <script>
             $.ajaxSetup({
                 headers: {
@@ -508,6 +577,9 @@
                         setTimeout(() => {
                         $("#success1").fadeOut('slow');  
                         }, 2000); 
+                    },
+                complete: function(){
+                    $('#courserefresh').click();
                     },
                 error: function (reject) {
                      var error1;
@@ -541,6 +613,9 @@
                         $("#success2").fadeOut('slow');  
                         }, 2000); 
                     },
+                    complete: function(){
+                    $('#teacherrefresh').click();
+                    },
                 error: function (reject) {
                      var error2;
                     if( reject.status === 422 ) {
@@ -572,6 +647,9 @@
                         setTimeout(() => {
                         $("#success3").fadeOut('slow');  
                         }, 2000); 
+                    },
+                    complete: function(){
+                    $('#subjectrefresh').click();
                     },
                 error: function (reject) {
                     var error3=" ";
@@ -607,6 +685,9 @@
                         }, 2000); 
                       //  console.log(data);
                     },
+                    complete: function(){
+                    $('#questionrefresh').click();
+                    },
                 error: function (reject) {
                    // var error4;
                     if( reject.status === 422 ) {
@@ -637,40 +718,29 @@
                     $('#loading').hide();
                 },
                 success  : function(data1) {
-                    function drawChart(data2) {
-              // Define the chart to be drawn.
-            
-            //   var data = google.visualization.arrayToDataTable([
-            //      ['Year', 'Strongly Disagree', 'Disagree','Not Sure','Agree','Strongly Agree'],
-            //      ['2012',  900,390,1530,540,540],
-            //      ['2013',  1000,400,1530,540,540],
-            //      ['2014',  1170,440,1530,540,540],
-            //      ['2015',  1250,480,1530,540,540],
-            //      ['2016',  1530,540,1530,540,540]
-            //   ]);
+                    function drawChart(data2) { 
                         var data = google.visualization.arrayToDataTable(data2);
             
-                        var options = {title: 'Reports (Percentage)','width':1000,
-                                'height':600, isStacked:true};  
+                        var options = {title: 'Reports (Percentage)',
+                                        animation:{ duration: 1000,
+                                                    easing: 'linear',
+                                                    startup: true },
+                                        hAxis: {title: 'Questions'},
+                                        'width':1000,
+                                        'height':600,
+                                        colors: ['#FF2300', '#FF9E00', '#F7FF00', '#8DFF00', '#00FF00'], 
+                                        isStacked:true};  
             
                         // Instantiate and draw the chart.
                         var chart = new google.visualization.ColumnChart(document.getElementById('cont'));
                         chart.draw(data, options);
                     }
-                    // console.log(data1);
-                    //             data1 = [
-                    //                 ['Year', 'Strongly Disagree', 'Disagree','Not Sure','Agree','Strongly Agree'],
-                    //                 ['2012',  900,390,1530,540,540],
-                    //                 ['2013',  1000,400,1530,540,540],
-                    //                 ['2014',  1170,440,1530,540,540],
-                    //                 ['2015',  1250,480,1530,540,540],
-                    //                 ['2016',  1530,540,1530,540,540]
-                    //             ];
                     google.charts.setOnLoadCallback(drawChart(data1));
-                                 console.log(data1); 
+                                 //console.log(data1); 
                 
                     },
                 error: function (reject) {
+                        $("#cont").empty();
                     //  var error1;
                     // if( reject.status === 422 ) {
                     //     var errors1 = $.parseJSON(reject.responseText);
@@ -679,7 +749,31 @@
                     //     error1  = error1 + (val[0]);
                     // })
                     // $("#danger1").fadeIn().html(error1);
-                    console.log(reject);
+                    var error3=" ";
+                    if( reject.status === 422 ) {
+                        var errors3 = $.parseJSON(reject.responseText);
+                        $.each(errors3, function(key,val){
+                        
+                            error3  = error3 + (val[0]);
+                        })
+                        $("#getdanger").fadeIn().html(error3);
+                        setTimeout(() => {
+                        $("#getdanger").fadeOut('slow');  
+                        }, 2000); 
+                        //console.log(errors);
+                    }
+                    else{
+                         var error = $.parseJSON(reject.responseText);
+                        $("#getdanger").fadeIn().html(error['error']);
+                        setTimeout(() => {
+                        $("#getdanger").fadeOut('slow');  
+                        }, 5000);
+                    }
+                        // $("#getdanger").fadeIn().html(reject);
+                        // setTimeout(() => {
+                        // $("#getdanger").fadeOut('slow');  
+                        // }, 2000); 
+                   // console.log(reject);
                 }
                 });
                 
@@ -709,30 +803,93 @@
                 }
                 }); 
             });
+
+            $("#courserefresh").click(function(){
+                $("#coursetable tr").remove();
+                $.ajax({
+                url      : "/dashboard/getcourse",
+                type     : 'POST',
+                cache    : false,
+                dataType: 'json',
+                success  : function(data) {
+                    var table = $("#coursetable");
+                    $.each(data, function(index){
+                        table.append('<tr><td>'+data[index].id+'</td><td>'+data[index].name+'</td></tr>');
+                    })
+                },
+                error: function (reject) {
+                    console.log(reject);
+                }
+            }); 
+            });
+            $("#teacherrefresh").click(function(){
+                $("#teachertable tr").remove();
+                $.ajax({
+                url      : "/dashboard/getteacherdata",
+                type     : 'POST',
+                cache    : false,
+                dataType: 'json',
+                success  : function(data) {
+                    var table = $("#teachertable");
+                    $.each(data, function(index){
+                        table.append('<tr><td>'+data[index].id+'</td><td>'+data[index].name+'</td></tr>');
+                    })
+                },
+                error: function (reject) {
+                    console.log(reject);
+                }
+            }); 
+            });
+            $("#subjectrefresh").click(function(){
+                $("#subjecttable tr").remove();
+                $.ajax({
+                url      : "/dashboard/getsubject",
+                type     : 'POST',
+                cache    : false,
+                dataType: 'json',
+                success  : function(data) {
+                    var table = $("#subjecttable");
+                    $.each(data, function(index){
+                        table.append('<tr><td>'+data[index].id+'</td><td>'+data[index].name+'</td><td>'+data[index].sem+'</td><td>'+data[index].course+'</td><td>'+data[index].teacher+'</td></tr>');
+                    })
+                },
+                error: function (reject) {
+                    console.log(reject);
+                }
+            }); 
+            });
+            $("#questionrefresh").click(function(){
+                $("#questiontable tr").remove();
+                $.ajax({
+                url      : "/dashboard/getquestion",
+                type     : 'POST',
+                cache    : false,
+                dataType: 'json',
+                success  : function(data) {
+                    var table = $("#questiontable");
+                    $.each(data, function(index){
+                        table.append('<tr><td>'+data[index].id+'</td><td>'+data[index].question+'</td><td>'+data[index].type+'</td></tr>');
+                    })
+                },
+                error: function (reject) {
+                    console.log(reject);
+                }
+            }); 
+            });
+
         </script>
-      
-      {{-- @if(!$courses->isEmpty())
-        @foreach($courses as $course)
-            <script>         
-                    $("#{{$course->id}}").submit(function(e){
-                        e.preventDefault();
-                        var form1 = $(this);
-                        $.ajax({
-                        url      : "/dashboard/getdata",
-                        type     : 'POST',
-                        cache    : false,
-                        data     : form1.serialize(),
-                        success  : function(data) {
-                           console.log(data);
-                            },
-                        error: function (reject) {
-                            console.log(reject);
-                            }
-                        });
-                        });
-            </script>
-        @endforeach
-      @endif --}}
+        <!--Close Ajaxs-->
+
+        <!--Other script-->
+        <script>
+                $("#course_id").change(function(){
+                $('#teacher').empty();
+                });
+                $("#sem").change(function(){
+                    $('#teacher').empty();
+                });
+        </script>        
+        <!--Closeother-->
 
     </body>
 </html>
