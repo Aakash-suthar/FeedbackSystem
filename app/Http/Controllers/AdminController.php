@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Http\Request;
+use Carbon\Carbon;
 use App\Admin;
 use App\Subject;
 use App\Course;
@@ -125,6 +126,7 @@ class AdminController extends Controller
             $course_id = $request->input('course_id');
             $sem = $request->input('sem');
             $teacher_id = $request->input('teacher_id');
+            $teachername = Teacher::find($teacher_id);
             
             //$subjects = Subject::where('course_id',$course_id)->where('sem',$sem)->get();
             $Totatfeedback = Feedback::where('course_id',$course_id)->where('sem',$sem)->where('teacher_id',$teacher_id)->count();
@@ -132,58 +134,77 @@ class AdminController extends Controller
             if($Totatfeedback>0){
                   //  $Totatfeedback = Feedback::where('course_id',$request->input('course_id'))->where('sem','6')->where('teacher_id',$subject->teacher_id)->count();
                    // $Q11 = (((Feedback::where('course_id',$course_id)->where('sem',$sem)->where('teacher_id',$teacher_id)->where('Q1','1')->count())/$Totatfeedback)*100);
-                    $Q11 = number_format((float)(((Feedback::where('course_id',$course_id)->where('sem',$sem)->where('teacher_id',$teacher_id)->where('Q1','1')->count())/$Totatfeedback)*100), 2, '.', '');
-                    $Q12 = number_format((float)(((Feedback::where('course_id',$course_id)->where('sem',$sem)->where('teacher_id',$teacher_id)->where('Q1','2')->count())/$Totatfeedback)*100), 2, '.', '');
-                    $Q13 = number_format((float)(((Feedback::where('course_id',$course_id)->where('sem',$sem)->where('teacher_id',$teacher_id)->where('Q1','3')->count())/$Totatfeedback)*100), 2, '.', '');
-                    $Q14 = number_format((float)(((Feedback::where('course_id',$course_id)->where('sem',$sem)->where('teacher_id',$teacher_id)->where('Q1','4')->count())/$Totatfeedback)*100), 2, '.', '');
-                    $Q15 = number_format((float)(((Feedback::where('course_id',$course_id)->where('sem',$sem)->where('teacher_id',$teacher_id)->where('Q1','5')->count())/$Totatfeedback)*100), 2, '.', '');
-                    $Q21 = number_format((float)(((Feedback::where('course_id',$course_id)->where('sem',$sem)->where('teacher_id',$teacher_id)->where('Q2','1')->count())/$Totatfeedback)*100), 2, '.', '');
-                    $Q22 = number_format((float)(((Feedback::where('course_id',$course_id)->where('sem',$sem)->where('teacher_id',$teacher_id)->where('Q2','2')->count())/$Totatfeedback)*100), 2, '.', '');
-                    $Q23 = number_format((float)(((Feedback::where('course_id',$course_id)->where('sem',$sem)->where('teacher_id',$teacher_id)->where('Q2','3')->count())/$Totatfeedback)*100), 2, '.', '');
-                    $Q24 = number_format((float)(((Feedback::where('course_id',$course_id)->where('sem',$sem)->where('teacher_id',$teacher_id)->where('Q2','4')->count())/$Totatfeedback)*100), 2, '.', '');
-                    $Q25 = number_format((float)(((Feedback::where('course_id',$course_id)->where('sem',$sem)->where('teacher_id',$teacher_id)->where('Q2','5')->count())/$Totatfeedback)*100), 2, '.', '');
-                    $Q31 = number_format((float)(((Feedback::where('course_id',$course_id)->where('sem',$sem)->where('teacher_id',$teacher_id)->where('Q3','1')->count())/$Totatfeedback)*100), 2, '.', '');
-                    $Q32 = number_format((float)(((Feedback::where('course_id',$course_id)->where('sem',$sem)->where('teacher_id',$teacher_id)->where('Q3','2')->count())/$Totatfeedback)*100), 2, '.', '');
-                    $Q33 = number_format((float)(((Feedback::where('course_id',$course_id)->where('sem',$sem)->where('teacher_id',$teacher_id)->where('Q3','3')->count())/$Totatfeedback)*100), 2, '.', '');
-                    $Q34 = number_format((float)(((Feedback::where('course_id',$course_id)->where('sem',$sem)->where('teacher_id',$teacher_id)->where('Q3','4')->count())/$Totatfeedback)*100), 2, '.', '');
-                    $Q35 = number_format((float)(((Feedback::where('course_id',$course_id)->where('sem',$sem)->where('teacher_id',$teacher_id)->where('Q3','5')->count())/$Totatfeedback)*100), 2, '.', '');
-                    $Q41 = number_format((float)(((Feedback::where('course_id',$course_id)->where('sem',$sem)->where('teacher_id',$teacher_id)->where('Q4','1')->count())/$Totatfeedback)*100), 2, '.', '');
-                    $Q42 = number_format((float)(((Feedback::where('course_id',$course_id)->where('sem',$sem)->where('teacher_id',$teacher_id)->where('Q4','2')->count())/$Totatfeedback)*100), 2, '.', '');
-                    $Q43 = number_format((float)(((Feedback::where('course_id',$course_id)->where('sem',$sem)->where('teacher_id',$teacher_id)->where('Q4','3')->count())/$Totatfeedback)*100), 2, '.', '');
-                    $Q44 = number_format((float)(((Feedback::where('course_id',$course_id)->where('sem',$sem)->where('teacher_id',$teacher_id)->where('Q4','4')->count())/$Totatfeedback)*100), 2, '.', '');
-                    $Q45 = number_format((float)(((Feedback::where('course_id',$course_id)->where('sem',$sem)->where('teacher_id',$teacher_id)->where('Q4','5')->count())/$Totatfeedback)*100), 2, '.', '');
-                    $Q51 = number_format((float)(((Feedback::where('course_id',$course_id)->where('sem',$sem)->where('teacher_id',$teacher_id)->where('Q5','1')->count())/$Totatfeedback)*100), 2, '.', '');
-                    $Q52 = number_format((float)(((Feedback::where('course_id',$course_id)->where('sem',$sem)->where('teacher_id',$teacher_id)->where('Q5','2')->count())/$Totatfeedback)*100), 2, '.', '');
-                    $Q53 = number_format((float)(((Feedback::where('course_id',$course_id)->where('sem',$sem)->where('teacher_id',$teacher_id)->where('Q5','3')->count())/$Totatfeedback)*100), 2, '.', '');
-                    $Q54 = number_format((float)(((Feedback::where('course_id',$course_id)->where('sem',$sem)->where('teacher_id',$teacher_id)->where('Q5','4')->count())/$Totatfeedback)*100), 2, '.', '');
-                    $Q55 = number_format((float)(((Feedback::where('course_id',$course_id)->where('sem',$sem)->where('teacher_id',$teacher_id)->where('Q5','5')->count())/$Totatfeedback)*100), 2, '.', '');
-                    $Q61 = number_format((float)(((Feedback::where('course_id',$course_id)->where('sem',$sem)->where('teacher_id',$teacher_id)->where('Q6','1')->count())/$Totatfeedback)*100), 2, '.', '');
-                    $Q62 = number_format((float)(((Feedback::where('course_id',$course_id)->where('sem',$sem)->where('teacher_id',$teacher_id)->where('Q6','2')->count())/$Totatfeedback)*100), 2, '.', '');
-                    $Q63 = number_format((float)(((Feedback::where('course_id',$course_id)->where('sem',$sem)->where('teacher_id',$teacher_id)->where('Q6','3')->count())/$Totatfeedback)*100), 2, '.', '');
-                    $Q64 = number_format((float)(((Feedback::where('course_id',$course_id)->where('sem',$sem)->where('teacher_id',$teacher_id)->where('Q6','4')->count())/$Totatfeedback)*100), 2, '.', '');
-                    $Q65 = number_format((float)(((Feedback::where('course_id',$course_id)->where('sem',$sem)->where('teacher_id',$teacher_id)->where('Q6','5')->count())/$Totatfeedback)*100), 2, '.', '');
-                    $Q71 = number_format((float)(((Feedback::where('course_id',$course_id)->where('sem',$sem)->where('teacher_id',$teacher_id)->where('Q7','1')->count())/$Totatfeedback)*100), 2, '.', '');
-                    $Q72 = number_format((float)(((Feedback::where('course_id',$course_id)->where('sem',$sem)->where('teacher_id',$teacher_id)->where('Q7','2')->count())/$Totatfeedback)*100), 2, '.', '');
-                    $Q73 = number_format((float)(((Feedback::where('course_id',$course_id)->where('sem',$sem)->where('teacher_id',$teacher_id)->where('Q7','3')->count())/$Totatfeedback)*100), 2, '.', '');
-                    $Q74 = number_format((float)(((Feedback::where('course_id',$course_id)->where('sem',$sem)->where('teacher_id',$teacher_id)->where('Q7','4')->count())/$Totatfeedback)*100), 2, '.', '');
-                    $Q75 = number_format((float)(((Feedback::where('course_id',$course_id)->where('sem',$sem)->where('teacher_id',$teacher_id)->where('Q7','5')->count())/$Totatfeedback)*100), 2, '.', '');
-                    $Q81 = number_format((float)(((Feedback::where('course_id',$course_id)->where('sem',$sem)->where('teacher_id',$teacher_id)->where('Q8','1')->count())/$Totatfeedback)*100), 2, '.', '');
-                    $Q82 = number_format((float)(((Feedback::where('course_id',$course_id)->where('sem',$sem)->where('teacher_id',$teacher_id)->where('Q8','2')->count())/$Totatfeedback)*100), 2, '.', '');
-                    $Q83 = number_format((float)(((Feedback::where('course_id',$course_id)->where('sem',$sem)->where('teacher_id',$teacher_id)->where('Q8','3')->count())/$Totatfeedback)*100), 2, '.', '');
-                    $Q84 = number_format((float)(((Feedback::where('course_id',$course_id)->where('sem',$sem)->where('teacher_id',$teacher_id)->where('Q8','4')->count())/$Totatfeedback)*100), 2, '.', '');
-                    $Q85 = number_format((float)(((Feedback::where('course_id',$course_id)->where('sem',$sem)->where('teacher_id',$teacher_id)->where('Q8','5')->count())/$Totatfeedback)*100), 2, '.', '');
-                    $Q91 = number_format((float)(((Feedback::where('course_id',$course_id)->where('sem',$sem)->where('teacher_id',$teacher_id)->where('Q9','1')->count())/$Totatfeedback)*100), 2, '.', '');
-                    $Q92 = number_format((float)(((Feedback::where('course_id',$course_id)->where('sem',$sem)->where('teacher_id',$teacher_id)->where('Q9','2')->count())/$Totatfeedback)*100), 2, '.', '');
-                    $Q93 = number_format((float)(((Feedback::where('course_id',$course_id)->where('sem',$sem)->where('teacher_id',$teacher_id)->where('Q9','3')->count())/$Totatfeedback)*100), 2, '.', '');
-                    $Q94 = number_format((float)(((Feedback::where('course_id',$course_id)->where('sem',$sem)->where('teacher_id',$teacher_id)->where('Q9','4')->count())/$Totatfeedback)*100), 2, '.', '');
-                    $Q95 = number_format((float)(((Feedback::where('course_id',$course_id)->where('sem',$sem)->where('teacher_id',$teacher_id)->where('Q9','5')->count())/$Totatfeedback)*100), 2, '.', '');
-                    $Q101 = number_format((float)(((Feedback::where('course_id',$course_id)->where('sem',$sem)->where('teacher_id',$teacher_id)->where('Q10','1')->count())/$Totatfeedback)*100), 2, '.', '');
-                    $Q102 = number_format((float)(((Feedback::where('course_id',$course_id)->where('sem',$sem)->where('teacher_id',$teacher_id)->where('Q10','2')->count())/$Totatfeedback)*100), 2, '.', '');
-                    $Q103 = number_format((float)(((Feedback::where('course_id',$course_id)->where('sem',$sem)->where('teacher_id',$teacher_id)->where('Q10','3')->count())/$Totatfeedback)*100), 2, '.', '');
-                    $Q104 = number_format((float)(((Feedback::where('course_id',$course_id)->where('sem',$sem)->where('teacher_id',$teacher_id)->where('Q10','4')->count())/$Totatfeedback)*100), 2, '.', '');
-                    $Q105 = number_format((float)(((Feedback::where('course_id',$course_id)->where('sem',$sem)->where('teacher_id',$teacher_id)->where('Q10','5')->count())/$Totatfeedback)*100), 2, '.', '');
+                    $Q11 = number_format((float)(((Feedback::where('course_id',$course_id)->where('sem',$sem)->where('teacher_id',$teacher_id)->where('Q1','1')->count())/$Totatfeedback)*100), 3, '.', '');
+                    $Q12 = number_format((float)(((Feedback::where('course_id',$course_id)->where('sem',$sem)->where('teacher_id',$teacher_id)->where('Q1','2')->count())/$Totatfeedback)*100), 3, '.', '');
+                    $Q13 = number_format((float)(((Feedback::where('course_id',$course_id)->where('sem',$sem)->where('teacher_id',$teacher_id)->where('Q1','3')->count())/$Totatfeedback)*100), 3, '.', '');
+                    $Q14 = number_format((float)(((Feedback::where('course_id',$course_id)->where('sem',$sem)->where('teacher_id',$teacher_id)->where('Q1','4')->count())/$Totatfeedback)*100), 3, '.', '');
+                    $Q15 = number_format((float)(((Feedback::where('course_id',$course_id)->where('sem',$sem)->where('teacher_id',$teacher_id)->where('Q1','5')->count())/$Totatfeedback)*100), 3, '.', '');
+                    $Q21 = number_format((float)(((Feedback::where('course_id',$course_id)->where('sem',$sem)->where('teacher_id',$teacher_id)->where('Q2','1')->count())/$Totatfeedback)*100), 3, '.', '');
+                    $Q22 = number_format((float)(((Feedback::where('course_id',$course_id)->where('sem',$sem)->where('teacher_id',$teacher_id)->where('Q2','2')->count())/$Totatfeedback)*100), 3, '.', '');
+                    $Q23 = number_format((float)(((Feedback::where('course_id',$course_id)->where('sem',$sem)->where('teacher_id',$teacher_id)->where('Q2','3')->count())/$Totatfeedback)*100), 3, '.', '');
+                    $Q24 = number_format((float)(((Feedback::where('course_id',$course_id)->where('sem',$sem)->where('teacher_id',$teacher_id)->where('Q2','4')->count())/$Totatfeedback)*100), 3, '.', '');
+                    $Q25 = number_format((float)(((Feedback::where('course_id',$course_id)->where('sem',$sem)->where('teacher_id',$teacher_id)->where('Q2','5')->count())/$Totatfeedback)*100), 3, '.', '');
+                    $Q31 = number_format((float)(((Feedback::where('course_id',$course_id)->where('sem',$sem)->where('teacher_id',$teacher_id)->where('Q3','1')->count())/$Totatfeedback)*100), 3, '.', '');
+                    $Q32 = number_format((float)(((Feedback::where('course_id',$course_id)->where('sem',$sem)->where('teacher_id',$teacher_id)->where('Q3','2')->count())/$Totatfeedback)*100), 3, '.', '');
+                    $Q33 = number_format((float)(((Feedback::where('course_id',$course_id)->where('sem',$sem)->where('teacher_id',$teacher_id)->where('Q3','3')->count())/$Totatfeedback)*100), 3, '.', '');
+                    $Q34 = number_format((float)(((Feedback::where('course_id',$course_id)->where('sem',$sem)->where('teacher_id',$teacher_id)->where('Q3','4')->count())/$Totatfeedback)*100), 3, '.', '');
+                    $Q35 = number_format((float)(((Feedback::where('course_id',$course_id)->where('sem',$sem)->where('teacher_id',$teacher_id)->where('Q3','5')->count())/$Totatfeedback)*100), 3, '.', '');
+                    $Q41 = number_format((float)(((Feedback::where('course_id',$course_id)->where('sem',$sem)->where('teacher_id',$teacher_id)->where('Q4','1')->count())/$Totatfeedback)*100), 3, '.', '');
+                    $Q42 = number_format((float)(((Feedback::where('course_id',$course_id)->where('sem',$sem)->where('teacher_id',$teacher_id)->where('Q4','2')->count())/$Totatfeedback)*100), 3, '.', '');
+                    $Q43 = number_format((float)(((Feedback::where('course_id',$course_id)->where('sem',$sem)->where('teacher_id',$teacher_id)->where('Q4','3')->count())/$Totatfeedback)*100), 3, '.', '');
+                    $Q44 = number_format((float)(((Feedback::where('course_id',$course_id)->where('sem',$sem)->where('teacher_id',$teacher_id)->where('Q4','4')->count())/$Totatfeedback)*100), 3, '.', '');
+                    $Q45 = number_format((float)(((Feedback::where('course_id',$course_id)->where('sem',$sem)->where('teacher_id',$teacher_id)->where('Q4','5')->count())/$Totatfeedback)*100), 3, '.', '');
+                    $Q51 = number_format((float)(((Feedback::where('course_id',$course_id)->where('sem',$sem)->where('teacher_id',$teacher_id)->where('Q5','1')->count())/$Totatfeedback)*100), 3, '.', '');
+                    $Q52 = number_format((float)(((Feedback::where('course_id',$course_id)->where('sem',$sem)->where('teacher_id',$teacher_id)->where('Q5','2')->count())/$Totatfeedback)*100), 3, '.', '');
+                    $Q53 = number_format((float)(((Feedback::where('course_id',$course_id)->where('sem',$sem)->where('teacher_id',$teacher_id)->where('Q5','3')->count())/$Totatfeedback)*100), 3, '.', '');
+                    $Q54 = number_format((float)(((Feedback::where('course_id',$course_id)->where('sem',$sem)->where('teacher_id',$teacher_id)->where('Q5','4')->count())/$Totatfeedback)*100), 3, '.', '');
+                    $Q55 = number_format((float)(((Feedback::where('course_id',$course_id)->where('sem',$sem)->where('teacher_id',$teacher_id)->where('Q5','5')->count())/$Totatfeedback)*100), 3, '.', '');
+                    $Q61 = number_format((float)(((Feedback::where('course_id',$course_id)->where('sem',$sem)->where('teacher_id',$teacher_id)->where('Q6','1')->count())/$Totatfeedback)*100), 3, '.', '');
+                    $Q62 = number_format((float)(((Feedback::where('course_id',$course_id)->where('sem',$sem)->where('teacher_id',$teacher_id)->where('Q6','2')->count())/$Totatfeedback)*100), 3, '.', '');
+                    $Q63 = number_format((float)(((Feedback::where('course_id',$course_id)->where('sem',$sem)->where('teacher_id',$teacher_id)->where('Q6','3')->count())/$Totatfeedback)*100), 3, '.', '');
+                    $Q64 = number_format((float)(((Feedback::where('course_id',$course_id)->where('sem',$sem)->where('teacher_id',$teacher_id)->where('Q6','4')->count())/$Totatfeedback)*100), 3, '.', '');
+                    $Q65 = number_format((float)(((Feedback::where('course_id',$course_id)->where('sem',$sem)->where('teacher_id',$teacher_id)->where('Q6','5')->count())/$Totatfeedback)*100), 3, '.', '');
+                    $Q71 = number_format((float)(((Feedback::where('course_id',$course_id)->where('sem',$sem)->where('teacher_id',$teacher_id)->where('Q7','1')->count())/$Totatfeedback)*100), 3, '.', '');
+                    $Q72 = number_format((float)(((Feedback::where('course_id',$course_id)->where('sem',$sem)->where('teacher_id',$teacher_id)->where('Q7','2')->count())/$Totatfeedback)*100), 3, '.', '');
+                    $Q73 = number_format((float)(((Feedback::where('course_id',$course_id)->where('sem',$sem)->where('teacher_id',$teacher_id)->where('Q7','3')->count())/$Totatfeedback)*100), 3, '.', '');
+                    $Q74 = number_format((float)(((Feedback::where('course_id',$course_id)->where('sem',$sem)->where('teacher_id',$teacher_id)->where('Q7','4')->count())/$Totatfeedback)*100), 3, '.', '');
+                    $Q75 = number_format((float)(((Feedback::where('course_id',$course_id)->where('sem',$sem)->where('teacher_id',$teacher_id)->where('Q7','5')->count())/$Totatfeedback)*100), 3, '.', '');
+                    $Q81 = number_format((float)(((Feedback::where('course_id',$course_id)->where('sem',$sem)->where('teacher_id',$teacher_id)->where('Q8','1')->count())/$Totatfeedback)*100), 3, '.', '');
+                    $Q82 = number_format((float)(((Feedback::where('course_id',$course_id)->where('sem',$sem)->where('teacher_id',$teacher_id)->where('Q8','2')->count())/$Totatfeedback)*100), 3, '.', '');
+                    $Q83 = number_format((float)(((Feedback::where('course_id',$course_id)->where('sem',$sem)->where('teacher_id',$teacher_id)->where('Q8','3')->count())/$Totatfeedback)*100), 3, '.', '');
+                    $Q84 = number_format((float)(((Feedback::where('course_id',$course_id)->where('sem',$sem)->where('teacher_id',$teacher_id)->where('Q8','4')->count())/$Totatfeedback)*100), 3, '.', '');
+                    $Q85 = number_format((float)(((Feedback::where('course_id',$course_id)->where('sem',$sem)->where('teacher_id',$teacher_id)->where('Q8','5')->count())/$Totatfeedback)*100), 3, '.', '');
+                    $Q91 = number_format((float)(((Feedback::where('course_id',$course_id)->where('sem',$sem)->where('teacher_id',$teacher_id)->where('Q9','1')->count())/$Totatfeedback)*100), 3, '.', '');
+                    $Q92 = number_format((float)(((Feedback::where('course_id',$course_id)->where('sem',$sem)->where('teacher_id',$teacher_id)->where('Q9','2')->count())/$Totatfeedback)*100), 3, '.', '');
+                    $Q93 = number_format((float)(((Feedback::where('course_id',$course_id)->where('sem',$sem)->where('teacher_id',$teacher_id)->where('Q9','3')->count())/$Totatfeedback)*100), 3, '.', '');
+                    $Q94 = number_format((float)(((Feedback::where('course_id',$course_id)->where('sem',$sem)->where('teacher_id',$teacher_id)->where('Q9','4')->count())/$Totatfeedback)*100), 3, '.', '');
+                    $Q95 = number_format((float)(((Feedback::where('course_id',$course_id)->where('sem',$sem)->where('teacher_id',$teacher_id)->where('Q9','5')->count())/$Totatfeedback)*100), 3, '.', '');
+                    $Q101 = number_format((float)(((Feedback::where('course_id',$course_id)->where('sem',$sem)->where('teacher_id',$teacher_id)->where('Q10','1')->count())/$Totatfeedback)*100), 3, '.', '');
+                    $Q102 = number_format((float)(((Feedback::where('course_id',$course_id)->where('sem',$sem)->where('teacher_id',$teacher_id)->where('Q10','2')->count())/$Totatfeedback)*100), 3, '.', '');
+                    $Q103 = number_format((float)(((Feedback::where('course_id',$course_id)->where('sem',$sem)->where('teacher_id',$teacher_id)->where('Q10','3')->count())/$Totatfeedback)*100), 3, '.', '');
+                    $Q104 = number_format((float)(((Feedback::where('course_id',$course_id)->where('sem',$sem)->where('teacher_id',$teacher_id)->where('Q10','4')->count())/$Totatfeedback)*100), 3, '.', '');
+                    $Q105 = number_format((float)(((Feedback::where('course_id',$course_id)->where('sem',$sem)->where('teacher_id',$teacher_id)->where('Q10','5')->count())/$Totatfeedback)*100), 3, '.', '');
 
-                    $Response = [
+                    $totalQ1 = number_format((float)(($Q11 +$Q21 + $Q31 +$Q41 + $Q51 +$Q61 + $Q71 +$Q81 + $Q91 +$Q101)/10), 2, '.', ''); 
+                    $totalQ2 = number_format((float)(($Q12 +$Q22 + $Q32 +$Q42 + $Q52 +$Q62 + $Q72 +$Q82 + $Q92 +$Q102)/10), 2, '.', ''); 
+                    $totalQ3 = number_format((float)(($Q13 +$Q23 + $Q33 +$Q43 + $Q53 +$Q63 + $Q73 +$Q83 + $Q93 +$Q103)/10), 2, '.', ''); 
+                    $totalQ4 = number_format((float)(($Q14 +$Q24 + $Q34 +$Q44 + $Q54 +$Q64 + $Q74 +$Q84 + $Q94 +$Q104)/10), 2, '.', ''); 
+                    $totalQ5 = number_format((float)(($Q15 +$Q25 + $Q35 +$Q45 + $Q55 +$Q65 + $Q75 +$Q85 + $Q95 +$Q105)/10), 2, '.', ''); 
+
+                    //$year = date('YYYY');
+                   // $year = $year->isoFormat('dddd D');
+                  
+
+                   $date = Carbon::now();
+                   $date2 = $date->toFormattedDateString();
+                   $date2 = $date->format('F d, Y'); 
+                //    $date->settings([
+                //     'toStringFormat' => 'jS \o\f F, Y g:i:s a',
+                // ]);
+                  // $date->toFormattedDateString();  
+
+                    $Response =[
+                           'chart' => [
                         ['Question', 'Strongly Disagree', 'Disagree','Not Sure','Agree','Strongly Agree'],
                         ['1',(float)$Q11,(float)$Q12,(float)$Q13,(float)$Q14,(float)$Q15],
                         ['2',(float)$Q21,(float)$Q22,(float)$Q23,(float)$Q24,(float)$Q25],
@@ -195,7 +216,17 @@ class AdminController extends Controller
                         ['8',(float)$Q81,(float)$Q82,(float)$Q83,(float)$Q84,(float)$Q85],
                         ['9',(float)$Q91,(float)$Q92,(float)$Q93,(float)$Q94,(float)$Q95],
                         ['10',(float)$Q101,(float)$Q102,(float)$Q103,(float)$Q104,(float)$Q105]
-                    ];
+                           ],
+                           'Report' => [
+                               'Q1' => $totalQ1,
+                               'Q2' => $totalQ2,
+                               'Q3' => $totalQ3,
+                               'Q4' => $totalQ4,
+                               'Q5' => $totalQ5,
+                            'all' => ($totalQ5+$totalQ4+$totalQ3)],
+                               'Faculty' => $teachername->name,
+                               'year' =>  $date2,
+                ];
 
                 //     // $Q1 = Feedback::where('course_id',$request->input('course_id'))->where('sem','6')->where('teacher_id',$subject->teacher_id)->where('Q1','2')->get();
             }

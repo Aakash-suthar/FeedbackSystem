@@ -311,8 +311,38 @@
                                             </div>
                                     {!! Form::close() !!}<!--End of Form-->
                                 </div>
-                                    <div id="cont" clas="container"  style = "width: 550px; height: 400px;">
+                                <div class="container-fluid" style="margin-top:20px;">
+                                    <ul class="nav nav-pills">
+                                            <li class="active" ><a data-toggle="pill" href="#chart">Chart(Question Wise)</a></li>
+                                            <li><a data-toggle="pill" href="#overall">Overall Report</a></li>
+                                    </ul>
+                                    <div class="tab-content" style="min-height: 20vh; ">
+                                            <div id="chart" class="tab-pane fade in active">
+                                                    <div id="cont" clas="container"  style = "width: 550px; height: 400px;">
+                                                        </div>
+                                            </div>
+                                            <div id="overall" class="tab-pane fade in">
+                                                    <div clas="container"  style = "min-height: 400px;margin-left:30px;margin-right:30px;">
+                                                        <br><br><br>
+                                                        <p align="right" id="date"></p><br><br><br>
+                                                        <p align="left"><b id="facultyname"></b></p><br>
+                                                        <p>This is with regard to the students feedback form filled up by the students last year.
+                                                            Satisfaction percentage is derived from the analysis of five point performance parameter of individual teacher.
+                                                            Following is the overall rating after the analysis.
+                                                        </p><br>
+                                                        <p align="left">Excellent :&nbsp;&nbsp; <b><label id="Q5"></label></b></p>
+                                                        <p align="left">Very Good :&nbsp;&nbsp; <b><label id="Q4"></label></b></p>
+                                                        <p align="left">Good :&nbsp;&nbsp; <b><label id="Q3"></label></b></p>
+                                                        <p align="left">Satisfactory :&nbsp;&nbsp; <b><label id="Q2"></label></b></p>
+                                                        <p align="left">Needs Improvement :&nbsp;&nbsp; <b><label id="Q1"></label></b></p>
+                                                        <br><br>
+                                                        <p>You are instructed to take corrective action so as to improve your
+                                                            overall rating which is <label id="all"></label></p><br><br><br>
+                                                    </div>
+                                            </div>
                                     </div>
+                                </div>
+                                    
                                     
                             </div>
                             <div id="profile"  class="tab-pane fade in">
@@ -735,8 +765,29 @@
                         var chart = new google.visualization.ColumnChart(document.getElementById('cont'));
                         chart.draw(data, options);
                     }
-                    google.charts.setOnLoadCallback(drawChart(data1));
-                                 //console.log(data1); 
+                    google.charts.setOnLoadCallback(drawChart(data1['chart']));
+                                 console.log(data1['Report']); 
+                                 console.log(data1['Faculty']); 
+                                 $('#date').empty();
+                                 $('#date').append(data1['year']);
+                                 $('#facultyname').empty();
+                                 $('#facultyname').append(data1['Faculty']);
+                                 $('#all').empty();
+                                 $('#all').append(data1['Report'].all);
+                                 $('#Q1').empty();
+                                 $('#Q1').append(data1['Report'].Q1);
+                                 $('#Q2').empty();
+                                 $('#Q2').append(data1['Report'].Q2);
+                                 $('#Q3').empty();
+                                 $('#Q3').append(data1['Report'].Q3);
+                                 $('#Q4').empty();
+                                 $('#Q4').append(data1['Report'].Q4);
+                                 $('#Q5').empty();
+                                 $('#Q5').append(data1['Report'].Q5);
+
+                                 //console.log(data1['year']); 
+
+
                 
                     },
                 error: function (reject) {
