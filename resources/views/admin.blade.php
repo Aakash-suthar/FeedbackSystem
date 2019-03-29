@@ -210,7 +210,7 @@
                             <li><a href="#">Home 3</a></li>
                         </ul>
                     </li> --}}
-                    <li><a href="#actions" data-toggle="pill">Not decide</a></li>
+                    <li><a href="#overalltab" data-toggle="pill">Overall Report</a></li>
                     <li>
                         <a href="#pageSubmenu" data-toggle="collapse" aria-expanded="false">Actions</a>
                         <ul class="collapse list-unstyled" id="pageSubmenu">
@@ -352,7 +352,7 @@
                                 <div class="row">
                                     <div class="col-xs-12" >
                                         <button class="btn btn-lg btn-info" style="margin:10px;width:140px;height:50px;" id="myBtn1">Add Course</button>
-                                        <button class="btn btn-lg btn-warning" id="courserefresh" style="margin:10px;width:140px;height:50px;" id="myBtn1">Refresh</button>
+                                        <button class="btn btn-lg btn-warning" id="courserefresh" style="margin:10px;width:140px;height:50px;">Refresh</button>
                                     </div>
                                     <div class="col-xs-12">
                                         <table  class="table table-bordered">
@@ -467,6 +467,17 @@
                                                 </table>
                                     </div>
                                 </div>
+                            </div>
+                            <div id="overalltab"  class="tab-pane fade in">
+                                    <div class="row">
+                                            <div class="col-xs-12" >
+                                                <button class="btn btn-lg btn-info" style="margin:10px;width:140px;height:50px;" id="getallreport">Get Report</button>
+                                                <button class="btn btn-lg btn-warning" id="getallreportrefresh" style="margin:10px;width:140px;height:50px;">Refresh</button>
+                                            </div>
+                                            <div id="showalldata" class="col-xs-12" >
+
+                                            </div>
+                                    </div>
                             </div>
                         </div>
                     </div>
@@ -791,7 +802,17 @@
                 
                     },
                 error: function (reject) {
+                        $('#all').empty();
+                        $('#facultyname').empty();
                         $("#cont").empty();
+                        $('#date').empty();
+                        $('#Q5').empty();
+                        $('#Q4').empty();
+                        $('#Q3').empty();
+                        $('#Q2').empty();
+                        $('#Q1').empty();
+
+
                     //  var error1;
                     // if( reject.status === 422 ) {
                     //     var errors1 = $.parseJSON(reject.responseText);
@@ -928,17 +949,68 @@
             }); 
             });
 
+            $("#getallreport").click(function(){
+                $.ajax({
+                url      : "/dashboard/getalldata",
+                type     : 'POST',
+                cache    : false,
+                dataType: 'json',
+                success  : function(data) {
+
+                    // var table = $("#questiontable");
+                    $.each(data, function(index){
+                        var container = $("#showalldata");
+                       // console.log(data[index].name);
+                        container.append('<p align="center">'+data[index].name+'</p><br>');
+                        container.append('<table class="table table-bordered"><thead><tr><th>Name</th><th>Excellent</th><th>Very Good</th><th>Good</th><th>Satisfactory</th><th>Needs Improvement</th></tr></thead><tbody');
+                        temp = data[index];
+                        //if()
+                        $.each(temp, function(index2){
+                           /// console.log(temp[index2].Q1);
+                           container.append('<tr><td>'+temp[index2].faculty+'</td><td>'+temp[index2].Q5+'</td><td>'+temp[index2].Q4+'</td><td>'+temp[index2].Q3+'</td><td>'+temp[index2].Q2+'</td><td>'+temp[index2].Q1+'</td></tr>');
+                           
+                        })
+                        container.append('</tbody></table><br>');
+                        // table.append('<tr><td>'+data[index].id+'</td><td>'+data[index].question+'</td><td>'+data[index].type+'</td></tr>');
+                    })
+                    //console.log(data);
+
+                },
+                error: function (reject) {
+                    console.log(reject);
+                }
+            }); 
+            });
         </script>
         <!--Close Ajaxs-->
 
         <!--Other script-->
         <script>
                 $("#course_id").change(function(){
-                $('#teacher').empty();
+                    $('#teacher').empty();
+                    $('#all').empty();
+                    $('#facultyname').empty();
+                    $("#cont").empty();
+                    $('#date').empty();
+                    $('#Q5').empty();
+                    $('#Q4').empty();
+                    $('#Q3').empty();
+                    $('#Q2').empty();
+                    $('#Q1').empty();
                 });
                 $("#sem").change(function(){
                     $('#teacher').empty();
+                    $('#all').empty();
+                    $('#facultyname').empty();
+                    $("#cont").empty();
+                    $('#date').empty();
+                    $('#Q5').empty();
+                    $('#Q4').empty();
+                    $('#Q3').empty();
+                    $('#Q2').empty();
+                    $('#Q1').empty();
                 });
+
         </script>        
         <!--Closeother-->
 

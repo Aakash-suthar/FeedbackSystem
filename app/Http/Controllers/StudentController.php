@@ -35,9 +35,9 @@ class StudentController extends Controller
         
         $cquestions = Question::where('type','currriculum')->get();
         $tquestions = Question::where('type','teacher')->get();
-        $course_id = 'B01';
-        $sem = '6';
-        $subjects = Subject::where('course_id','B01')->where('sem','6')->get();
+        $course_id = 'B02';
+        $sem = '1';
+        $subjects = Subject::where('course_id',$course_id)->where('sem',$sem)->get();
          return view('student.teacherandcurriculumform',compact('cquestions','subjects','tquestions','sem','course_id'));
     }
 

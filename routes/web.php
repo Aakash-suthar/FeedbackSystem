@@ -72,6 +72,7 @@ Route::prefix('dashboard')->group(function () {
     Route::post('/addquestion','AdminController@addquestion');
     Route::post('/getquestion','AdminController@Getquestion');
     Route::post('/getdata','AdminController@Getdata');
+    Route::post('/getalldata','AdminController@Getalldata');
     Route::get('','AdminController@dashboard')->name('dashboard');
 });
 // Route::get('/',function(){
