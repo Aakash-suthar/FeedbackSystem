@@ -19,7 +19,7 @@
                         <div class="row">
                         <div class="col-xs-6 col-md-3 tabsclass">
                              <i class="fa fa-caret-right"  aria-hidden="true"></i>
-                        <a class="tabslink" href="/student/aboutcollage">  
+                        <a class="tabslink" href="/student/aboutcollege">  
                                About College</a></div>
                                <div class="col-xs-6 col-md-3 tabsclass">
                                 <i class="fa fa-caret-right"  aria-hidden="true"></i>
@@ -33,7 +33,7 @@
 				       <div class="row">
                             <div class="col-xs-6 col-md-3 tabsclass">
                              <i class="fa fa-caret-right"  aria-hidden="true"></i>
-                                <a class="tabslink" href="/faculty/aboutcollage">  
+                                <a class="tabslink" onclick='check2()'>  
                                About College</a>
                             </div>
                         </div>
@@ -43,8 +43,8 @@
 				      <div class="row">
                         <div class="col-xs-6 col-md-3 tabsclass">
                              <i class="fa fa-caret-right"  aria-hidden="true"></i>
-                           <a class="tabslink"  href="/parent/aboutcollage">  
-                               About Collage</a></div>
+                           <a class="tabslink"  href="/parent/aboutcollege">  
+                               About College</a></div>
                         </div>
 				    </div><!-- End of Parents tab-->
                 
@@ -52,8 +52,8 @@
               <div class="row">
                 <div class="col-xs-6 col-md-3 tabsclass">
                   <i class="fa fa-caret-right"  aria-hidden="true"></i>
-                    <a class="tabslink"  href="/Fromemployers/Aboutemployee.php">  
-                  About Employee</a>
+                    <a class="tabslink"  href="/employee/aboutcollege">  
+                  About College</a>
                 </div>
               </div>
             </div><!-- End of Employers-->
@@ -71,8 +71,8 @@
                     <div class="row">
                         <div class="col-xs-6 col-md-3 tabsclass">
                           <i class="fa fa-caret-right"  aria-hidden="true"></i>
-                            <a class="tabslink"  href="/alumini/aboutcollage">  
-                          About Collage</a></div>
+                            <a class="tabslink"  href="/alumini/aboutcollege">  
+                          About College</a></div>
                     </div>
             </div>  <!-- End of alumini-->               
   </div><!--end of main wrapper-->

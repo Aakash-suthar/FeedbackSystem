@@ -10,10 +10,10 @@ class Subject extends Model
     public $incrementing = false;
 
     protected $fillable = [
-        'id', 'name','sem','course_id','teacher_id',
+        'id', 'name','sem','course_id','faculty_id',
     ];
-    public function teacher(){
-        return $this->belongsTo('App\Teacher');      
+    public function faculty(){
+        return $this->belongsTo('App\Faculty');      
     }
 
     public function course(){

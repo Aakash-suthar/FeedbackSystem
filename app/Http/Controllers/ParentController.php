@@ -8,9 +8,9 @@ use App\Question;
 
 class ParentController extends Controller
 {
-    public function aboutcollage(){
-        $q = Question::where('type','collage')->get();
-        return view("parent.aboutcollageform",compact('q'));
+    public function aboutcollege(){
+        $q = Question::where('type','college')->get();
+        return view("parent.aboutcollegeform",compact('q'));
     }
 
     public function submit(Request $request){    

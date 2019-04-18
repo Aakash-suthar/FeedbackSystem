@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateFeedbackTable extends Migration
+class CreateEmployeesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,13 +13,13 @@ class CreateFeedbackTable extends Migration
      */
     public function up()
     {
-        Schema::create('feedbacks', function (Blueprint $table) {
+        Schema::create('employees', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('subject_id');
-            $table->string('student_id');
-            $table->string('course_id');
-            $table->string('teacher_id');
-            $table->string('sem');
+            $table->string('name');
+            $table->string('email')->unique();
+            $table->string('company');
+            $table->string('position');
+            $table->string('comment');
             $table->string('Q1');
             $table->string('Q2');
             $table->string('Q3');
@@ -34,12 +34,10 @@ class CreateFeedbackTable extends Migration
             $table->string('Q12');
             $table->string('Q13');
             $table->string('Q14');
-            $table->foreign('teacher_id')->references('id')->on('faculties');
-            $table->foreign('course_id')->references('id')->on('courses');
-            $table->foreign('subject_id')->references('id')->on('subjects');
-            $table->foreign('student_id')->references('id')->on('users');
-            
-
+            $table->string('Q15');
+            $table->string('Q16');
+            $table->string('Q17');
+            $table->string('Q18');
             $table->timestamps();
         });
     }
@@ -51,6 +49,6 @@ class CreateFeedbackTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('feedback');
+        Schema::dropIfExists('employees');
     }
 }

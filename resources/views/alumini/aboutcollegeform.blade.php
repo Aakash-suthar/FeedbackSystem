@@ -1,10 +1,10 @@
-@extends('layouts.layout')
+@extends('layouts.app')
 @section('content')
-<div class="container-fluid" id="myContainer">
+{{-- <div class="container-fluid" id="myContainer">
         <div class="row" style="padding: 0px;margin:0px;">
             <div  class="col-9 col-xs-9" style="padding: 0px;margin: 0px;">
                 <img class="logo">
-                <h2 style="margin-top: 15px; " class="text-info" align="center">Feedback Form
+                <h2 style="margin-top: 15px; " class="text-info" align="center">Employer Feedback Form
                 </h2>
             </div>
             </div>
@@ -197,6 +197,90 @@
             </form> <!--End of Form-->
          </div><!-- End of content-->
     </div> <!--End of container-->
+</div> --}}
+
+<div class="container-fluid" style="margin: 20px 10px 20px 10px;min-width:505px;">
+    <div class="container-fluid" style="background-color: whitesmoke; box-shadow: 4px 5px 8px 2px rgba(0, 0, 0, 0.2), -3px -2px 8px 2px rgba(0, 0, 0, 0.2);border-radius: 10px;">
+        <div class="content"> 
+                {!! Form::open(['url' => '/alumini/submit','class'=>'form-inline','method'=>'POST','autocomplete'=>'off']) !!}
+                        <h3 align="center" style="margin-top: 20px;">Alumini Feedback Form </h3>
+                        <p style="margin-top: 30px;">Dear Employer,</p>
+                        <p>We are glad that you have spent valuable years pursuing courses of your choice at Aligarh Muslim
+                                University. We shall be thankful if you can spare some of your valuable time to fill up this
+                                feedback form and give us valuable suggestions for further improvement of the University. Your
+                                valuable inputs will be of great use to improve the quality of our academic programs and enhance
+                                the credibility of our University.</p>    
+                        <p style="margin-bottom: 10px;margin-top: 10px" class="col-xs-12"><b><i>Directions:</i></b></p>
+                        <p class="col-xs-12"><i>For each item please indicate your level of agreement with the following statements by selecting appropriate option.</i></p>                
+       
+
+                        @php
+                        $i = 1
+                        @endphp
+                        @foreach($q as $qu)
+                            <div class="form-group col-xs-12" style="margin: 10px">
+                                {{Form::label('',$qu->question,['class'=>'control-label col-xs-12'])}}
+                                <label style="margin: 5px 0px 7px 20px"class="radio-inline"><input type="radio" name="Q{{$i}}" value="5" required>Strongly Agree</label>
+                                <label class="radio-inline"><input type="radio" name="Q{{$i}}" value="4">Agree</label>
+                                <label class="radio-inline"><input type="radio" name="Q{{$i}}"value="3">Not Sure</label>
+                                <label class="radio-inline"><input type="radio" name="Q{{$i}}" value="2">Disagree</label>
+                                <label class="radio-inline" style="margin-left:20px; "><input type="radio" name="Q{{$i++}}" value="1">Strongly Disagree</label>
+                            </div> <!--End of question 1--> 
+                        @endforeach
+
+                        <div class="form-group col-xs-12" style="margin: 10px">
+                                {{Form::label('','Any other suggestion.',['class'=>'control-label col-xs-12'])}}
+                              <textarea  style="margin-left:20px;" name="comment"  rows="4" cols="50" required></textarea>
+                        </div>
+                        <div class="col-xs-12">
+                            <div class="form-group" style="padding:20px;">
+                                <label>Name &nbsp;: &nbsp;&nbsp;</label>
+                                <input size="35" type="text" name="name" class='form-control' required/>
+                            </div>
+                            <div class="form-group" style="padding:20px;">
+                                <label >Email  &nbsp;: &nbsp;&nbsp;  </label>
+                                <input size="35" type="email" name="email" class='form-control' required/>
+                            </div>
+                        </div>
+                                
+                            {{-- <div class="form-group" style="padding:20px;">
+                                <label >Phone no &nbsp;: &nbsp;&nbsp; </label>
+                                <input type="number" name="phoneno" class='form-control' required/>
+                            </div> --}}
+                            <div class="col-xs-12">
+                                <div class="form-group"  style="padding:20px;">
+                                        <label >Course  &nbsp;: &nbsp;&nbsp;  </label>
+                                        <select id="course_id" name="degree" class="form-control" style="cursor:pointer;padding-left:5px;" required>
+                                        @if(!$courses->isEmpty())
+                                                @foreach($courses as $course)
+                                                    <option value="{{$course->id}}">{{$course->name}}</option>
+                                                @endforeach
+                                            @endif
+                                        </select>
+                                </div>
+                                <div class="form-group"  style="padding:20px;">
+                                    <label >Year  &nbsp;: &nbsp;&nbsp; </label>
+                                            {{Form::select('year',['2016'=>'2016','2017'=>'2017','2018'=>'2018'],null,['cursor'=>'pointer','class'=>'form-control','required'=>'required'])}}
+                                </div>
+                            </div>
+                            <div class="col-xs-12">
+                                <div class="form-group"  style="padding:20px;">
+                                    <label >Position  &nbsp;: &nbsp;&nbsp; </label>                                  
+                                    <input size="35" type="text" name="position" class='form-control' required/>          
+                                </div>
+
+                                <div class="form-group"  style="padding:20px;">
+                                    <label >Company/Organisation &nbsp;: &nbsp;&nbsp; </label>
+                                    <input size="35" type="text" name="company" class='form-control' required/>
+                                </div>
+                            </div>
+                        <div style="margin-top: 20px;margin-bottom: 20px;" align="center" class="form-group col-xs-12">
+                            <input type="Submit" class="btn btn-info" value="Submit" name="about">
+                            <input style="margin-left:20px;" type="reset" class="btn .btn-warning" value="Reset ">
+                        </div> <!--End of Submit buttons-->
+                        {!! Form::close() !!}<!--End of Form-->        
+        </div>
+    </div>
 </div>
 @endsection
         

@@ -4,7 +4,8 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
-
+use Illuminate\Http\Request;
+use Auth;
 
 class LoginController extends Controller
 {
@@ -36,5 +37,19 @@ class LoginController extends Controller
     public function __construct()
     {
         $this->middleware('guest')->except('logout');
+    }
+
+    public function login(Request $request){
+      //  Auth::guard('faculty')->logout();
+       // Auth::guard('admin')->logout();
+            $this->validate($request,[
+                'id' => 'required',
+                'password' => 'required|min:6'
+            ]);
+        if(Auth::guard()->attempt(['id'=> $request->id,'password'=>$request->password])){
+            return redirect()->route('student.teacherandcurriculum');
+        }
+        flash('Wrong Username or password')->error();
+        return redirect()->back();
     }
 }

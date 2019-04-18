@@ -14,7 +14,7 @@ class Feedback extends Model
     ];
     
     public function teacher(){
-        return $this->belongsTo('App\Teacher');      
+        return $this->belongsTo('App\Faculty');      
     }
 
     public function course(){

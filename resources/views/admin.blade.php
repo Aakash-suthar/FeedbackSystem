@@ -69,18 +69,26 @@
                 <div class="modal-content">
                         <div class="modal-header">
                           <span id="gg2" class="close">&times;</span>
-                          <h2 align="center">Add Teacher</h2>
+                          <h2 align="center">Add Faculty</h2>
                         </div>
                         <div class="modal-body row">
                                 {!! Form::open(['id'=>'form2','class'=>'form-vertical','autocomplete'=>'off']) !!}  
                                 <div style="padding:12px;padding-bottom: 0px;margin-bottom: 0px" class="form-group col-xs-12">
-                                <label for="name" class="col-xs-12" style="margin-bottom: 10px;"> Teacher Id :*  </label>
+                                <label for="name" class="col-xs-12" style="margin-bottom: 10px;"> Faculty Id :*  </label>
                                 <input type="text" name="id"  class="form-control" required/>
                                 </div>
                                  <div class="form-group col-xs-12" style="padding:12px">
-                                <label for="username" class="col-xs-12" style="margin-bottom: 10px;">Teacher Name :*  </label>
+                                <label for="username" class="col-xs-12" style="margin-bottom: 10px;">Name :*  </label>
                                 <input type="text" name="name" class="form-control" required/>
                                 </div>
+                                 <div class="form-group col-xs-12" style="padding:12px">
+                                <label for="username" class="col-xs-12" style="margin-bottom: 10px;">Email :*  </label>
+                                <input type="text" name="email" class="form-control" required/>
+                                </div>
+                                <div class="form-group col-xs-12" style="padding:12px">
+                                    <label for="username" class="col-xs-12" style="margin-bottom: 10px;">Password as phone no :*  </label>
+                                    <input type="text" name="password" class="form-control" required/>
+                                    </div>
                                  <div class="form-group col-xs-12" style="margin-top:10px;">
                                     <div style="margin: 0px;padding: 0px;" class="row">
                                         <div class="col-xs-6" style="padding: 0px;">
@@ -128,8 +136,8 @@
                                             <input type="text" name="course_id" class="form-control" required/>
                                           </div>
                                           <div class="form-group col-xs-12" style="padding:12px">
-                                                <label for="username" class="col-xs-12" style="margin-bottom: 10px;">Teacher Id :*  </label>
-                                                <input type="text" name="teacher_id" class="form-control" required/>
+                                                <label for="username" class="col-xs-12" style="margin-bottom: 10px;">Faculty Id :*  </label>
+                                                <input type="text" name="faculty_id" class="form-control" required/>
                                               </div>
                                    <div class="form-group col-xs-12" style="margin-top:10px;">
                                       <div style="margin: 0px;padding: 0px;" class="row">
@@ -167,7 +175,7 @@
                                 </div>
                                  <div class="form-group col-xs-12" style="padding:12px">
                                 <label for="username" class="col-xs-12" style="margin-bottom: 10px;">Type :*  </label>
-                                {{Form::select('type',['collage'=>'About Collage','currriculum'=>'About Currriculum','teacher'=>'About Teacher'],null,['class'=>'form-control'])}}                                </div>
+                                {{Form::select('type',['college'=>'About College','curriculum'=>'About Curriculum','teacher'=>'About Teacher','employer'=>'From Employer','alumini'=>'From Alumini','faculty'=>'From Faculty'],null,['class'=>'form-control'])}}                                </div>
                                  <div class="form-group col-xs-12" style="margin-top:10px;">
                                     <div style="margin: 0px;padding: 0px;" class="row">
                                         <div class="col-xs-6" style="padding: 0px;">
@@ -269,7 +277,9 @@
                 <div class="container-fluid">
                         <div class="tab-content" style="min-height: 20vh; ">
                             <div id="home"  class="tab-pane fade in active">
-                                <h1>Welcome to Feedback</h1>
+                                <button id="totalfeedback" class="btn btn-info btn-lg" style="width:200px;height:150px;">{{$feedback}}</button>
+                                <p>Total Forms Submitted.</p>
+                                
                             </div>
                             <div id="actions" class="tab-pane fade in">
                             </div>
@@ -339,6 +349,9 @@
                                                         <p>You are instructed to take corrective action so as to improve your
                                                             overall rating which is <label id="all"></label></p><br><br><br>
                                                     </div>
+                                                    <div class="container">
+                                                        <a id="pdfurl" href="">Export to PDF</a>
+                                                    </div>
                                             </div>
                                     </div>
                                 </div>
@@ -388,6 +401,7 @@
                                                       <tr>
                                                         <th scope="col">ID</th>
                                                         <th scope="col">Name</th>
+                                                        <th scope="col">Email</th>
                                                       </tr>
                                                     </thead>
                                                     <tbody id="teachertable">
@@ -396,6 +410,7 @@
                                                             <tr>
                                                                 <td>{{$teacher->id}}</td>
                                                                 <td>{{$teacher->name}}</td>
+                                                                <td>{{$teacher->email}}</td>
                                                             </tr/>
                                                             @endforeach
                                                         @endif
@@ -429,7 +444,7 @@
                                                             <td>{{$subject->name}}</td>
                                                             <td>{{$subject->sem}}</td>
                                                             <td>{{$subject->course->name}}</td>
-                                                            <td>{{$subject->teacher->name}}</td>
+                                                            <td>{{$subject->faculty->name}}</td>
                                                         </tr/>
                                                         @endforeach
                                                     @endif
@@ -643,7 +658,7 @@
                 e.preventDefault();
                 var form2 = $(this);
                 $.ajax({
-                url      : "/dashboard/addteacher",
+                url      : "/dashboard/addfaculty",
                 type     : 'POST',
                 cache    : false,
                 data     : form2.serialize(),
@@ -777,8 +792,6 @@
                         chart.draw(data, options);
                     }
                     google.charts.setOnLoadCallback(drawChart(data1['chart']));
-                                 console.log(data1['Report']); 
-                                 console.log(data1['Faculty']); 
                                  $('#date').empty();
                                  $('#date').append(data1['year']);
                                  $('#facultyname').empty();
@@ -795,11 +808,9 @@
                                  $('#Q4').append(data1['Report'].Q4);
                                  $('#Q5').empty();
                                  $('#Q5').append(data1['Report'].Q5);
-
-                                 //console.log(data1['year']); 
-
-
-                
+                                 $("#pdfurl").attr("href", "");
+                                 $("#pdfurl").attr("href", "/dashboard/getpdfdata/"+data1['pdf']+"/"+data1['course_id']+"");
+                            
                     },
                 error: function (reject) {
                         $('#all').empty();
@@ -811,6 +822,7 @@
                         $('#Q3').empty();
                         $('#Q2').empty();
                         $('#Q1').empty();
+                        $("#pdfurl").attr("href", "");
 
 
                     //  var error1;
@@ -897,14 +909,14 @@
             $("#teacherrefresh").click(function(){
                 $("#teachertable tr").remove();
                 $.ajax({
-                url      : "/dashboard/getteacherdata",
+                url      : "/dashboard/getfacultydata",
                 type     : 'POST',
                 cache    : false,
                 dataType: 'json',
                 success  : function(data) {
                     var table = $("#teachertable");
                     $.each(data, function(index){
-                        table.append('<tr><td>'+data[index].id+'</td><td>'+data[index].name+'</td></tr>');
+                        table.append('<tr><td>'+data[index].id+'</td><td>'+data[index].name+'</td><td>'+data[index].email+'</td></tr>');
                     })
                 },
                 error: function (reject) {
@@ -956,31 +968,39 @@
                 cache    : false,
                 dataType: 'json',
                 success  : function(data) {
-
-                    // var table = $("#questiontable");
                     $.each(data, function(index){
                         var container = $("#showalldata");
                        // console.log(data[index].name);
-                        container.append('<p align="center">'+data[index].name+'</p><br>');
-                        container.append('<table class="table table-bordered"><thead><tr><th>Name</th><th>Excellent</th><th>Very Good</th><th>Good</th><th>Satisfactory</th><th>Needs Improvement</th></tr></thead><tbody');
-                        temp = data[index];
-                        //if()
+                        container.append('<p align="center"><b>'+data[index].name+'</b></p><br>');
+                        container.append('<table id = '+ data[index].id +' class="table table-bordered"><thead><tr><th>Name</th><th>Excellent</th><th>Very Good</th><th>Good</th><th>Satisfactory</th><th>Needs Improvement</th></tr></thead><tbody>');
+                        var temp = data[index].allsubjects;
+                        var tableid = '#'+data[index].id;
+                       var table = $(tableid);
                         $.each(temp, function(index2){
-                           /// console.log(temp[index2].Q1);
-                           container.append('<tr><td>'+temp[index2].faculty+'</td><td>'+temp[index2].Q5+'</td><td>'+temp[index2].Q4+'</td><td>'+temp[index2].Q3+'</td><td>'+temp[index2].Q2+'</td><td>'+temp[index2].Q1+'</td></tr>');
+                           table.append('<tr><td>'+temp[index2].faculty+'</td><td>'+temp[index2].Q5+'</td><td>'+temp[index2].Q4+'</td><td>'+temp[index2].Q3+'</td><td>'+temp[index2].Q2+'</td><td>'+temp[index2].Q1+'</td></tr>');
                            
                         })
-                        container.append('</tbody></table><br>');
-                        // table.append('<tr><td>'+data[index].id+'</td><td>'+data[index].question+'</td><td>'+data[index].type+'</td></tr>');
+                        table.append('</tbody></table><br>');
                     })
-                    //console.log(data);
-
                 },
                 error: function (reject) {
                     console.log(reject);
                 }
             }); 
             });
+
+            $('#totalfeedback').click(function(){
+                $.ajax({
+                    url      : "/dashboard/totalfeedback",
+                    type     : 'POST',
+                    success  : function(data) {
+                        $('#totalfeedback').text(data);
+                        }, 
+                    error: function (reject) {
+                        $('#totalfeedback').text('Error. Try Again');
+                    }
+                 }); 
+                });
         </script>
         <!--Close Ajaxs-->
 
@@ -1009,7 +1029,7 @@
                     $('#Q3').empty();
                     $('#Q2').empty();
                     $('#Q1').empty();
-                });
+                });  
 
         </script>        
         <!--Closeother-->

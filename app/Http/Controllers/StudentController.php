@@ -27,10 +27,12 @@ class StudentController extends Controller
         return redirect('/')->with('success','Successfully Submited.');
     }
 
-    public function aboutcollage(){
-        $q = Question::where('type','collage')->get();
-        return view("student.aboutcollageform",compact('q'));
+    public function aboutcollege(){
+        $q = Question::where('type','college')->get();
+        return view("student.aboutcollegeform",compact('q'));
     } 
+
+    
     public function teachercurriculum(Request $request){
         
         $cquestions = Question::where('type','currriculum')->get();
@@ -57,7 +59,7 @@ class StudentController extends Controller
             $subject->id;
             $feedback->student_id = $request->input('student_id');
             $feedback->sem = $request->input('sem');
-            $feedback->teacher_id = $subject->teacher_id;
+            $feedback->teacher_id = $subject->faculty_id;
             $feedback->course_id = $subject->course_id;
             $feedback->subject_id = $subject->id;
             $feedback->Q1 = $request->input("S$i$q");$q++;

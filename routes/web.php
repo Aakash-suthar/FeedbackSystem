@@ -25,12 +25,12 @@ Route::get('/users/{id}{name}', function ($id,$name) {
 
 //students controller
 Route::prefix('student')->group(function () {
-    Route::get('/aboutcollage','StudentController@aboutcollage');
+    Route::get('/aboutcollege','StudentController@aboutcollege');
     // Route::get('/login','StudentController@login');
     Route::post('/submit','StudentController@submit');
     Route::post('/login','Auth\LoginController@login');
     Route::post('/tcsubmit','StudentController@tcsubmit')->middleware('auth');
-    Route::get('/teacherandcurriculum','StudentController@teachercurriculum')->middleware('auth');
+    Route::get('/teacherandcurriculum','StudentController@teachercurriculum')->name('student.teacherandcurriculum')->middleware('auth');
 });
 
 
@@ -42,19 +42,21 @@ Route::prefix('student')->group(function () {
 
 // facultys controller
 Route::prefix('faculty')->group(function () {
-    Route::post('/submit','FacultyController@submit');
-    Route::get('/aboutcollage','FacultyController@aboutcollage');
+    Route::post('/submit','FacultyController@Submit');
+    Route::post('/login','Auth\FacultyLoginController@Login');
+    Route::get('/logout','Auth\FacultyLoginController@Logout');
+    Route::get('/aboutcollege','FacultyController@aboutcollege')->name('faculty.aboutcollege');
 });
 
 // parent controller
 Route::prefix('parent')->group(function () {
     Route::post('/submit','ParentController@submit');
-    Route::get('/aboutcollage','ParentController@aboutcollage');
+    Route::get('/aboutcollege','ParentController@aboutcollege');
 });
 //Alumini form submission
 Route::prefix('alumini')->group(function () {
-    Route::post('/submit','AluminiController@submit');
-    Route::get('/aboutcollage','AluminiController@aboutcollage');
+    Route::post('/submit','AluminiController@Submit');
+    Route::get('/aboutcollege','AluminiController@Aboutcollege');
 });
 
 
@@ -64,14 +66,16 @@ Route::prefix('dashboard')->group(function () {
     Route::get('/logout','Auth\AdminLoginController@Logout')->name('adminlogout');
     Route::post('/addcourse','AdminController@addcourse');
     Route::post('/getcourse','AdminController@Getcourse');
-    Route::post('/addteacher','AdminController@addteacher');
-    Route::post('/getteacherdata','AdminController@Getteacherdata');
+    Route::post('/addfaculty','AdminController@Addfaculty');
+    Route::post('/getfacultydata','AdminController@Getfacultydata');
     Route::post('/getteacher','AdminController@Getteacher');
     Route::post('/addsubject','AdminController@addsubject');
     Route::post('/getsubject','AdminController@Getsubject');
     Route::post('/addquestion','AdminController@addquestion');
     Route::post('/getquestion','AdminController@Getquestion');
     Route::post('/getdata','AdminController@Getdata');
+    Route::post('/totalfeedback','AdminController@Totalfeedback');
+    Route::get('/getpdfdata/{id}/{course}','AdminController@GetPDFdata');
     Route::post('/getalldata','AdminController@Getalldata');
     Route::get('','AdminController@dashboard')->name('dashboard');
 });
@@ -82,6 +86,12 @@ Route::prefix('dashboard')->group(function () {
 //     return view('welcome');
 // });
 
+
+Route::prefix('employee')->group(function () {
+    Route::get('/aboutcollege','EmployeeController@Aboutcollege');
+    Route::post('/submit','EmployeeController@Submit');
+
+});
 // Route::get('/home', 'StudentController@teachercurriculum')->name('home');
 Route::get('/','WelcomeController@index')->name('/');
 // Route::get('/home', 'HomeController@index')->name('home');

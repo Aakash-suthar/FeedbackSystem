@@ -48,6 +48,10 @@ return [
             'driver' => 'session',
             'provider' => 'admins',
         ],
+        'faculty' => [
+            'driver' => 'session',
+            'provider' => 'facultys',
+        ],
         'admin-api' => [
             'driver' => 'token',
             'provider' => 'admins',
@@ -80,6 +84,11 @@ return [
             'driver' => 'eloquent',
             'model' => App\Admin::class,
         ],
+        'facultys' => [
+            'driver' => 'eloquent',
+            'model' => App\Faculty::class,
+        ],
+
 
         // 'users' => [
         //     'driver' => 'database',
@@ -110,6 +119,11 @@ return [
         ],
         'admins' => [
             'provider' => 'admins',
+            'table' => 'password_resets',
+            'expire' => 60,
+        ],
+        'facultys' => [
+            'provider' => 'facultys',
             'table' => 'password_resets',
             'expire' => 60,
         ],

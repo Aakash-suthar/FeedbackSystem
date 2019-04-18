@@ -1,35 +1,34 @@
 <?php
 
 namespace App\Http\Controllers\Auth;
-use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
 use Auth;
 
-class AdminLoginController extends Controller
-{
 
+class FacultyLoginController extends Controller
+{
+    
     public function __construct()
     {
-        $this->middleware('guest:admin')->except('Logout');
+        $this->middleware('guest:faculty')->except('Logout');
     }
 
     public function Logout(){
-        Auth::guard('admin')->logout();
-      //  Auth::session()->invalidate();
+        Auth::guard('faculty')->logout();
         return redirect('/');
     }
     
 
     public function Login(Request $request){
-      //  Auth::guard()->logout();
-       // Auth::guard('faculty')->logout();
-     //   Auth::session()->invalidate();
+       // Auth::guard()->logout();
+      //  Auth::guard('admin')->logout();
             $this->validate($request,[
                 'id' => 'required',
                 'password' => 'required|min:6'
             ]);
-        if(Auth::guard('admin')->attempt(['id'=> $request->id,'password'=>$request->password])){
-            return redirect()->route('dashboard');
+        if(Auth::guard('faculty')->attempt(['id'=> $request->id,'password'=>$request->password])){
+            return redirect()->route('faculty.aboutcollege');
         }
         flash('Wrong Username or password')->error();
         return redirect()->back();

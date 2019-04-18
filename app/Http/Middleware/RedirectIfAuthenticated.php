@@ -17,9 +17,21 @@ class RedirectIfAuthenticated
      */
     public function handle($request, Closure $next, $guard = null)
     {
-        if (Auth::guard($guard)->check()) {
-            return redirect('/student/teacherandcurriculum');
-        }
-        return $next($request);
+
+      if ($guard == "admin" && Auth::guard($guard)->check()) {
+        return redirect('/dashboard');
+      }
+      if ($guard == "faculty" && Auth::guard($guard)->check()) {
+          return redirect('/faculty/aboutcollege');
+      }
+      if (Auth::guard($guard)->check()) {
+          return redirect('/student/teacherandcurriculum');
+      }
+
+    return $next($request);
+        // if (Auth::guard($guard)->check()) {
+        //     return redirect('/student/teacherandcurriculum');
+        // }
+        // return $next($request);
     }
 }

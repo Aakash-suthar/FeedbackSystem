@@ -3,18 +3,22 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\faculty\Fcollage;
+use App\Ffeedback;
 use App\Question;
 
 class FacultyController extends Controller
 {
-    public function aboutcollage(){
-        $q = Question::where('type','collage')->get();
-        return view("faculty.aboutcollageform",compact('q'));
+    public function __construct(){
+        $this->middleware('auth:faculty');
+    }
+    
+    public function aboutcollege(){
+        $q = Question::where('type','faculty')->get();
+        return view("faculty.aboutcollegeform",compact('q'));
     }
 
-    public function submit(Request $request){    
-        $s = Fcollage::create($request->all());
+    public function Submit(Request $request){    
+        $s = Ffeedback::create($request->all());
         $s->save();
         flash('Success Submitted')->success();
         return redirect('/')->with('success','Successfully Submited.');

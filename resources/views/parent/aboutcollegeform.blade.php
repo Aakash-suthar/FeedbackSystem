@@ -21,8 +21,8 @@
         <label style="margin: 5px 0px 7px 20px"class="radio-inline"><input type="radio" name="Q{{$i}}" value="5" required>Strongly Agree</label>
         <label class="radio-inline"><input type="radio" name="Q{{$i}}" value="4">Agree</label>
         <label class="radio-inline"><input type="radio" name="Q{{$i}}"value="3">Not Sure</label>
-        <label class="radio-inline"><input type="radio" name="Q{{$i++}}" value="2">Disagree</label>
-        <label class="radio-inline" style="margin-left:20px; "><input type="radio" name="Q1" value="1">Strongly Disagree</label>
+        <label class="radio-inline"><input type="radio" name="Q{{$i}}" value="2">Disagree</label>
+        <label class="radio-inline" style="margin-left:20px; "><input type="radio" name="Q{{$i++}}" value="1">Strongly Disagree</label>
     </div> <!--End of question 1--> 
     @endforeach
     
