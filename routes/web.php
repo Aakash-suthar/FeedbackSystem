@@ -59,7 +59,7 @@ Route::prefix('alumini')->group(function () {
     Route::get('/aboutcollege','AluminiController@Aboutcollege');
 });
 
-
+Route::get('/management/localmanagement','ParentController@Local');
 
 Route::prefix('dashboard')->group(function () {
     Route::post('/login', 'Auth\AdminLoginController@Login');

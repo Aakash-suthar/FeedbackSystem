@@ -11,6 +11,10 @@ use App\Teacher;
 use App\Question;
 use App\Feedback;
 use App\Faculty;
+use App\Ffeedback;
+use App\Alumini;
+use App\student\Scollage;
+use App\parent\Pcollage;
 use Session;
 use View;
 use PDF;
@@ -32,13 +36,29 @@ class AdminController extends Controller
         $questions = Question::all();
         $teachers  = Faculty::all();
         $feedback = Feedback::count();
-        return view('admin',compact('courses','subjects','questions','teachers','feedback'));
+        $ffeedback = Ffeedback::count();
+        $alumini = Alumini::count();
+        $pcollage = Pcollage::count();
+        $scollage = Scollage::count();
+
+        return view('admin',compact('courses','subjects','questions','teachers','feedback','ffeedback','scollage','pcollage','alumini'));
     }
     
     public function Totalfeedback(Request $request){
         if($request->ajax()){
             $feedback = Feedback::count();
-            return response($feedback);
+            $ffeedback = Ffeedback::count();
+            $alumini = Alumini::count();
+            $pcollage = Pcollage::count();
+            $scollage = Scollage::count();
+            $response = [
+                'feedback' => $feedback,
+                'ffeedback' => $ffeedback,
+                'alumini' => $alumini,
+                'pcollage' => $pcollage,
+                'scollage' => $scollage
+            ];
+            return response()->json($response);
         }
     }
     public function addcourse(Request $request){

@@ -62,7 +62,7 @@
                 <div class="row">
                     <div class="col-xs-6 col-md-3 tabsclass">
                       <i class="fa fa-caret-right"  aria-hidden="true"></i>
-                        <a class="tabslink"  href="/Fromemployers/Aboutemployee.php">  
+                        <a class="tabslink"  href="/management/localmanagement">  
                       About Local Management</a></div>
                 </div>
             </div><!-- End of management-->    

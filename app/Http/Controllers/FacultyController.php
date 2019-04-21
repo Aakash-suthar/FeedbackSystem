@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Ffeedback;
 use App\Question;
+use App\Faculty;
 
 class FacultyController extends Controller
 {

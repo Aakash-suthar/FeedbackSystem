@@ -10,6 +10,8 @@ use App\Subject;
 use App\Course;
 use App\Feedback;
 use App\Teacher;
+use App\User;
+
 use Auth;
 use Session;
 
@@ -33,12 +35,12 @@ class StudentController extends Controller
     } 
 
     
-    public function teachercurriculum(Request $request){
-        
-        $cquestions = Question::where('type','currriculum')->get();
+    public function teachercurriculum(){
+        $user = User::find(Auth::user()->id);
+        $cquestions = Question::where('type','curriculum')->get();
         $tquestions = Question::where('type','teacher')->get();
-        $course_id = 'B02';
-        $sem = '1';
+        $course_id =  $user->course_id;
+        $sem = $user->sem;
         $subjects = Subject::where('course_id',$course_id)->where('sem',$sem)->get();
          return view('student.teacherandcurriculumform',compact('cquestions','subjects','tquestions','sem','course_id'));
     }

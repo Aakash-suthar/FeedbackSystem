@@ -20,5 +20,8 @@ class ParentController extends Controller
         return redirect('/')->with('success','Successfully Submited.');
     }
     
+    public function Local(){
+        return view('management.local');
+    }
   
 }

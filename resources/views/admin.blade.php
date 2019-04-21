@@ -210,14 +210,6 @@
 
                 <ul class="list-unstyled components">
                     <li class="active"> <a href="#home" data-toggle="pill">Home</a></li> 
-                    {{-- <li class="active">
-                        <a href="#homeSubmenu" data-toggle="collapse" aria-expanded="false">Home</a>
-                        <ul class="collapse list-unstyled" id="homeSubmenu">
-                            <li><a href="#">Home 1</a></li>
-                            <li><a href="#">Home 2</a></li>
-                            <li><a href="#">Home 3</a></li>
-                        </ul>
-                    </li> --}}
                     <li><a href="#overalltab" data-toggle="pill">Overall Report</a></li>
                     <li>
                         <a href="#pageSubmenu" data-toggle="collapse" aria-expanded="false">Actions</a>
@@ -277,9 +269,47 @@
                 <div class="container-fluid">
                         <div class="tab-content" style="min-height: 20vh; ">
                             <div id="home"  class="tab-pane fade in active">
-                                <button id="totalfeedback" class="btn btn-info btn-lg" style="width:200px;height:150px;">{{$feedback}}</button>
-                                <p>Total Forms Submitted.</p>
-                                
+                                <div class="row">
+                                    <div style="margin-bottom:0px" class="col-xs-4">
+                                        <div align="center">
+                                            <button id="feedback" class="btn btn-info btn-lg" style="width:200px;height:150px;">{{$feedback}}</button>
+                                            <p style="padding-top:5px;">Total Feedback Form submitted.</p>    
+                                        </div>
+                                    </div>
+                                    <div style="margin-bottom:0px" class="col-xs-4">
+                                            <div align="center">
+                                                <button id="facultysss" class="btn btn-info btn-lg" style="width:200px;height:150px;">{{$ffeedback}}</button>
+                                                <p style="padding-top:5px;">Total Faculty Feedback submitted.</p>
+                                            </div>    
+                                    </div>
+                                    <div style="margin-bottom:0px" class="col-xs-4">
+                                        <div align="center">
+                                            <button id="parent" class="btn btn-info btn-lg" style="width:200px;height:150px;">{{$pcollage}}</button>
+                                            <p style="padding-top:5px;">Total Parent Feedback submitted.</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <br>
+                                <br>
+                                <div class="row">
+                                    <div class="col-xs-4">
+                                        <div align="center">
+                                            <button id="student" class="btn btn-info btn-lg" style="width:200px;height:150px;">{{$scollage}}</button>
+                                            <p style="padding-top:5px;">Total Student Feedback submitted.</p>
+                                        </div>
+                                    </div>
+                                    <div class="col-xs-4">
+                                        <div align="center">
+                                            <button id="alumini" class="btn btn-info btn-lg" style="width:200px;height:150px;">{{$alumini}}</button>
+                                            <p style="padding-top:5px;">Total Alumini Feedback submitted.</p>
+                                        </div>
+                                    </div>
+                                    <div class="col-xs-4">
+                                        <div align="center">
+                                            <button id="totalfeedback" class="btn btn-light btn-lg" style="width:200px;height:150px;">Refresh</button>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                             <div id="actions" class="tab-pane fade in">
                             </div>
@@ -993,11 +1023,20 @@
                 $.ajax({
                     url      : "/dashboard/totalfeedback",
                     type     : 'POST',
+                    dataType: 'json',
                     success  : function(data) {
-                        $('#totalfeedback').text(data);
+                        $('#feedback').text(data.feedback);
+                        $('#parent').text(data.pcollage);
+                        $('#student').text(data.scollage);
+                        $('#facultysss').text(data.faculty);
+                        $('#ffeedback').text(data.ffeedback);
                         }, 
                     error: function (reject) {
-                        $('#totalfeedback').text('Error. Try Again');
+                        $('#parent').text('Error. Try Again');
+                        $('#student').text('Error. Try Again');
+                        $('#feedback').text('Error. Try Again');
+                        $('#facultysss').text('Error. Try Again');
+                        $('#ffeedback').text('Error. Try Again');
                     }
                  }); 
                 });
