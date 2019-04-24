@@ -224,7 +224,11 @@
                         <a href="#reports" data-toggle="pill">Reports</a>
                     </li>
                     <li>
-                        <a href="#profile" data-toggle="pill">Profile</a>
+                        <a href="#pageSubmenu2" data-toggle="collapse" aria-expanded="false">Curriculum</a>
+                        <ul class="collapse list-unstyled" id="pageSubmenu2">
+                        <li><a href="#profile" data-toggle="pill">Subject Wise Report</a></li>
+                        <li><a href="#profileoverall" data-toggle="pill">Overall Report</a></li>
+                        </ul>
                     </li>
                 </ul>
 
@@ -388,9 +392,54 @@
                                     
                                     
                             </div>
-                            <div id="profile"  class="tab-pane fade in">
-                                <h1>Welcome to profile</h1>
+                            <div id="profileoverall"  class="tab-pane fade in">
+                                <div class="col-xs-12" >
+                                    <button class="btn btn-lg btn-info" style="margin:10px;width:140px;height:50px;" id="getcurriculumreport">Get Report</button>
+                                    <button class="btn btn-lg btn-warning" id="getcurriculumreportrefresh" style="margin:10px;width:140px;height:50px;">Refresh</button>
+                                </div>
+                                <div id="showcurriculumdata" class="col-xs-12" >
+
+                                </div>
                             </div>
+                            <div id="profile"  class="tab-pane fade in">
+                                    <div class="container-fluid">
+                                        {!! Form::open(['class'=>'form-inline','id'=>'curriculumform','method'=>'POST','autocomplete'=>'off']) !!}
+                                            <div class="form-group" style="padding:10px;">
+                                                {{Form::label('', 'Course*')}}
+                                                <select id="course_id2" name="course_id2" class="form-control" style="cursor:pointer;padding-left:5px;">
+                                                    
+                                                @if(!$courses->isEmpty())
+                                                        @foreach($courses as $course)
+                                                            <option value="{{$course->id}}">{{$course->name}}</option>
+                                                        @endforeach
+                                                    @endif
+                                                </select>
+                                            </div>
+                                            <div class="form-group" style="padding:10px;">
+                                                    {{Form::label('', 'Subject*')}}
+                                                    <select id="subject2" name="subject_id" class="form-control" style="cursor:pointer;min-width:40px;padding-left:5px;padding-right:5px;">
+                                                    </select>
+                                                    <button type="button" id="getsubject2" class="btn btn-default">Get Subjects</button>
+                                            </div>
+    
+                                            <button type="submit" class="btn btn-default">Submit</button>
+    
+                                            <div class="form-group" id="loading2" style="display:none;padding:10px;">
+                                                <i class="fa fa-spinner fa-spin" style="font-size:44px;"></i>
+                                            </div>
+                                            <div  class="form-group">
+                                                    <span id="getsuccess10" class="text-success"></span>
+                                                    <span id="getdanger10" class="text-danger"></span>
+                                                </div>
+                                        {!! Form::close() !!}<!--End of Form-->
+                                    </div>
+                                    <div class="container-fluid" style="margin-top:20px;">
+                                        <div id="curriculumgraph" clas="container"  style = "width: 550px; height: 400px;">
+                                            </div>
+                                    </div>
+                                        
+                                        
+                                </div>
                             <div id="course"  class="tab-pane fade in">
                                 <div class="row">
                                     <div class="col-xs-12" >
@@ -749,7 +798,6 @@
                         setTimeout(() => {
                         $("#danger3").fadeOut('slow');  
                         }, 5000);
-                        //console.log(errors);
                     }
                 }
                 });
@@ -769,7 +817,6 @@
                         setTimeout(() => {
                         $("#success4").fadeOut('slow');  
                         }, 2000); 
-                      //  console.log(data);
                     },
                     complete: function(){
                     $('#questionrefresh').click();
@@ -874,7 +921,6 @@
                         setTimeout(() => {
                         $("#getdanger").fadeOut('slow');  
                         }, 2000); 
-                        //console.log(errors);
                     }
                     else{
                          var error = $.parseJSON(reject.responseText);
@@ -887,26 +933,85 @@
                         // setTimeout(() => {
                         // $("#getdanger").fadeOut('slow');  
                         // }, 2000); 
-                   // console.log(reject);
                 }
                 });
                 
             });
 
-            $("#getteacher").click(function(){
+            $("#curriculumform").submit(function(e){
+                e.preventDefault();
+                var form1 = $(this);
                 $.ajax({
-                url      : "/dashboard/getteacher",
+                url      : "/dashboard/curriculumdata",
                 type     : 'POST',
                 cache    : false,
-                data     : {'course_id':$('#course_id').val() ,
-                             'sem':$('#sem').val()
+                data     : form1.serialize(),
+                dataType: 'json',
+                beforeSend: function(){
+                    $('#loading2').show();
+                },
+                complete: function(){
+                    $('#loading2').hide();
+                },
+                success  : function(data1) {
+                    function drawChart(data2) { 
+                        var data = google.visualization.arrayToDataTable(data2);
+            
+                        var options = {title: 'Reports (Percentage)',
+                                        animation:{ duration: 1000,
+                                                    easing: 'linear',
+                                                    startup: true },
+                                        hAxis: {title: 'Questions'},
+                                        'width':1000,
+                                        'height':600,
+                                        colors: ['#FF2300', '#FF9E00', '#F7FF00', '#8DFF00', '#00FF00'], 
+                                        isStacked:true};  
+            
+                        // Instantiate and draw the chart.
+                        var chart = new google.visualization.ColumnChart(document.getElementById('curriculumgraph'));
+                        chart.draw(data, options);
+                    }
+                    google.charts.setOnLoadCallback(drawChart(data1['chart']));
+                           
+                    },
+                error: function (reject) {
+                    var error3=" ";
+                    if( reject.status === 422 ) {
+                        var errors3 = $.parseJSON(reject.responseText);
+                        $.each(errors3, function(key,val){
+                        
+                            error3  = error3 + (val[0]);
+                        })
+                        $("#getdanger10").fadeIn().html(error3);
+                        setTimeout(() => {
+                        $("#getdanger10").fadeOut('slow');  
+                        }, 2000); 
+                    }
+                    else{
+                         var error = $.parseJSON(reject.responseText);
+                        $("#getdanger10").fadeIn().html(error['error']);
+                        setTimeout(() => {
+                        $("#getdanger10").fadeOut('slow');  
+                        }, 5000);
+                    }
+                }
+                });
+                
+            });
+
+            
+
+            $("#getsubject2").click(function(){
+                $.ajax({
+                url      : "/dashboard/getsubject2",
+                type     : 'POST',
+                cache    : false,
+                data     : {'course_id':$('#course_id2').val() ,
                             },
                 dataType: 'json',
                 success  : function(data) {
-                    // console.log(data);
-                    var t =  $('#teacher');
+                    var t =  $('#subject2');
                     t.empty();
-                   // console.log(data);
                     $.each(data, function(index){
                         
                         t.append('<option value="'+ data[index].id +'">'+data[index].name+'</option>');
@@ -917,6 +1022,30 @@
                 }
                 }); 
             });
+            $("#getteacher").click(function(){
+                $.ajax({
+                url      : "/dashboard/getteacher",
+                type     : 'POST',
+                cache    : false,
+                data     : {'course_id':$('#course_id').val() ,
+                             'sem':$('#sem').val()
+                            },
+                dataType: 'json',
+                success  : function(data) {
+                    var t =  $('#teacher');
+                    t.empty();
+                    $.each(data, function(index){
+                        
+                        t.append('<option value="'+ data[index].id +'">'+data[index].name+'</option>');
+                        })
+                    },
+                error: function (reject) {
+                    console.log(reject);
+                }
+                }); 
+            });
+
+            
 
             $("#courserefresh").click(function(){
                 $("#coursetable tr").remove();
@@ -934,8 +1063,9 @@
                 error: function (reject) {
                     console.log(reject);
                 }
-            }); 
+                }); 
             });
+
             $("#teacherrefresh").click(function(){
                 $("#teachertable tr").remove();
                 $.ajax({
@@ -952,8 +1082,9 @@
                 error: function (reject) {
                     console.log(reject);
                 }
-            }); 
+                }); 
             });
+
             $("#subjectrefresh").click(function(){
                 $("#subjecttable tr").remove();
                 $.ajax({
@@ -970,8 +1101,9 @@
                 error: function (reject) {
                     console.log(reject);
                 }
-            }); 
+                }); 
             });
+
             $("#questionrefresh").click(function(){
                 $("#questiontable tr").remove();
                 $.ajax({
@@ -988,35 +1120,63 @@
                 error: function (reject) {
                     console.log(reject);
                 }
-            }); 
+                }); 
             });
 
             $("#getallreport").click(function(){
+                $("#showalldata").empty();
                 $.ajax({
-                url      : "/dashboard/getalldata",
-                type     : 'POST',
-                cache    : false,
-                dataType: 'json',
-                success  : function(data) {
-                    $.each(data, function(index){
-                        var container = $("#showalldata");
-                       // console.log(data[index].name);
-                        container.append('<p align="center"><b>'+data[index].name+'</b></p><br>');
-                        container.append('<table id = '+ data[index].id +' class="table table-bordered"><thead><tr><th>Name</th><th>Excellent</th><th>Very Good</th><th>Good</th><th>Satisfactory</th><th>Needs Improvement</th></tr></thead><tbody>');
-                        var temp = data[index].allsubjects;
-                        var tableid = '#'+data[index].id;
-                       var table = $(tableid);
-                        $.each(temp, function(index2){
-                           table.append('<tr><td>'+temp[index2].faculty+'</td><td>'+temp[index2].Q5+'</td><td>'+temp[index2].Q4+'</td><td>'+temp[index2].Q3+'</td><td>'+temp[index2].Q2+'</td><td>'+temp[index2].Q1+'</td></tr>');
-                           
+                    url      : "/dashboard/getalldata",
+                    type     : 'POST',
+                    cache    : false,
+                    dataType: 'json',
+                    success  : function(data) {
+                        $.each(data, function(index){
+                            var container = $("#showalldata");
+                            container.append('<p align="center"><b>'+data[index].name+'</b></p><br>');
+                            container.append('<table id = '+ data[index].id +' class="table table-bordered"><thead><tr><th>Name</th><th>Excellent</th><th>Very Good</th><th>Good</th><th>Satisfactory</th><th>Needs Improvement</th></tr></thead><tbody>');
+                            var temp = data[index].allsubjects;
+                            var tableid = '#'+data[index].id;
+                        var table = $(tableid);
+                            $.each(temp, function(index2){
+                            table.append('<tr><td>'+temp[index2].faculty+'</td><td>'+temp[index2].Q5+'</td><td>'+temp[index2].Q4+'</td><td>'+temp[index2].Q3+'</td><td>'+temp[index2].Q2+'</td><td>'+temp[index2].Q1+'</td></tr>');
+                            
+                            })
+                            table.append('</tbody></table><br>');
                         })
-                        table.append('</tbody></table><br>');
-                    })
-                },
-                error: function (reject) {
-                    console.log(reject);
-                }
-            }); 
+                    },
+                    error: function (reject) {
+                        console.log(reject);
+                    }
+                }); 
+            });
+
+            $("#getcurriculumreport").click(function(){
+                $("#showcurriculumdata").empty();
+                $.ajax({
+                    url      : "/dashboard/getcurriculumdata",
+                    type     : 'POST',
+                    cache    : false,
+                    dataType: 'json',
+                    success  : function(data) {
+                        $.each(data, function(index){
+                            var container = $("#showcurriculumdata");
+                            container.append('<p align="center"><b>'+data[index].name+'</b></p><br>');
+                            container.append('<table id = new'+ data[index].id +' class="table table-bordered"><thead><tr><th>Name</th><th>Excellent</th><th>Very Good</th><th>Good</th><th>Satisfactory</th><th>Needs Improvement</th></tr></thead><tbody>');
+                            var temp = data[index].allsubjects;
+                            var tableid = '#new'+data[index].id;
+                        var table = $(tableid);
+                            $.each(temp, function(index2){
+                            table.append('<tr><td>'+temp[index2].subject+'</td><td>'+temp[index2].Q5+'</td><td>'+temp[index2].Q4+'</td><td>'+temp[index2].Q3+'</td><td>'+temp[index2].Q2+'</td><td>'+temp[index2].Q1+'</td></tr>');
+                            
+                            })
+                            table.append('</tbody></table><br>');
+                        })
+                    },
+                    error: function (reject) {
+                        console.log(reject);
+                    }
+                }); 
             });
 
             $('#totalfeedback').click(function(){
@@ -1045,6 +1205,15 @@
 
         <!--Other script-->
         <script>
+
+                $('#getcurriculumreportrefresh').click(function(){
+                    $("#showcurriculumdata").empty();
+                    $("#getcurriculumreport").click();
+                });
+                $('#getallreportrefresh').click(function(){
+                    $("#showalldata").empty();
+                    $("#getallreport").click();
+                });
                 $("#course_id").change(function(){
                     $('#teacher').empty();
                     $('#all').empty();
@@ -1056,6 +1225,9 @@
                     $('#Q3').empty();
                     $('#Q2').empty();
                     $('#Q1').empty();
+                });
+                $("#course_id2").change(function(){
+                    $('#subject2').empty();               
                 });
                 $("#sem").change(function(){
                     $('#teacher').empty();

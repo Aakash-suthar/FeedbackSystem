@@ -52,7 +52,6 @@ class StudentController extends Controller
             'sem'=>'required',
             'course_id'=>'required|exists:courses,id',
             ]);
-            // $course = Course::find($request->input('course_id'));
             $subjects = Subject::where('course_id',$request->input('course_id'))->where('sem',$request->input('sem'))->get();
             $i = 1;
             $q = 1;

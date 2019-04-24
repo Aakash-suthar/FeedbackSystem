@@ -78,6 +78,10 @@ Route::prefix('dashboard')->group(function () {
     Route::get('/getpdfdata/{id}/{course}','AdminController@GetPDFdata');
     Route::post('/getalldata','AdminController@Getalldata');
     Route::get('','AdminController@dashboard')->name('dashboard');
+    Route::post('/getcurriculumdata','AdminController@Getcurriculumdata');
+    Route::post('/curriculumdata','AdminController@Getcurriculum');
+    Route::post('/getsubject2','AdminController@Getsubject2');
+    
 });
 // Route::get('/',function(){
 //     // $title = 'hello';

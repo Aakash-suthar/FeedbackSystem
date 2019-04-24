@@ -484,6 +484,195 @@ class AdminController extends Controller
         return response($alldata);
     }
 
+    public function Getsubject2(Request $request){
+        if($request->ajax()){
+            $this->validate($request,[
+            'course_id'=>'required|exists:courses,id',
+            ]);
+            $course_id = $request->input('course_id');
+            $subjects = Subject::where('course_id',$course_id)->get();
+             $all=array();
+            foreach($subjects as $sub){
+                array_push($all,array ('id' => $sub->id,
+                    'name'=> $sub->name,
+                ));
+            }
+            return response($all);
+        }
+    }
+    public function Getcurriculumdata(Request $request){
+        if($request->ajax()){
+
+            $alldata = array();
+            $courses = Course::all();
+            foreach($courses as $course)
+            {
+               
+                $subjectsarray = array();
+                $subjects =  Subject::where('course_id',$course->id)->get();
+                if($subjects->count()>0){
+                    foreach($subjects as $sub){
+
+                        $Totatfeedback = Feedback::where('teacher_id',$sub->faculty->id)->count();
+                        if($Totatfeedback>0){
+                            $Q111 = number_format((float)(((Feedback::where('teacher_id',$sub->faculty->id)->where('Q11','1')->count())/$Totatfeedback)*100), 3, '.', '');
+                            $Q112 = number_format((float)(((Feedback::where('teacher_id',$sub->faculty->id)->where('Q11','2')->count())/$Totatfeedback)*100), 3, '.', '');
+                            $Q113 = number_format((float)(((Feedback::where('teacher_id',$sub->faculty->id)->where('Q11','3')->count())/$Totatfeedback)*100), 3, '.', '');
+                            $Q114 = number_format((float)(((Feedback::where('teacher_id',$sub->faculty->id)->where('Q11','4')->count())/$Totatfeedback)*100), 3, '.', '');
+                            $Q115 = number_format((float)(((Feedback::where('teacher_id',$sub->faculty->id)->where('Q11','5')->count())/$Totatfeedback)*100), 3, '.', '');
+                            $Q121 = number_format((float)(((Feedback::where('teacher_id',$sub->faculty->id)->where('Q12','1')->count())/$Totatfeedback)*100), 3, '.', '');
+                            $Q122 = number_format((float)(((Feedback::where('teacher_id',$sub->faculty->id)->where('Q12','2')->count())/$Totatfeedback)*100), 3, '.', '');
+                            $Q123 = number_format((float)(((Feedback::where('teacher_id',$sub->faculty->id)->where('Q12','3')->count())/$Totatfeedback)*100), 3, '.', '');
+                            $Q124 = number_format((float)(((Feedback::where('teacher_id',$sub->faculty->id)->where('Q12','4')->count())/$Totatfeedback)*100), 3, '.', '');
+                            $Q125 = number_format((float)(((Feedback::where('teacher_id',$sub->faculty->id)->where('Q12','5')->count())/$Totatfeedback)*100), 3, '.', '');
+                            $Q131 = number_format((float)(((Feedback::where('teacher_id',$sub->faculty->id)->where('Q13','1')->count())/$Totatfeedback)*100), 3, '.', '');
+                            $Q132 = number_format((float)(((Feedback::where('teacher_id',$sub->faculty->id)->where('Q13','2')->count())/$Totatfeedback)*100), 3, '.', '');
+                            $Q133 = number_format((float)(((Feedback::where('teacher_id',$sub->faculty->id)->where('Q13','3')->count())/$Totatfeedback)*100), 3, '.', '');
+                            $Q134 = number_format((float)(((Feedback::where('teacher_id',$sub->faculty->id)->where('Q13','4')->count())/$Totatfeedback)*100), 3, '.', '');
+                            $Q135 = number_format((float)(((Feedback::where('teacher_id',$sub->faculty->id)->where('Q13','5')->count())/$Totatfeedback)*100), 3, '.', '');
+                            $Q141 = number_format((float)(((Feedback::where('teacher_id',$sub->faculty->id)->where('Q14','1')->count())/$Totatfeedback)*100), 3, '.', '');
+                            $Q142 = number_format((float)(((Feedback::where('teacher_id',$sub->faculty->id)->where('Q14','2')->count())/$Totatfeedback)*100), 3, '.', '');
+                            $Q143 = number_format((float)(((Feedback::where('teacher_id',$sub->faculty->id)->where('Q14','3')->count())/$Totatfeedback)*100), 3, '.', '');
+                            $Q144 = number_format((float)(((Feedback::where('teacher_id',$sub->faculty->id)->where('Q14','4')->count())/$Totatfeedback)*100), 3, '.', '');
+                            $Q145 = number_format((float)(((Feedback::where('teacher_id',$sub->faculty->id)->where('Q14','5')->count())/$Totatfeedback)*100), 3, '.', '');
+                            $totalQ1 = number_format((float)(($Q111 +$Q121 + $Q131 +$Q141)/4), 2, '.', ''); 
+                            $totalQ2 = number_format((float)(($Q112 +$Q122 + $Q132 +$Q142)/4), 2, '.', ''); 
+                            $totalQ3 = number_format((float)(($Q113 +$Q123 + $Q133 +$Q143)/4), 2, '.', ''); 
+                            $totalQ4 = number_format((float)(($Q114 +$Q124 + $Q134 +$Q144)/4), 2, '.', ''); 
+                            $totalQ5 = number_format((float)(($Q115 +$Q125 + $Q135 +$Q145)/4), 2, '.', ''); 
+                            
+                            
+                            array_push($subjectsarray,[
+                                'subject' => $sub->name,
+                                'Q1' => $totalQ1,
+                                'Q2' => $totalQ2,
+                                'Q3' => $totalQ3,
+                                'Q4' => $totalQ4,
+                                'Q5' => $totalQ5
+                            ]);
+                        
+                        }
+                        else{
+                            array_push($subjectsarray,[
+                                'subject' => $sub->name,
+                                'Q1' => 0,
+                                'Q2' => 0,
+                                'Q3' => 0,
+                                'Q4' => 0,
+                                'Q5' => 0
+                            ]); 
+                        }
+                    }
+                }
+                $coursearray = array(
+                    'name' => $course->name,
+                    'id' => $course->id,
+                    'allsubjects' => $subjectsarray,
+                );
+                array_push($alldata,$coursearray);
+            }
+        }
+
+        return response($alldata);
+    }
+
+    public function Getcurriculum(Request $request){
+        if($request->ajax()){
+            $this->validate($request,[
+            'course_id2'=>'required|exists:courses,id',
+            'subject_id' =>'required|exists:subjects,id',
+            ]);
+            $course_id = $request->input('course_id2');
+            $subject_id = $request->input('subject_id');
+            
+            //$subjects = Subject::where('course_id',$course_id)->where('sem',$sem)->get();
+            $Totatfeedback = Feedback::where('course_id',$course_id)->where('subject_id',$subject_id)->count();
+
+            if($Totatfeedback>0){
+                  //  $Totatfeedback = Feedback::where('course_id',$request->input('course_id'))->where('sem','6')->where('teacher_id',$subject->teacher_id)->count();
+                   // $Q11 = (((Feedback::where('course_id',$course_id)->where('sem',$sem)->where('teacher_id',$teacher_id)->where('Q1','1')->count())/$Totatfeedback)*100);
+                    $Q111 = number_format((float)(((Feedback::where('course_id',$course_id)->where('subject_id',$subject_id)->where('Q11','1')->count())/$Totatfeedback)*100), 3, '.', '');
+                    $Q112 = number_format((float)(((Feedback::where('course_id',$course_id)->where('subject_id',$subject_id)->where('Q11','2')->count())/$Totatfeedback)*100), 3, '.', '');
+                    $Q113 = number_format((float)(((Feedback::where('course_id',$course_id)->where('subject_id',$subject_id)->where('Q11','3')->count())/$Totatfeedback)*100), 3, '.', '');
+                    $Q114 = number_format((float)(((Feedback::where('course_id',$course_id)->where('subject_id',$subject_id)->where('Q11','4')->count())/$Totatfeedback)*100), 3, '.', '');
+                    $Q115 = number_format((float)(((Feedback::where('course_id',$course_id)->where('subject_id',$subject_id)->where('Q11','5')->count())/$Totatfeedback)*100), 3, '.', '');
+                    $Q121 = number_format((float)(((Feedback::where('course_id',$course_id)->where('subject_id',$subject_id)->where('Q12','1')->count())/$Totatfeedback)*100), 3, '.', '');
+                    $Q122 = number_format((float)(((Feedback::where('course_id',$course_id)->where('subject_id',$subject_id)->where('Q12','2')->count())/$Totatfeedback)*100), 3, '.', '');
+                    $Q123 = number_format((float)(((Feedback::where('course_id',$course_id)->where('subject_id',$subject_id)->where('Q12','3')->count())/$Totatfeedback)*100), 3, '.', '');
+                    $Q124 = number_format((float)(((Feedback::where('course_id',$course_id)->where('subject_id',$subject_id)->where('Q12','4')->count())/$Totatfeedback)*100), 3, '.', '');
+                    $Q125 = number_format((float)(((Feedback::where('course_id',$course_id)->where('subject_id',$subject_id)->where('Q12','5')->count())/$Totatfeedback)*100), 3, '.', '');
+                    $Q131 = number_format((float)(((Feedback::where('course_id',$course_id)->where('subject_id',$subject_id)->where('Q13','1')->count())/$Totatfeedback)*100), 3, '.', '');
+                    $Q132 = number_format((float)(((Feedback::where('course_id',$course_id)->where('subject_id',$subject_id)->where('Q13','2')->count())/$Totatfeedback)*100), 3, '.', '');
+                    $Q133 = number_format((float)(((Feedback::where('course_id',$course_id)->where('subject_id',$subject_id)->where('Q13','3')->count())/$Totatfeedback)*100), 3, '.', '');
+                    $Q134 = number_format((float)(((Feedback::where('course_id',$course_id)->where('subject_id',$subject_id)->where('Q13','4')->count())/$Totatfeedback)*100), 3, '.', '');
+                    $Q135 = number_format((float)(((Feedback::where('course_id',$course_id)->where('subject_id',$subject_id)->where('Q13','5')->count())/$Totatfeedback)*100), 3, '.', '');
+                    $Q141 = number_format((float)(((Feedback::where('course_id',$course_id)->where('subject_id',$subject_id)->where('Q14','1')->count())/$Totatfeedback)*100), 3, '.', '');
+                    $Q142 = number_format((float)(((Feedback::where('course_id',$course_id)->where('subject_id',$subject_id)->where('Q14','2')->count())/$Totatfeedback)*100), 3, '.', '');
+                    $Q143 = number_format((float)(((Feedback::where('course_id',$course_id)->where('subject_id',$subject_id)->where('Q14','3')->count())/$Totatfeedback)*100), 3, '.', '');
+                    $Q144 = number_format((float)(((Feedback::where('course_id',$course_id)->where('subject_id',$subject_id)->where('Q14','4')->count())/$Totatfeedback)*100), 3, '.', '');
+                    $Q145 = number_format((float)(((Feedback::where('course_id',$course_id)->where('subject_id',$subject_id)->where('Q14','5')->count())/$Totatfeedback)*100), 3, '.', '');
+                   
+                    // $totalQ1 = number_format((float)(($Q111 +$Q121 + $Q131 +$Q141)/4), 2, '.', ''); 
+                    // $totalQ2 = number_format((float)(($Q112 +$Q122 + $Q132 +$Q142)/4), 2, '.', ''); 
+                    // $totalQ3 = number_format((float)(($Q113 +$Q123 + $Q133 +$Q143)/4), 2, '.', ''); 
+                    // $totalQ4 = number_format((float)(($Q114 +$Q124 + $Q134 +$Q144)/4), 2, '.', ''); 
+                    // $totalQ5 = number_format((float)(($Q115 +$Q125 + $Q135 +$Q145)/4), 2, '.', ''); 
+
+                    //$year = date('YYYY');
+                   // $year = $year->isoFormat('dddd D');
+                  
+
+                //    $date = Carbon::now();
+                //    $date2 = $date->toFormattedDateString();
+                //    $date2 = $date->format('F d, Y'); 
+                //    $date->settings([
+                //     'toStringFormat' => 'jS \o\f F, Y g:i:s a',
+                // ]);
+                  // $date->toFormattedDateString();  
+
+                    $Response =[
+                           'chart' => [
+                        ['Question', 'Strongly Disagree', 'Disagree','Not Sure','Agree','Strongly Agree'],
+                        ['1',(float)$Q111,(float)$Q112,(float)$Q113,(float)$Q114,(float)$Q115],
+                        ['2',(float)$Q121,(float)$Q122,(float)$Q123,(float)$Q124,(float)$Q125],
+                        ['3',(float)$Q131,(float)$Q132,(float)$Q133,(float)$Q134,(float)$Q135],
+                        ['4',(float)$Q141,(float)$Q142,(float)$Q143,(float)$Q144,(float)$Q145]
+                           ]
+                        //    'Report' => [
+                        //        'Q1' => $totalQ1,
+                        //        'Q2' => $totalQ2,
+                        //        'Q3' => $totalQ3,
+                        //        'Q4' => $totalQ4,
+                        //        'Q5' => $totalQ5,
+                        //     'all' => ($totalQ5+$totalQ4+$totalQ3)],
+                        //        'Faculty' => $teachername->name,
+                        //        'pdf' => $teacher_id,
+                        //        'course_id' => $course_id,
+                        //        'year' =>  $date2,
+                ];
+
+                //     // $Q1 = Feedback::where('course_id',$request->input('course_id'))->where('sem','6')->where('teacher_id',$subject->teacher_id)->where('Q1','2')->get();
+            }
+            else {
+                // $Response   = [
+                //     ['Q11' => 0, 'Q12' => 0, 'Q13' => 0, 'Q14' => 0, 'Q15' => 0],
+                //     ['Q21' => 0, 'Q22' => 0, 'Q23' => 0, 'Q24' => 0, 'Q25' => 0],
+                //     ['Q31' => 0, 'Q32' => 0, 'Q33' => 0, 'Q34' => 0, 'Q35' => 0],
+                //     ['Q41' => 0, 'Q42' => 0, 'Q43' => 0, 'Q44' => 0, 'Q45' => 0],
+                //     ['Q51' => 0, 'Q52' => 0, 'Q53' => 0, 'Q54' => 0, 'Q55' => 0],
+                //     ['Q61' => 0, 'Q62' => 0, 'Q63' => 0, 'Q64' => 0, 'Q65' => 0],
+                //     ['Q71' => 0, 'Q72' => 0, 'Q73' => 0, 'Q74' => 0, 'Q75' => 0],
+                //     ['Q81' => 0, 'Q82' => 0, 'Q83' => 0, 'Q84' => 0, 'Q85' => 0],
+                //     ['Q91' => 0, 'Q92' => 0, 'Q93' => 0, 'Q94' => 0, 'Q95' => 0],
+                //     ['Q101' =>0, 'Q102' =>0, 'Q103' =>0, 'Q104' =>0, 'Q105' =>0]
+                // ];  
+                return response()->json(['error'=>'No Feedback Found!!!'],423);  
+            
+            }
+        
+              return response(json_encode($Response));
+        }
+    }
     public function GetPDFdata($id,$course){
         $course_id = $course;
         $teacher_id =$id;

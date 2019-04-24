@@ -49,7 +49,7 @@
                 <th> Teacher Question</th>
                 @if(!$subjects->isEmpty())
                 @foreach($subjects as $s)
-                    <th>{{$s->name}}</th>
+                <th><pre align="center">{{$s->name}}</pre>{{$s->faculty->name}}</th>
                 @endforeach
                 @endif
                 </thead>
