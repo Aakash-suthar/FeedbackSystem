@@ -13,9 +13,19 @@ class AddColumnsToUsersTable extends Migration
      */
     public function up()
     {
-        Schema::table('users', function (Blueprint $table) {
+        Schema::create('users', function (Blueprint $table) {
+            $table->string('id')->unique();
+            $table->primary('id');
+            $table->string('fname');
+            $table->string('mname');
+            $table->string('lname');
+            $table->string('email')->unique();
+            $table->string('password');
             $table->string('sem');
             $table->string('course_id');
+            $table->string('phoneno');
+            $table->rememberToken();
+            $table->timestamps();
             $table->foreign('course_id')->references('id')->on('courses');
         });
     }
@@ -27,8 +37,6 @@ class AddColumnsToUsersTable extends Migration
      */
     public function down()
     {
-        Schema::table('users', function (Blueprint $table) {
-            //
-        });
+            Schema::dropIfExists('users');
     }
 }

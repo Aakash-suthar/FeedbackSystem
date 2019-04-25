@@ -197,6 +197,7 @@
                       </div>
         
             </div>
+
         <div class="wrapper">
             <!-- Sidebar Holder -->
             <nav id="sidebar">
@@ -210,6 +211,7 @@
 
                 <ul class="list-unstyled components">
                     <li class="active"> <a href="#home" data-toggle="pill">Home</a></li> 
+                    <li><a href="#studenttab" data-toggle="pill">Add Student</a></li> 
                     <li><a href="#overalltab" data-toggle="pill">Overall Report</a></li>
                     <li>
                         <a href="#pageSubmenu" data-toggle="collapse" aria-expanded="false">Actions</a>
@@ -402,44 +404,44 @@
                                 </div>
                             </div>
                             <div id="profile"  class="tab-pane fade in">
-                                    <div class="container-fluid">
-                                        {!! Form::open(['class'=>'form-inline','id'=>'curriculumform','method'=>'POST','autocomplete'=>'off']) !!}
-                                            <div class="form-group" style="padding:10px;">
-                                                {{Form::label('', 'Course*')}}
-                                                <select id="course_id2" name="course_id2" class="form-control" style="cursor:pointer;padding-left:5px;">
-                                                    
-                                                @if(!$courses->isEmpty())
-                                                        @foreach($courses as $course)
-                                                            <option value="{{$course->id}}">{{$course->name}}</option>
-                                                        @endforeach
-                                                    @endif
+                                <div class="container-fluid">
+                                    {!! Form::open(['class'=>'form-inline','id'=>'curriculumform','method'=>'POST','autocomplete'=>'off']) !!}
+                                        <div class="form-group" style="padding:10px;">
+                                            {{Form::label('', 'Course*')}}
+                                            <select id="course_id2" name="course_id2" class="form-control" style="cursor:pointer;padding-left:5px;">
+                                                
+                                            @if(!$courses->isEmpty())
+                                                    @foreach($courses as $course)
+                                                        <option value="{{$course->id}}">{{$course->name}}</option>
+                                                    @endforeach
+                                                @endif
+                                            </select>
+                                        </div>
+                                        <div class="form-group" style="padding:10px;">
+                                                {{Form::label('', 'Subject*')}}
+                                                <select id="subject2" name="subject_id" class="form-control" style="cursor:pointer;min-width:40px;padding-left:5px;padding-right:5px;">
                                                 </select>
+                                                <button type="button" id="getsubject2" class="btn btn-default">Get Subjects</button>
+                                        </div>
+
+                                        <button type="submit" class="btn btn-default">Submit</button>
+
+                                        <div class="form-group" id="loading2" style="display:none;padding:10px;">
+                                            <i class="fa fa-spinner fa-spin" style="font-size:44px;"></i>
+                                        </div>
+                                        <div  class="form-group">
+                                                <span id="getsuccess10" class="text-success"></span>
+                                                <span id="getdanger10" class="text-danger"></span>
                                             </div>
-                                            <div class="form-group" style="padding:10px;">
-                                                    {{Form::label('', 'Subject*')}}
-                                                    <select id="subject2" name="subject_id" class="form-control" style="cursor:pointer;min-width:40px;padding-left:5px;padding-right:5px;">
-                                                    </select>
-                                                    <button type="button" id="getsubject2" class="btn btn-default">Get Subjects</button>
-                                            </div>
-    
-                                            <button type="submit" class="btn btn-default">Submit</button>
-    
-                                            <div class="form-group" id="loading2" style="display:none;padding:10px;">
-                                                <i class="fa fa-spinner fa-spin" style="font-size:44px;"></i>
-                                            </div>
-                                            <div  class="form-group">
-                                                    <span id="getsuccess10" class="text-success"></span>
-                                                    <span id="getdanger10" class="text-danger"></span>
-                                                </div>
-                                        {!! Form::close() !!}<!--End of Form-->
-                                    </div>
-                                    <div class="container-fluid" style="margin-top:20px;">
-                                        <div id="curriculumgraph" clas="container"  style = "width: 550px; height: 400px;">
-                                            </div>
-                                    </div>
-                                        
-                                        
+                                    {!! Form::close() !!}<!--End of Form-->
                                 </div>
+                                <div class="container-fluid" style="margin-top:20px;">
+                                    <div id="curriculumgraph" clas="container"  style = "width: 550px; height: 400px;">
+                                        </div>
+                                </div>
+                                    
+                                        
+                            </div>
                             <div id="course"  class="tab-pane fade in">
                                 <div class="row">
                                     <div class="col-xs-12" >
@@ -572,6 +574,57 @@
 
                                             </div>
                                     </div>
+                            </div>
+                            <div id="studenttab" class="tab-pane fade in">
+                                {!! Form::open(['id'=>'form5','class'=>'form-inline','autocomplete'=>'off']) !!}  
+                                <div style="padding:12px;padding-bottom: 0px;margin-bottom: 0px" class="form-group col-xs-6">
+                                <label for="name" style="margin-bottom: 10px;"> Id :*  </label>
+                                <input type="text" name="id"  class="form-control" required/>
+                                </div>
+                                 <div class="form-group col-xs-6" style="padding:12px">
+                                <label for="username" style="margin-bottom: 10px;">FirstName :*  </label>
+                                <input type="text" name="fname" class="form-control" required/>
+                                </div>
+                                <div class="form-group col-xs-6" style="padding:12px">
+                                    <label for="username" style="margin-bottom: 10px;">MiddleName :*  </label>
+                                    <input type="text" name="mname" class="form-control" required/>
+                                </div>
+                                    <div class="form-group col-xs-6" style="padding:12px">
+                                        <label for="username" style="margin-bottom: 10px;">LastName :*  </label>
+                                        <input type="text" name="lname" class="form-control" required/>
+                                    </div>
+                                    <div class="form-group col-xs-6" style="padding:12px">
+                                    <label for="username" style="margin-bottom: 10px;">Email :*  </label>
+                                    <input type="text" name="email" class="form-control" required/>
+                                    </div>
+                                    <div class="form-group col-xs-6" style="padding:12px">
+                                        <label for="username" style="margin-bottom: 10px;">Course ID :*  </label>
+                                        <input type="text" name="course_id" class="form-control" required/>
+                                        </div>
+                                        <div class="form-group" style="padding:10px;">
+                                            {{Form::label('', 'Sem*')}}
+                                            {{Form::select('sem', ['1'=>'1','2'=>'2','3'=>'3','4' => '4', '5' => '5','6'=>'6'],null,['id'=>'sem','class'=>'form-control','style'=>'cursor:pointer;'])}}
+                                        </div> <!--End of course select-->
+
+                                <div class="form-group col-xs-6" style="padding:12px">
+                                    <label for="username" style="margin-bottom: 10px;">Password as phone no :*  </label>
+                                    <input type="text" name="password" class="form-control" required/>
+                                    </div>
+                                 <div class="form-group col-xs-12" style="margin-top:10px;">
+                                    <div style="margin: 0px;padding: 0px;" class="row">
+                                        <div class="col-xs-6" style="padding: 0px;">
+                                        <input type="Submit" class="btn btn-success col-xs-6" style="float: right;width: 80px;" value="Submit"/></div>
+                                        <div style="padding: 0px;margin-left: 10px;" class="col-xs-5">
+                                        <input style="margin: 0px;width: 80px" type="Reset" class="btn btn-warning col-xs-6" value="Reset"/>  
+                                        </div>
+                                         
+                                    </div>
+                                </div>
+                                <div align="center">
+                                <span id="success5" class="text-success"></span>
+                                <span id="danger5" class="text-danger"></span>
+                                </div>
+                                {!! Form::close() !!}
                             </div>
                         </div>
                     </div>
@@ -828,6 +881,36 @@
                         $("#danger4").fadeIn().html(error['error']);
                         setTimeout(() => {
                         $("#danger4").fadeOut('slow');  
+                        }, 5000);
+                        }
+                    }
+                });
+                
+            });
+
+            $("#form5").submit(function(e){
+                e.preventDefault();
+                //console.log(form5.serialize());
+                var form5 = $(this);
+                $.ajax({
+                url      : '/dashboard/addstudent',
+                type     : 'POST',
+                cache    : false,
+                data     : form5.serialize(),
+                success  : function(data) {
+                        $("#form5").trigger("reset");
+                        $("#success5").fadeIn().html(data['success']);
+                        setTimeout(() => {
+                        $("#success5").fadeOut('slow');  
+                        }, 2000); 
+                    },
+                error: function (reject) {
+                   // var error4;
+                    if( reject.status === 422 ) {
+                         var error = $.parseJSON(reject.responseText);
+                        $("#danger5").fadeIn().html(error['error']);
+                        setTimeout(() => {
+                        $("#danger5").fadeOut('slow');  
                         }, 5000);
                         }
                     }

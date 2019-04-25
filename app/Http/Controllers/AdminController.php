@@ -13,6 +13,7 @@ use App\Feedback;
 use App\Faculty;
 use App\Ffeedback;
 use App\Alumini;
+use App\User;
 use App\student\Scollage;
 use App\parent\Pcollage;
 use Session;
@@ -92,6 +93,35 @@ class AdminController extends Controller
             return response($this->Response);
         }
     }
+
+    public function Addstudent(Request $request){
+        if($request->ajax()){
+            //    $this->validate($request,[
+            //     'id'=>'required|unique:users,id',
+            //     'fname'=>'required',
+            //     'mname'=>'required',
+            //     'lname'=>'required',
+            //     'sem'=>'required',
+            //     'course_id'=>'required|exits:courses,id',
+            //     'email' => 'email|unique:users,email',
+            //     'password' => 'required|min:10'
+            //     ]);
+            
+            $s = new User;
+            $s->id = $request->input('id');
+            $s->fname = $request->input('fname');
+            $s->mname = $request->input('mname');
+            $s->lname = $request->input('lname');
+            $s->sem = $request->input('sem');
+            $s->course_id = $request->input('course_id');
+            $s->email = $request->input('email');
+            $s->phoneno = $request->input('password');
+            $s->password = Hash::make($request->input('password'));
+            $s->save();
+            return response($this->Response);
+        }
+    }
+
     public function Getfacultydata(Request $request){
         if($request->ajax()){
          $teachers = Faculty::all();

@@ -81,7 +81,7 @@ Route::prefix('dashboard')->group(function () {
     Route::post('/getcurriculumdata','AdminController@Getcurriculumdata');
     Route::post('/curriculumdata','AdminController@Getcurriculum');
     Route::post('/getsubject2','AdminController@Getsubject2');
-    
+    Route::post('/addstudent','AdminController@Addstudent');
 });
 // Route::get('/',function(){
 //     // $title = 'hello';
