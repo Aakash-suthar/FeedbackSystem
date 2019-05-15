@@ -38,6 +38,7 @@ class CreateEmployeesTable extends Migration
             $table->string('Q16');
             $table->string('Q17');
             $table->string('Q18');
+            $table->string('year');
             $table->timestamps();
         });
     }

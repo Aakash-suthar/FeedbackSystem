@@ -129,16 +129,18 @@
                                   </div>
                                   <div class="form-group col-xs-12" style="padding:12px">
                                         <label for="username" class="col-xs-12" style="margin-bottom: 10px;">Sem :*  </label>
-                                        <input type="text" name="sem" class="form-control" required/>
-                                      </div>
+                                        {{Form::select('sem', ['1'=>'1','2'=>'2','3'=>'3','4' => '4', '5' => '5','6'=>'6'],null,['class'=>'form-control','style'=>'cursor:pointer;'])}}
+                                    </div>
                                       <div class="form-group col-xs-12" style="padding:12px">
                                             <label for="username" class="col-xs-12" style="margin-bottom: 10px;">Course Id :*  </label>
-                                            <input type="text" name="course_id" class="form-control" required/>
-                                          </div>
-                                          <div class="form-group col-xs-12" style="padding:12px">
-                                                <label for="username" class="col-xs-12" style="margin-bottom: 10px;">Faculty Id :*  </label>
-                                                <input type="text" name="faculty_id" class="form-control" required/>
-                                              </div>
+                                            <select name="course_id" class="form-control" style="cursor:pointer;padding-left:5px;">
+                                                @if(!$courses->isEmpty())
+                                                        @foreach($courses as $course)
+                                                            <option value="{{$course->id}}">{{$course->name}}</option>
+                                                        @endforeach
+                                                    @endif
+                                                </select>  
+                                        </div>
                                    <div class="form-group col-xs-12" style="margin-top:10px;">
                                       <div style="margin: 0px;padding: 0px;" class="row">
                                           <div class="col-xs-6" style="padding: 0px;">
@@ -220,7 +222,11 @@
                             <li><a href="#faculty" data-toggle="pill">Facultys</a></li>
                             <li><a href="#subject" data-toggle="pill">Subjects</a></li>
                             <li><a href="#question" data-toggle="pill">Questions</a></li>
+                            <li><a href="#assign" data-toggle="pill">Assign Subj->Faculty</a></li>
                         </ul>
+                    </li>
+                    <li>
+                        <a href="#importexport" data-toggle="pill">Import / Export Excel</a>
                     </li>
                     <li>
                         <a href="#reports" data-toggle="pill">Reports</a>
@@ -333,11 +339,11 @@
                                                 @endif
                                             </select>
                                         </div>
-
+{{-- 
                                         <div class="form-group" style="padding:10px;">
                                             {{Form::label('', 'Sem*')}}
                                             {{Form::select('sem', ['1'=>'1','2'=>'2','3'=>'3','4' => '4', '5' => '5','6'=>'6'],null,['id'=>'sem','class'=>'form-control','style'=>'cursor:pointer;'])}}
-                                        </div> <!--End of course select-->
+                                        </div> <!--End of course select--> --}}
 
                                         <div class="form-group" style="padding:10px;">
                                                 {{Form::label('', 'Teacher*')}}
@@ -408,7 +414,7 @@
                                     {!! Form::open(['class'=>'form-inline','id'=>'curriculumform','method'=>'POST','autocomplete'=>'off']) !!}
                                         <div class="form-group" style="padding:10px;">
                                             {{Form::label('', 'Course*')}}
-                                            <select id="course_id2" name="course_id2" class="form-control" style="cursor:pointer;padding-left:5px;">
+                                            <select id="coursesubject" name="course_id" class="form-control" style="cursor:pointer;padding-left:5px;">
                                                 
                                             @if(!$courses->isEmpty())
                                                     @foreach($courses as $course)
@@ -417,6 +423,11 @@
                                                 @endif
                                             </select>
                                         </div>
+                                        <div class="form-group" style="padding:10px;">
+                                                {{Form::label('', 'Sem*')}}
+                                                {{Form::select('sem', ['1'=>'1','2'=>'2','3'=>'3','4' => '4', '5' => '5','6'=>'6'],null,['id'=>'semsubject','class'=>'form-control','style'=>'cursor:pointer;'])}}
+                                            </div> <!--End of course select-->
+    
                                         <div class="form-group" style="padding:10px;">
                                                 {{Form::label('', 'Subject*')}}
                                                 <select id="subject2" name="subject_id" class="form-control" style="cursor:pointer;min-width:40px;padding-left:5px;padding-right:5px;">
@@ -454,6 +465,7 @@
                                                   <tr>
                                                     <th scope="col">ID</th>
                                                     <th scope="col">Name</th>
+                                                    <th scope="col">Edit</th>
                                                   </tr>
                                                 </thead>
                                                 <tbody id="coursetable">
@@ -462,6 +474,7 @@
                                                         <tr>
                                                             <td>{{$course->id}}</td>
                                                             <td>{{$course->name}}</td>
+                                                        <td><a target="_blank" href="/dashboard/course/{{$course->id}}">Edit</a></td>
                                                         </tr/>
                                                         @endforeach
                                                     @endif
@@ -504,7 +517,38 @@
                                 <div class="row">
                                     <div class="col-xs-12" >
                                         <button class="btn btn-lg btn-info" style="margin:10px;width:140px;height:50px;" id="myBtn3">Add</button>
-                                        <button class="btn btn-lg btn-warning" id="subjectrefresh" style="margin:10px;width:140px;height:50px;">Refresh</button>
+                                        {{-- <button class="btn btn-lg btn-warning" id="subjectrefresh" style="margin:10px;width:140px;height:50px;">Refresh</button> --}}
+                                        {!! Form::open(['class'=>'form-inline','id'=>'subjectform','method'=>'POST','autocomplete'=>'off']) !!}
+                                        <div class="form-group" style="padding:10px;">
+                                            {{Form::label('', 'Course*')}}
+                                            <select name="course_id" class="form-control" style="cursor:pointer;padding-left:5px;">
+                                                
+                                            @if(!$courses->isEmpty())
+                                                    @foreach($courses as $course)
+                                                        <option value="{{$course->id}}">{{$course->name}}</option>
+                                                    @endforeach
+                                                @endif
+                                            </select>
+                                        </div>
+
+                                        <div class="form-group" style="padding:10px;">
+                                            {{Form::label('', 'Sem*')}}
+                                            {{Form::select('sem', ['1'=>'1','2'=>'2','3'=>'3','4' => '4', '5' => '5','6'=>'6'],null,['class'=>'form-control','style'=>'cursor:pointer;'])}}
+                                        </div> <!--End of course select-->
+                                        {{-- <div class="form-group" style="padding:10px;">
+                                                {{Form::label('', 'Div*')}}
+                                                {{Form::select('div', ['A'=>'A','B'=>'B','C'=>'C','D' => 'D', 'E' => 'E','F'=>'F'],null,['class'=>'form-control','style'=>'cursor:pointer;'])}}
+                                            </div> <!--End of course select--> --}}
+    
+                                        <button type="submit" class="btn btn-default">Submit</button>
+
+                                        <div class="form-group" id="subjectloading" style="display:none;padding:10px;">
+                                            <i class="fa fa-spinner fa-spin" style="font-size:44px;" ></i>
+                                        </div>
+                                        <div  class="form-group">
+                                                <span id="subjectdanger" class="text-danger"></span>
+                                            </div>
+                                    {!! Form::close() !!}<!--End of Form-->
                                     </div>
                                     <div class="col-xs-12">
                                         <table  class="table table-bordered">
@@ -512,23 +556,10 @@
                                                     <tr>
                                                     <th scope="col">ID</th>
                                                     <th scope="col">Name</th>
-                                                    <th scope="col">Sem</th>
-                                                    <th scope="col">Course</th>
-                                                    <th scope="col">Faculty</th>
                                                     </tr>
                                                 </thead>
                                                 <tbody id="subjecttable">
-                                                        @if(!$subjects->isEmpty())
-                                                        @foreach($subjects as $subject)
-                                                        <tr>
-                                                            <td>{{$subject->id}}</td>
-                                                            <td>{{$subject->name}}</td>
-                                                            <td>{{$subject->sem}}</td>
-                                                            <td>{{$subject->course->name}}</td>
-                                                            <td>{{$subject->faculty->name}}</td>
-                                                        </tr/>
-                                                        @endforeach
-                                                    @endif
+                                                        
                                                 </tbody>
                                                 </table>
                                     </div>
@@ -625,6 +656,70 @@
                                 <span id="danger5" class="text-danger"></span>
                                 </div>
                                 {!! Form::close() !!}
+                            </div>
+                            <div id="importexport"  class="tab-pane fade in">
+                                <div class="container-fluid">
+                                    <div class="col-sm-6">
+                                        <div align="center">
+                                                    <a target="_blank" style="margin-top:10px" href="dashboard/student/import" class="btn btn-primary" id="importbutton">Import Student Excel File</a>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-6"></div>
+                                </div>
+                            </div>
+                            <div id="assign"  class="tab-pane fade in">
+                                    <div class="row">
+                                            <div class="col-xs-12" >
+                                                <div class="col-sm-4">
+                                                    <button class="btn btn-lg btn-info" style="margin:10px;width:140px;height:50px;" id="">Add</button>
+                                                </div>
+                                                <div class="col-sm-8">
+                                                    {!! Form::open(['class'=>'form-inline','id'=>'assignform','method'=>'POST','autocomplete'=>'off']) !!}
+                                                        <div class="form-group" style="padding:10px;">
+                                                            {{Form::label('', 'Course*')}}
+                                                            <select name="course_id" class="form-control" style="cursor:pointer;padding-left:5px;">
+                                                                
+                                                            @if(!$courses->isEmpty())
+                                                                    @foreach($courses as $course)
+                                                                        <option value="{{$course->id}}">{{$course->name}}</option>
+                                                                    @endforeach
+                                                                @endif
+                                                            </select>
+                                                        </div>
+                
+                                                        <div class="form-group" style="padding:10px;">
+                                                            {{Form::label('', 'Sem*')}}
+                                                            {{Form::select('sem', ['1'=>'1','2'=>'2','3'=>'3','4' => '4', '5' => '5','6'=>'6'],null,['class'=>'form-control','style'=>'cursor:pointer;'])}}
+                                                        </div> <!--End of course select-->
+                                                        {{-- <div class="form-group" style="padding:10px;">
+                                                                {{Form::label('', 'Div*')}}
+                                                                {{Form::select('div', ['A'=>'A','B'=>'B','C'=>'C','D' => 'D', 'E' => 'E','F'=>'F'],null,['class'=>'form-control','style'=>'cursor:pointer;'])}}
+                                                            </div> <!--End of course select--> --}}
+                    
+                                                        <button type="submit" class="btn btn-default">Submit</button>
+                
+                                                        <div class="form-group" id="assignloading" style="display:none;padding:10px;">
+                                                            <i class="fa fa-spinner fa-spin" style="font-size:44px;" ></i>
+                                                        </div>
+                                                        <div  class="form-group">
+                                                                <span id="assigndanger" class="text-danger"></span>
+                                                            </div>
+                                                    {!! Form::close() !!}<!--End of Form-->
+                                                </div>
+                                            </div>
+                                            <div class="col-xs-12" >
+                                                <table class="table table-bordered">
+                                                <thead>
+                                                    <th>Subject</th>
+                                                    <th>Faculty</th>
+                                                    <th>Div</th>
+                                                </thead>
+                                                <tbody id="assigntable">
+
+                                                </tbody>
+                                                </table>
+                                            </div>
+                                    </div>
                             </div>
                         </div>
                     </div>
@@ -887,7 +982,6 @@
                 });
                 
             });
-
             $("#form5").submit(function(e){
                 e.preventDefault();
                 //console.log(form5.serialize());
@@ -917,7 +1011,80 @@
                 });
                 
             });
-
+            $("#assignform").submit(function(e){
+                e.preventDefault();
+                $("#assigntable tr").remove();
+                //console.log(form5.serialize());
+                var assignform = $(this);
+                $.ajax({
+                url      : "/dashboard/assigndata",
+                type     : 'POST',
+                cache    : false,
+                data     : assignform.serialize(),
+                dataType: 'json',
+                beforeSend: function(){
+                    $('#assignloading').show();
+                },
+                complete: function(){
+                    $('#assignloading').hide();
+                },
+                success  : function(data) {
+                  //  console.log(data);
+                    var assigntable =  $('#assigntable');
+                    $.each(data, function(index){
+                        assigntable.append('<tr><td>'+data[index].subject+'</td><td>'+data[index].faculty+'</td><td>'+data[index].div+'</td></tr>');
+                    })
+                    },
+                error: function (reject) {
+                   // var error4;
+                    if( reject.status === 422 ) {
+                         var error = $.parseJSON(reject.responseText);
+                        $("#assigndanger").fadeIn().html(error['error']);
+                        setTimeout(() => {
+                        $("#assigndanger").fadeOut('slow');  
+                        }, 5000);
+                        }
+                    }
+                });
+                
+            });
+            $("#subjectform").submit(function(e){
+                e.preventDefault();
+                $("#subjecttable tr").remove();
+                //console.log(form5.serialize());
+                var subjectform = $(this);
+                $.ajax({
+                url      : "/dashboard/getsubject",
+                type     : 'POST',
+                cache    : false,
+                data     : subjectform.serialize(),
+                dataType: 'json',
+                beforeSend: function(){
+                    $('#subjectloading').show();
+                },
+                complete: function(){
+                    $('#subjectloading').hide();
+                },
+                success  : function(data) {
+                  //  console.log(data);
+                  var table = $("#subjecttable");
+                    $.each(data, function(index){
+                        table.append('<tr><td>'+data[index].id+'</td><td>'+data[index].name+'</td></tr>');
+                    })
+                    },
+                error: function (reject) {
+                   // var error4;
+                    if( reject.status === 422 ) {
+                         var error = $.parseJSON(reject.responseText);
+                        $("#subjectdanger").fadeIn().html(error['error']);
+                        setTimeout(() => {
+                        $("#subjectdanger").fadeOut('slow');  
+                        }, 5000);
+                        }
+                    }
+                });
+                
+            });
             $("#Getform").submit(function(e){
                 e.preventDefault();
                 var form1 = $(this);
@@ -1020,7 +1187,6 @@
                 });
                 
             });
-
             $("#curriculumform").submit(function(e){
                 e.preventDefault();
                 var form1 = $(this);
@@ -1080,16 +1246,14 @@
                 }
                 });
                 
-            });
-
-            
-
+            });          
             $("#getsubject2").click(function(){
                 $.ajax({
                 url      : "/dashboard/getsubject2",
                 type     : 'POST',
                 cache    : false,
-                data     : {'course_id':$('#course_id2').val() ,
+                data     : {'course_id':$('#coursesubject').val() ,
+                        'sem':$('#semsubject').val(),
                             },
                 dataType: 'json',
                 success  : function(data) {
@@ -1111,7 +1275,7 @@
                 type     : 'POST',
                 cache    : false,
                 data     : {'course_id':$('#course_id').val() ,
-                             'sem':$('#sem').val()
+                            //  'sem':$('#sem').val()
                             },
                 dataType: 'json',
                 success  : function(data) {
@@ -1126,10 +1290,7 @@
                     console.log(reject);
                 }
                 }); 
-            });
-
-            
-
+            });   
             $("#courserefresh").click(function(){
                 $("#coursetable tr").remove();
                 $.ajax({
@@ -1140,7 +1301,7 @@
                 success  : function(data) {
                     var table = $("#coursetable");
                     $.each(data, function(index){
-                        table.append('<tr><td>'+data[index].id+'</td><td>'+data[index].name+'</td></tr>');
+                        table.append('<tr><td>'+data[index].id+'</td><td>'+data[index].name+'</td><td><a target="_blank" href="/dashboard/course/'+data[index].id+'">Edit</a></td></tr>');
                     })
                 },
                 error: function (reject) {
@@ -1148,7 +1309,6 @@
                 }
                 }); 
             });
-
             $("#teacherrefresh").click(function(){
                 $("#teachertable tr").remove();
                 $.ajax({
@@ -1158,6 +1318,11 @@
                 dataType: 'json',
                 success  : function(data) {
                     var table = $("#teachertable");
+                    var selectw = $("#teachermodal");
+                    selectw.empty();
+                    $.each(data, function(index){
+                        selectw.append('<option value="'+ data[index].id +'">'+data[index].name+'</option>');
+                        })
                     $.each(data, function(index){
                         table.append('<tr><td>'+data[index].id+'</td><td>'+data[index].name+'</td><td>'+data[index].email+'</td></tr>');
                     })
@@ -1167,26 +1332,24 @@
                 }
                 }); 
             });
-
-            $("#subjectrefresh").click(function(){
-                $("#subjecttable tr").remove();
-                $.ajax({
-                url      : "/dashboard/getsubject",
-                type     : 'POST',
-                cache    : false,
-                dataType: 'json',
-                success  : function(data) {
-                    var table = $("#subjecttable");
-                    $.each(data, function(index){
-                        table.append('<tr><td>'+data[index].id+'</td><td>'+data[index].name+'</td><td>'+data[index].sem+'</td><td>'+data[index].course+'</td><td>'+data[index].teacher+'</td></tr>');
-                    })
-                },
-                error: function (reject) {
-                    console.log(reject);
-                }
-                }); 
-            });
-
+            // $("#subjectrefresh").click(function(){
+            //     $("#subjecttable tr").remove();
+            //     $.ajax({
+            //     url      : "/dashboard/getsubject",
+            //     type     : 'POST',
+            //     cache    : false,
+            //     dataType: 'json',
+            //     success  : function(data) {
+            //         var table = $("#subjecttable");
+            //         $.each(data, function(index){
+            //             table.append('<tr><td>'+data[index].id+'</td><td>'+data[index].name+'</td><td>'+data[index].sem+'</td><td>'+data[index].course+'</td></tr>');
+            //         })
+            //     },
+            //     error: function (reject) {
+            //         console.log(reject);
+            //     }
+            //     }); 
+            // });
             $("#questionrefresh").click(function(){
                 $("#questiontable tr").remove();
                 $.ajax({
@@ -1205,7 +1368,6 @@
                 }
                 }); 
             });
-
             $("#getallreport").click(function(){
                 $("#showalldata").empty();
                 $.ajax({
@@ -1233,7 +1395,6 @@
                     }
                 }); 
             });
-
             $("#getcurriculumreport").click(function(){
                 $("#showcurriculumdata").empty();
                 $.ajax({
@@ -1261,7 +1422,6 @@
                     }
                 }); 
             });
-
             $('#totalfeedback').click(function(){
                 $.ajax({
                     url      : "/dashboard/totalfeedback",
@@ -1282,13 +1442,12 @@
                         $('#ffeedback').text('Error. Try Again');
                     }
                  }); 
-                });
+            });
         </script>
-        <!--Close Ajaxs-->
+<!--Close Ajaxs-->
 
         <!--Other script-->
         <script>
-
                 $('#getcurriculumreportrefresh').click(function(){
                     $("#showcurriculumdata").empty();
                     $("#getcurriculumreport").click();
@@ -1324,7 +1483,6 @@
                     $('#Q2').empty();
                     $('#Q1').empty();
                 });  
-
         </script>        
         <!--Closeother-->
 

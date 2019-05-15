@@ -22,6 +22,7 @@ class CreateScollagesTable extends Migration
             $table->string('Q5');
             $table->string('Q6');
             $table->string('Q7');
+            $table->string('year');
             $table->timestamps('created_at');
         });
     }

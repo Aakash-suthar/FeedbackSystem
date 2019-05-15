@@ -37,6 +37,7 @@ class CreateFfeedbacksTable extends Migration
             $table->string('Q19');
             $table->string('Q20');
             $table->string('Q21');
+            $table->string('year');
             $table->string('comment');
             $table->foreign('faculty_id')->references('id')->on('faculties');
             $table->timestamps();

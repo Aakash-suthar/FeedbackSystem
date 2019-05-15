@@ -213,6 +213,7 @@
                         <p style="margin-bottom: 10px;margin-top: 10px" class="col-xs-12"><b><i>Directions:</i></b></p>
                         <p class="col-xs-12"><i>For each item please indicate your level of agreement with the following statements by selecting appropriate option.</i></p>                
        
+                        {{Form::hidden('year', date('Y'))}}
 
                         @php
                         $i = 1

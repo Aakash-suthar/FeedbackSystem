@@ -9,8 +9,11 @@
     <p style="margin-top: 30px;">Dear Students,</p>
     <p>This form has been designed to get feedback from you to strengthen the quality of teaching-learning environment, to provide best possible facilities and modern infrastructure. The information provided by you will be kept confidential.</p>    
    {{Form::hidden('student_id',Auth::user()->id)}}
-   {{Form::hidden('course_id',$course_id)}}
-   {{Form::hidden('sem',$sem)}}
+   {{Form::hidden('course_id',Auth::user()->course->id)}}
+   {{Form::hidden('sem',Auth::user()->sem)}}
+   {{Form::hidden('div',Auth::user()->div)}}
+   {{Form::hidden('year', date('Y'))}}
+
 <div class="row">
 
     <div class="col-xs-12" style="height:150px;">
@@ -31,11 +34,11 @@
             </div>
 
         <div style="margin:10px;margin-left:0px" class="col-xs-2">
-        <label > Course : </label> <button type="button" class="btn btn-primary" disabled>{{$course_id}}</button>
+        <label > Course : </label> <button type="button" class="btn btn-primary" disabled>{{Auth::user()->course->id}}</button>
         </div>
 
         <div style="margin:10px;margin-left:0px" class="col-xs-2">
-        <label> Sem : </label> <button type="button" class="btn btn-primary" disabled>{{$sem}}</button>
+        <label> Sem : </label> <button type="button" class="btn btn-primary" disabled>{{Auth::user()->sem}}</button>
         </div>
     </div>
         @php
@@ -47,9 +50,9 @@
             <table class="table">
                 <thead>
                 <th> Teacher Question</th>
-                @if(!$subjects->isEmpty())
-                @foreach($subjects as $s)
-                <th><pre align="center">{{$s->name}}</pre>{{$s->faculty->name}}</th>
+                @if(!$assign->isEmpty())
+                @foreach($assign as $s)
+                <th><pre align="center">{{$s->subject->name}}</pre>{{$s->faculty->name}}</th>
                 @endforeach
                 @endif
                 </thead>
@@ -59,7 +62,7 @@
                         @foreach($tquestions as $q)
                         <tr>
                             <td>{{$q->question}}</td>
-                            @foreach($subjects as $subject)
+                            @foreach($assign as $t)
                             <td>{!!Form::select("S$S$Q", [''=>'','1'=>'1','2'=>'2','3'=>'3','4'=>'4','5'=>'5'],null,['class'=>'form-control','style'=>'cursor:pointer','required'=>'required'])!!}</td>                           
                              @php $S = $S+1; @endphp
                             @endforeach
@@ -73,9 +76,9 @@
                 <table class="table">
                     <thead>
                     <th>Curriculum Question</th>
-                    @if(!$subjects->isEmpty())
-                    @foreach($subjects as $s)
-                        <th>{{$s->name}}</th>
+                    @if(!$assign->isEmpty())
+                    @foreach($assign as $s)
+                        <th>{{$s->subject->name}}</th>
                     @endforeach
                     @endif
                     </thead>
@@ -84,7 +87,7 @@
                             @foreach($cquestions as $q)
                             <tr>
                                 <td>{{$q->question}}</td>
-                                @foreach($subjects as $subject)
+                                @foreach($assign as $subject)
                                 <td>{!!Form::select("S$S$Q", [''=>'','1'=>'1','2'=>'2','3'=>'3','4'=>'4','5'=>'5'],null,['class'=>'form-control','style'=>'cursor:pointer','required'=>'required'])!!}</td>
                                 @php $S = $S+1; @endphp
                                 @endforeach

@@ -14,8 +14,9 @@ class FacultyLoginController extends Controller
         $this->middleware('guest:faculty')->except('Logout');
     }
 
-    public function Logout(){
+    public function Logout(Request $request){
         Auth::guard('faculty')->logout();
+        $request->session()->flush();
         return redirect('/');
     }
     

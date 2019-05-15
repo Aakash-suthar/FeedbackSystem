@@ -38,7 +38,7 @@ Route::prefix('student')->group(function () {
 //     echo $id;
 // });
 //Auth::routes();
-
+Route::group(['middleware' => ['web']], function () {
 
 // facultys controller
 Route::prefix('faculty')->group(function () {
@@ -61,28 +61,36 @@ Route::prefix('alumini')->group(function () {
 
 Route::get('/management/localmanagement','ParentController@Local');
 
-Route::prefix('dashboard')->group(function () {
-    Route::post('/login', 'Auth\AdminLoginController@Login');
-    Route::get('/logout','Auth\AdminLoginController@Logout')->name('adminlogout');
-    Route::post('/addcourse','AdminController@addcourse');
-    Route::post('/getcourse','AdminController@Getcourse');
-    Route::post('/addfaculty','AdminController@Addfaculty');
-    Route::post('/getfacultydata','AdminController@Getfacultydata');
-    Route::post('/getteacher','AdminController@Getteacher');
-    Route::post('/addsubject','AdminController@addsubject');
-    Route::post('/getsubject','AdminController@Getsubject');
-    Route::post('/addquestion','AdminController@addquestion');
-    Route::post('/getquestion','AdminController@Getquestion');
-    Route::post('/getdata','AdminController@Getdata');
-    Route::post('/totalfeedback','AdminController@Totalfeedback');
-    Route::get('/getpdfdata/{id}/{course}','AdminController@GetPDFdata');
-    Route::post('/getalldata','AdminController@Getalldata');
-    Route::get('','AdminController@dashboard')->name('dashboard');
-    Route::post('/getcurriculumdata','AdminController@Getcurriculumdata');
-    Route::post('/curriculumdata','AdminController@Getcurriculum');
-    Route::post('/getsubject2','AdminController@Getsubject2');
-    Route::post('/addstudent','AdminController@Addstudent');
-});
+    Route::prefix('dashboard')->group(function () {
+        Route::post('/login', 'Auth\AdminLoginController@Login');
+        Route::get('/logout','Auth\AdminLoginController@Logout')->name('adminlogout');
+        Route::post('/addcourse','AdminController@addcourse');
+        Route::post('/getcourse','AdminController@Getcourse');
+        Route::post('/addfaculty','AdminController@Addfaculty');
+        Route::post('/getfacultydata','AdminController@Getfacultydata');
+        Route::post('/getteacher','AdminController@Getteacher');
+        Route::post('/addsubject','AdminController@addsubject');
+        Route::post('/getsubject','AdminController@Getsubject');
+        Route::post('/addquestion','AdminController@addquestion');
+        Route::post('/getquestion','AdminController@Getquestion');
+        Route::post('/getdata','AdminController@Getdata');
+        Route::post('/totalfeedback','AdminController@Totalfeedback');
+        Route::get('/getpdfdata/{id}/{course}','AdminController@GetPDFdata');
+        Route::post('/getalldata','AdminController@Getalldata');
+        Route::get('','AdminController@dashboard')->name('dashboard');
+        Route::post('/getcurriculumdata','AdminController@Getcurriculumdata');
+        Route::post('/curriculumdata','AdminController@Getcurriculum');
+        Route::post('/getsubject2','AdminController@Getsubject2');
+        Route::post('/addstudent','AdminController@Addstudent');
+
+        Route::get('/course/{id}','AdminController@Editcourse');
+        Route::post('/course/submit','AdminController@Editcoursesubmit');
+        Route::get('/student/import','AdminController@Importstudent');
+        Route::post('/import','AdminController@ImportExcel');
+
+        Route::post('/assigndata','AdminController@AssignData');
+        
+    });
 // Route::get('/',function(){
 //     // $title = 'hello';
 //     // return view('welcome',compact('title'));
@@ -100,3 +108,4 @@ Route::prefix('employee')->group(function () {
 Route::get('/','WelcomeController@index')->name('/');
 // Route::get('/home', 'HomeController@index')->name('home');
 
+});

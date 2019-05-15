@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 use App\Ffeedback;
 use App\Question;
 use App\Faculty;
+use Carbon\Carbon;
+
 
 class FacultyController extends Controller
 {
@@ -20,6 +22,10 @@ class FacultyController extends Controller
 
     public function Submit(Request $request){    
         $s = Ffeedback::create($request->all());
+      //  $date = Carbon::now();
+        // $date2 = $date->toFormattedDateString();
+        // $date2 = $date->format('Y'); 
+        // $s->year = $date2;
         $s->save();
         flash('Success Submitted')->success();
         return redirect('/')->with('success','Successfully Submited.');

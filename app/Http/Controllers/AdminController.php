@@ -14,11 +14,14 @@ use App\Faculty;
 use App\Ffeedback;
 use App\Alumini;
 use App\User;
+use App\Assign;
 use App\student\Scollage;
 use App\parent\Pcollage;
 use Session;
 use View;
 use PDF;
+use DB;
+use Excel;
 
 class AdminController extends Controller
 {
@@ -96,17 +99,6 @@ class AdminController extends Controller
 
     public function Addstudent(Request $request){
         if($request->ajax()){
-            //    $this->validate($request,[
-            //     'id'=>'required|unique:users,id',
-            //     'fname'=>'required',
-            //     'mname'=>'required',
-            //     'lname'=>'required',
-            //     'sem'=>'required',
-            //     'course_id'=>'required|exits:courses,id',
-            //     'email' => 'email|unique:users,email',
-            //     'password' => 'required|min:10'
-            //     ]);
-            
             $s = new User;
             $s->id = $request->input('id');
             $s->fname = $request->input('fname');
@@ -137,8 +129,6 @@ class AdminController extends Controller
             'name'=>'required',
             'sem'=>'required',
             'course_id'=>'required|exists:courses,id',
-            'faculty_id'=>'required|exists:faculties,id',
-
         ]);
         
         $s = Subject::create($request->all());
@@ -221,17 +211,17 @@ class AdminController extends Controller
     public function Getdata(Request $request){
         if($request->ajax()){
             $this->validate($request,[
-            'course_id'=>'required|exists:courses,id',
-            'sem'=>'required',
-            'teacher_id' =>'required|exists:subjects,faculty_id',
+            'course_id'=>'required',
+            //'sem'=>'required',
+            'teacher_id' =>'required',
             ]);
             $course_id = $request->input('course_id');
-            $sem = $request->input('sem');
+            // $sem = $request->input('sem');
             $teacher_id = $request->input('teacher_id');
             $teachername = Faculty::find($teacher_id);
             
             //$subjects = Subject::where('course_id',$course_id)->where('sem',$sem)->get();
-            $Totatfeedback = Feedback::where('course_id',$course_id)->where('sem',$sem)->where('teacher_id',$teacher_id)->count();
+            $Totatfeedback = Feedback::where('course_id',$course_id)->where('teacher_id',$teacher_id)->count();
 
             if($Totatfeedback>0){
                   //  $Totatfeedback = Feedback::where('course_id',$request->input('course_id'))->where('sem','6')->where('teacher_id',$subject->teacher_id)->count();
@@ -359,15 +349,15 @@ class AdminController extends Controller
         if($request->ajax()){
             $this->validate($request,[
             'course_id'=>'required|exists:courses,id',
-            'sem'=>'required',
+            // 'sem'=>'required',
             ]);
             $course_id = $request->input('course_id');
-            $sem = $request->input('sem');
-            $subjects = Subject::where('course_id',$course_id)->where('sem',$sem)->get();
+            // $sem = $request->input('sem');
+            $subjects = Faculty::where('course_id',$course_id)->get();
              $teacher=array();
-            foreach($subjects as $sub){
-                array_push($teacher,array ('id' => $sub->faculty->id,
-                    'name'=> $sub->faculty->name,
+            foreach($subjects as $faculty){
+                array_push($teacher,array ('id' => $faculty->id,
+                    'name'=> $faculty->name,
                 ));
             }
             return response($teacher);
@@ -382,15 +372,17 @@ class AdminController extends Controller
     }
     public function Getsubject(Request $request){
         if($request->ajax()){
-         $subjects = Subject::all();
+            $this->validate($request,[
+                'course_id'=>'required',
+                'sem'=>'required',
+               // 'div'=>'required',
+                ]);
+         $subjects = Subject::where('course_id',$request->input('course_id'))->where('sem',$request->input('sem'))->get();
          $subarray = array();
          foreach($subjects as $sub){
             array_push($subarray,array (
                 'id' => $sub->id,
                 'name'=> $sub->name,
-                'sem'=> $sub->sem,
-                'course' => $sub->course->name,
-                'teacher' => $sub->faculty->name
             ));
         }
         }
@@ -518,9 +510,11 @@ class AdminController extends Controller
         if($request->ajax()){
             $this->validate($request,[
             'course_id'=>'required|exists:courses,id',
+            'sem'=>'required',
             ]);
             $course_id = $request->input('course_id');
-            $subjects = Subject::where('course_id',$course_id)->get();
+            $sem = $request->input('sem');
+            $subjects = Subject::where('course_id',$course_id)->where('sem',$sem)->get();
              $all=array();
             foreach($subjects as $sub){
                 array_push($all,array ('id' => $sub->id,
@@ -532,7 +526,6 @@ class AdminController extends Controller
     }
     public function Getcurriculumdata(Request $request){
         if($request->ajax()){
-
             $alldata = array();
             $courses = Course::all();
             foreach($courses as $course)
@@ -543,28 +536,28 @@ class AdminController extends Controller
                 if($subjects->count()>0){
                     foreach($subjects as $sub){
 
-                        $Totatfeedback = Feedback::where('teacher_id',$sub->faculty->id)->count();
+                        $Totatfeedback = Feedback::where('subject_id',$sub->id)->count();
                         if($Totatfeedback>0){
-                            $Q111 = number_format((float)(((Feedback::where('teacher_id',$sub->faculty->id)->where('Q11','1')->count())/$Totatfeedback)*100), 3, '.', '');
-                            $Q112 = number_format((float)(((Feedback::where('teacher_id',$sub->faculty->id)->where('Q11','2')->count())/$Totatfeedback)*100), 3, '.', '');
-                            $Q113 = number_format((float)(((Feedback::where('teacher_id',$sub->faculty->id)->where('Q11','3')->count())/$Totatfeedback)*100), 3, '.', '');
-                            $Q114 = number_format((float)(((Feedback::where('teacher_id',$sub->faculty->id)->where('Q11','4')->count())/$Totatfeedback)*100), 3, '.', '');
-                            $Q115 = number_format((float)(((Feedback::where('teacher_id',$sub->faculty->id)->where('Q11','5')->count())/$Totatfeedback)*100), 3, '.', '');
-                            $Q121 = number_format((float)(((Feedback::where('teacher_id',$sub->faculty->id)->where('Q12','1')->count())/$Totatfeedback)*100), 3, '.', '');
-                            $Q122 = number_format((float)(((Feedback::where('teacher_id',$sub->faculty->id)->where('Q12','2')->count())/$Totatfeedback)*100), 3, '.', '');
-                            $Q123 = number_format((float)(((Feedback::where('teacher_id',$sub->faculty->id)->where('Q12','3')->count())/$Totatfeedback)*100), 3, '.', '');
-                            $Q124 = number_format((float)(((Feedback::where('teacher_id',$sub->faculty->id)->where('Q12','4')->count())/$Totatfeedback)*100), 3, '.', '');
-                            $Q125 = number_format((float)(((Feedback::where('teacher_id',$sub->faculty->id)->where('Q12','5')->count())/$Totatfeedback)*100), 3, '.', '');
-                            $Q131 = number_format((float)(((Feedback::where('teacher_id',$sub->faculty->id)->where('Q13','1')->count())/$Totatfeedback)*100), 3, '.', '');
-                            $Q132 = number_format((float)(((Feedback::where('teacher_id',$sub->faculty->id)->where('Q13','2')->count())/$Totatfeedback)*100), 3, '.', '');
-                            $Q133 = number_format((float)(((Feedback::where('teacher_id',$sub->faculty->id)->where('Q13','3')->count())/$Totatfeedback)*100), 3, '.', '');
-                            $Q134 = number_format((float)(((Feedback::where('teacher_id',$sub->faculty->id)->where('Q13','4')->count())/$Totatfeedback)*100), 3, '.', '');
-                            $Q135 = number_format((float)(((Feedback::where('teacher_id',$sub->faculty->id)->where('Q13','5')->count())/$Totatfeedback)*100), 3, '.', '');
-                            $Q141 = number_format((float)(((Feedback::where('teacher_id',$sub->faculty->id)->where('Q14','1')->count())/$Totatfeedback)*100), 3, '.', '');
-                            $Q142 = number_format((float)(((Feedback::where('teacher_id',$sub->faculty->id)->where('Q14','2')->count())/$Totatfeedback)*100), 3, '.', '');
-                            $Q143 = number_format((float)(((Feedback::where('teacher_id',$sub->faculty->id)->where('Q14','3')->count())/$Totatfeedback)*100), 3, '.', '');
-                            $Q144 = number_format((float)(((Feedback::where('teacher_id',$sub->faculty->id)->where('Q14','4')->count())/$Totatfeedback)*100), 3, '.', '');
-                            $Q145 = number_format((float)(((Feedback::where('teacher_id',$sub->faculty->id)->where('Q14','5')->count())/$Totatfeedback)*100), 3, '.', '');
+                            $Q111 = number_format((float)(((Feedback::where('subject_id',$sub->id)->where('Q11','1')->count())/$Totatfeedback)*100), 3, '.', '');
+                            $Q112 = number_format((float)(((Feedback::where('subject_id',$sub->id)->where('Q11','2')->count())/$Totatfeedback)*100), 3, '.', '');
+                            $Q113 = number_format((float)(((Feedback::where('subject_id',$sub->id)->where('Q11','3')->count())/$Totatfeedback)*100), 3, '.', '');
+                            $Q114 = number_format((float)(((Feedback::where('subject_id',$sub->id)->where('Q11','4')->count())/$Totatfeedback)*100), 3, '.', '');
+                            $Q115 = number_format((float)(((Feedback::where('subject_id',$sub->id)->where('Q11','5')->count())/$Totatfeedback)*100), 3, '.', '');
+                            $Q121 = number_format((float)(((Feedback::where('subject_id',$sub->id)->where('Q12','1')->count())/$Totatfeedback)*100), 3, '.', '');
+                            $Q122 = number_format((float)(((Feedback::where('subject_id',$sub->id)->where('Q12','2')->count())/$Totatfeedback)*100), 3, '.', '');
+                            $Q123 = number_format((float)(((Feedback::where('subject_id',$sub->id)->where('Q12','3')->count())/$Totatfeedback)*100), 3, '.', '');
+                            $Q124 = number_format((float)(((Feedback::where('subject_id',$sub->id)->where('Q12','4')->count())/$Totatfeedback)*100), 3, '.', '');
+                            $Q125 = number_format((float)(((Feedback::where('subject_id',$sub->id)->where('Q12','5')->count())/$Totatfeedback)*100), 3, '.', '');
+                            $Q131 = number_format((float)(((Feedback::where('subject_id',$sub->id)->where('Q13','1')->count())/$Totatfeedback)*100), 3, '.', '');
+                            $Q132 = number_format((float)(((Feedback::where('subject_id',$sub->id)->where('Q13','2')->count())/$Totatfeedback)*100), 3, '.', '');
+                            $Q133 = number_format((float)(((Feedback::where('subject_id',$sub->id)->where('Q13','3')->count())/$Totatfeedback)*100), 3, '.', '');
+                            $Q134 = number_format((float)(((Feedback::where('subject_id',$sub->id)->where('Q13','4')->count())/$Totatfeedback)*100), 3, '.', '');
+                            $Q135 = number_format((float)(((Feedback::where('subject_id',$sub->id)->where('Q13','5')->count())/$Totatfeedback)*100), 3, '.', '');
+                            $Q141 = number_format((float)(((Feedback::where('subject_id',$sub->id)->where('Q14','1')->count())/$Totatfeedback)*100), 3, '.', '');
+                            $Q142 = number_format((float)(((Feedback::where('subject_id',$sub->id)->where('Q14','2')->count())/$Totatfeedback)*100), 3, '.', '');
+                            $Q143 = number_format((float)(((Feedback::where('subject_id',$sub->id)->where('Q14','3')->count())/$Totatfeedback)*100), 3, '.', '');
+                            $Q144 = number_format((float)(((Feedback::where('subject_id',$sub->id)->where('Q14','4')->count())/$Totatfeedback)*100), 3, '.', '');
+                            $Q145 = number_format((float)(((Feedback::where('subject_id',$sub->id)->where('Q14','5')->count())/$Totatfeedback)*100), 3, '.', '');
                             $totalQ1 = number_format((float)(($Q111 +$Q121 + $Q131 +$Q141)/4), 2, '.', ''); 
                             $totalQ2 = number_format((float)(($Q112 +$Q122 + $Q132 +$Q142)/4), 2, '.', ''); 
                             $totalQ3 = number_format((float)(($Q113 +$Q123 + $Q133 +$Q143)/4), 2, '.', ''); 
@@ -609,10 +602,10 @@ class AdminController extends Controller
     public function Getcurriculum(Request $request){
         if($request->ajax()){
             $this->validate($request,[
-            'course_id2'=>'required|exists:courses,id',
+            'course_id'=>'required|exists:courses,id',
             'subject_id' =>'required|exists:subjects,id',
             ]);
-            $course_id = $request->input('course_id2');
+            $course_id = $request->input('course_id');
             $subject_id = $request->input('subject_id');
             
             //$subjects = Subject::where('course_id',$course_id)->where('sem',$sem)->get();
@@ -774,5 +767,68 @@ class AdminController extends Controller
 
        $pdf = PDF::loadView('pdf',compact('date2','all','Faculty','totalQ1','totalQ2','totalQ3','totalQ4','totalQ5'));
        return $pdf->download('report.pdf');
+    }
+
+    public function Editcourse($id){
+        $course = Course::find($id);
+        return view('course.editcourse',compact('course'));
+    }
+    public function Editcoursesubmit(Request $request){
+       if($request->ajax()){
+       $this->validate($request,[
+           'id'=>'required|exists:courses,id',
+           'name'=>'required',
+           ]);
+        $course = Course::find($request->input('id'));
+        $course->name = $request->input('name');
+        $course->save();
+        return response($this->Response);
+       }
+
+    }
+    
+    public function ImportExcel(Request $request){
+        $this->validate($request,[
+            'importfile'=>'required',
+            ]);
+            $path = $request->file('importfile')->getRealPath();
+            $data = Excel::load($path)->get();
+    
+    
+            if($data->count()){
+                foreach ($data as $key => $value) {
+                    $arr[] = ['id'=>$value->id,'name' => $value->name,'password' => bcrypt($value->phoneno), 'phoneno' => $value->phoneno, 'div' => $value->div, 'email' => $value->email,'sem' => $value->sem, 'course_id' => $value->course];
+                }
+        
+                if(!empty($arr)){
+                    User::insert($arr);
+                }
+            }
+                flash('Done')->success();
+                return view('info');
+    }
+        
+    public function Importstudent(){
+            return view('importstudentexcel');
+    }
+    
+    public function AssignData(Request $request){
+        if($request->ajax()){
+            $this->validate($request,[
+                'course_id'=>'required',
+                'sem'=>'required',
+               // 'div'=>'required',
+                ]);
+            $assigns = Assign::where('course_id',$request->input('course_id'))->where('sem',$request->input('sem'))->get();
+            $subarray = array();
+            foreach($assigns as $assign){
+                    array_push($subarray,array (
+                    'subject'=> $assign->subject->name,
+                    'faculty'=> $assign->faculty->name,
+                    'div'=> $assign->div,
+                    ));
+            }
+            return response($subarray);
+        }
     }
 }

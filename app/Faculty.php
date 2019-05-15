@@ -9,7 +9,7 @@ class Faculty extends Authenticatable
 {
     use Notifiable;
     protected $guard = 'faculty';
-
+    protected $table = 'faculties';
     public  $primaryKey = 'id';
     public $incrementing = false;
     /**
@@ -18,9 +18,12 @@ class Faculty extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'id','name', 'email', 'password',
+        'id','name', 'email', 'password','course_id'
     ];
-
+    
+    public function course(){
+        return $this->belongsTo('App\Course','course_id');      
+    }
     /**
      * The attributes that should be hidden for arrays.
      *

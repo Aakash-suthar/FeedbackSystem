@@ -170,16 +170,33 @@
 
         // When the user clicks the button, open the modal 
         btn.onclick = function() {
-            modal.style.display = "block";
+            var AuthUser = "{{{ (Auth::guard('admin')->user()) ? Auth::guard('admin')->user() : null }}}";
+            if(AuthUser){
+                window.location.href = "{{URL::to('/dashboard')}}";
+            }
+            else {
+                modal.style.display = "block";
+           } 
         }
         function check() {
-            console.log(modal1);
-                    modal1.style.display = "block";
+            var AuthUser2 = "{{{ (Auth::user()) ? Auth::user() : null }}}";
+            if(AuthUser2){
+            //console.log(modal1);
+            window.location.href = "{{URL::to('/student/teacherandcurriculum')}}";
                 }
+            else {
+                modal1.style.display = "block";
+           } 
+        }
         function check2() {
-                    console.log(modal2);
-                    modal2.style.display = "block";
+                var AuthUser3 = "{{{ (Auth::guard('faculty')->user()) ? Auth::guard('faculty')->user() : null }}}";
+                if(AuthUser3){
+                    window.location.href = "{{URL::to('/faculty/aboutcollege')}}";
                 }
+                else{
+                        modal2.style.display = "block";
+                }
+            }
         // When the user clicks on <span> (x), close the modal
         span.onclick = function() {
             modal.style.display = "none";

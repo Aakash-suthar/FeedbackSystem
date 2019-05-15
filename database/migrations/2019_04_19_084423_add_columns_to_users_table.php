@@ -13,20 +13,17 @@ class AddColumnsToUsersTable extends Migration
      */
     public function up()
     {
-        Schema::create('users', function (Blueprint $table) {
-            $table->string('id')->unique();
-            $table->primary('id');
-            $table->string('fname');
-            $table->string('mname');
-            $table->string('lname');
-            $table->string('email')->unique();
-            $table->string('password');
+        Schema::create('assigns', function (Blueprint $table) {
+            $table->increments('id');
+            //$table->primary('id');   
+            $table->string('faculty_id');
+            $table->string('div');
             $table->string('sem');
             $table->string('course_id');
-            $table->string('phoneno');
-            $table->rememberToken();
-            $table->timestamps();
+            $table->string('subject_id');
             $table->foreign('course_id')->references('id')->on('courses');
+            $table->foreign('subject_id')->references('id')->on('subjects');
+            $table->foreign('faculty_id')->references('id')->on('faculties');
         });
     }
 

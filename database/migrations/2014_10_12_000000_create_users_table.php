@@ -19,8 +19,13 @@ class CreateUsersTable extends Migration
             $table->string('name');
             $table->string('email')->unique();
             $table->string('password');
+            $table->string('sem');
+            $table->string('div');
+            $table->string('course_id');
+            $table->string('phoneno');
             $table->rememberToken();
             $table->timestamps();
+            $table->foreign('course_id')->references('id')->on('courses');
         });
     }
 

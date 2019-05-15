@@ -229,7 +229,8 @@
                                 <label class="radio-inline" style="margin-left:20px; "><input type="radio" name="Q{{$i++}}" value="1">Strongly Disagree</label>
                             </div> <!--End of question 1--> 
                         @endforeach
-         
+                        {{Form::hidden('year', date('Y'))}}
+
  
                         <div class="form-group col-xs-12" style="margin: 10px">
                                 {{Form::label('','Would you like to recruit more AMU student?',['class'=>'control-label col-xs-12'])}}

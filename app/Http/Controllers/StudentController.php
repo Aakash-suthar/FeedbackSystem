@@ -11,6 +11,7 @@ use App\Course;
 use App\Feedback;
 use App\Teacher;
 use App\User;
+use App\Assign;
 
 use Auth;
 use Session;
@@ -21,12 +22,7 @@ class StudentController extends Controller
         flash('Success Submitted')->success();
          $s = Scollage::create($request->all());
          $s->save();
-        //  session()->flash('success','dwadaw');
-        // // return redirect('/')->with('success','Successfully Submited.');
-        // return redirect('/');
-
-        //Session::flash('success', "Special message goes here");
-        return redirect('/')->with('success','Successfully Submited.');
+         return redirect('/')->with('success','Successfully Submited.');
     }
 
     public function aboutcollege(){
@@ -41,28 +37,31 @@ class StudentController extends Controller
         $tquestions = Question::where('type','teacher')->get();
         $course_id =  $user->course_id;
         $sem = $user->sem;
-        $subjects = Subject::where('course_id',$course_id)->where('sem',$sem)->get();
-         return view('student.teacherandcurriculumform',compact('cquestions','subjects','tquestions','sem','course_id'));
+        $div =  $user->div;
+        $assign = Assign::where('course_id',$course_id)->where('sem',$sem)->where('div',$div)->get();
+        return view('student.teacherandcurriculumform',compact('cquestions','assign','tquestions'));
     }
 
 
     public function tcsubmit(Request $request){
         $this->validate($request,[
-             "student_id"=>'required|exists:users,id|unique:feedbacks,student_id',
+            'student_id'=>'required|exists:users,id|unique:feedbacks,student_id',
             'sem'=>'required',
+            'div'=>'required',
             'course_id'=>'required|exists:courses,id',
             ]);
-            $subjects = Subject::where('course_id',$request->input('course_id'))->where('sem',$request->input('sem'))->get();
+            $assign = Assign::where('course_id',$request->input('course_id'))->where('sem',$request->input('sem'))->where('div',$request->input('div'))->get();
             $i = 1;
             $q = 1;
-            foreach($subjects as $subject){
+            foreach($assign as $sub){
             $feedback = new Feedback;
-            $subject->id;
             $feedback->student_id = $request->input('student_id');
             $feedback->sem = $request->input('sem');
-            $feedback->teacher_id = $subject->faculty_id;
-            $feedback->course_id = $subject->course_id;
-            $feedback->subject_id = $subject->id;
+            $feedback->div = $request->input('div');
+            $feedback->teacher_id = $sub->faculty_id;
+            $feedback->course_id = $sub->course_id;
+            $feedback->subject_id = $sub->subject_id;
+            $feedback->year =  $request->input('year');
             $feedback->Q1 = $request->input("S$i$q");$q++;
             $feedback->Q2 = $request->input("S$i$q");$q++;
             $feedback->Q3 = $request->input("S$i$q");$q++;
@@ -80,8 +79,10 @@ class StudentController extends Controller
             $i++;$q = 1;
             $feedback->save();
             }
+            
             flash('Success Submitted')->success();
             Auth::guard('web')->logout();
+            $request->session()->flush();
             return redirect('/');
     }
 }
