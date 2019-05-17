@@ -8,6 +8,8 @@ class Assign extends Model
 {
     public  $primaryKey = 'id';
     protected $table = 'assigns';
+    public $timestamps = false;
+    
     protected $fillable = [
      'subject_id','sem','course_id','div','faculty_id'
     ];

@@ -91,6 +91,7 @@ class AdminController extends Controller
             $s->id = $request->input('id');
             $s->name = $request->input('name');
             $s->email = $request->input('email');
+            $s->phoneno = $request->input('password');
             $s->password = Hash::make($request->input('password'));
             $s->save();
             return response($this->Response);
@@ -812,6 +813,81 @@ class AdminController extends Controller
             return view('importstudentexcel');
     }
     
+    public function ImportExcelf(Request $request){
+        $this->validate($request,[
+            'importfile'=>'required',
+            ]);
+            $path = $request->file('importfile')->getRealPath();
+            $data = Excel::load($path)->get();
+    
+    
+            if($data->count()){
+                foreach ($data as $key => $value) {
+                    $arr[] = ['id'=>$value->id,'name' => $value->name,'password' => bcrypt($value->phoneno), 'email' => $value->email, 'course_id' => $value->course];
+                }
+        
+                if(!empty($arr)){
+                    Faculty::insert($arr);
+                }
+            }
+                flash('Done')->success();
+                return view('info');
+    }
+        
+    public function Importfaculty(){
+            return view('importfacultyexcel');
+    }
+
+    public function ImportExcels(Request $request){
+        $this->validate($request,[
+            'importfile'=>'required',
+            ]);
+            $path = $request->file('importfile')->getRealPath();
+            $data = Excel::load($path)->get();
+    
+    
+            if($data->count()){
+                foreach ($data as $key => $value) {
+                    $arr[] = ['id'=>$value->id,'name' => $value->name,'sem' => $value->sem, 'course_id' => $value->course];
+                }
+        
+                if(!empty($arr)){
+                    Subject::insert($arr);
+                }
+            }
+                flash('Done')->success();
+                return view('info');
+    }
+        
+    public function Importsubject(){
+            return view('importsubjectexcel');
+    }
+
+    public function ImportExcela(Request $request){
+        $this->validate($request,[
+            'importfile'=>'required',
+            ]);
+            $path = $request->file('importfile')->getRealPath();
+            $data = Excel::load($path)->get();
+    
+    
+            if($data->count()){
+                foreach ($data as $key => $value) {
+                    $arr[] = ['div'=>$value->div,'sem' => $value->sem,'faculty_id' => $value->faculty, 'course_id' => $value->course,'subject_id' => $value->subject];
+                }
+        
+                if(!empty($arr)){
+                    Assign::insert($arr);
+                }
+            }
+                flash('Done')->success();
+                return view('info');
+    }
+        
+    public function Importassign(){
+            return view('importassignexcel');
+    }
+
     public function AssignData(Request $request){
         if($request->ajax()){
             $this->validate($request,[
@@ -831,4 +907,181 @@ class AdminController extends Controller
             return response($subarray);
         }
     }
+    public function Getsubfac(Request $request){
+        if($request->ajax()){
+            $this->validate($request,[
+                'course_id'=>'required',
+                ]);
+            $subjects = Subject::where('course_id',$request->input('course_id'))->get();
+            $facultys = Faculty::where('course_id',$request->input('course_id'))->get();
+            $all = array();
+            array_push($all,$subjects);
+            array_push($all,$facultys);
+
+            return response($all);
+            }
+    }
+
+    public function Addassign(Request $request){
+        if($request->ajax()){
+            $this->validate($request,[
+                'course_id'=>'required',
+                'div'=>'required',
+                'sem'=>'required',
+                'faculty_id'=>'required',
+                'subject_id'=>'required',
+                ]);
+               $assign = Assign::create($request->all());
+               $assign->save();
+              return response($this->Response);
+           }
+    }
+
+    // export to excel function
+    
+    public function Coursexport(){
+
+        Excel::create('Course data', function($excel) {
+
+            $excel->sheet('Sheet 1', function($sheet) {
+                $courses = Course::all();
+                $course_array[] = array('Course Id','Name');
+                foreach($courses as $course){
+                    $course_array[]  = array(
+                        $course->id,
+                        $course->name,
+                    );
+                }
+                $sheet->fromArray($course_array, null, 'A1', false, false);
+            });
+        })->export('xls');
+        //return view('/dashboard');
+    }
+
+    public function Subjectexport(){
+
+        Excel::create('Subject data', function($excel) {
+
+            $excel->sheet('Sheet 1', function($sheet) {
+                $Subjects = Subject::all();
+                $course_array[] = array('Subject Id','Name','Sem','Course Name');
+                foreach($Subjects as $subject){
+                    $course_array[]  = array(
+                        $subject->id,
+                        $subject->name,
+                        $subject->sem,
+                        $subject->course->name,
+                    );
+                }
+                $sheet->fromArray($course_array, null, 'A1', false, false);
+            });
+        })->export('xls');
+        //return view('/dashboard');
+    }
+    public function Facultyexport(){
+
+        Excel::create('Faculty data', function($excel) {
+
+            $excel->sheet('Sheet 1', function($sheet) {
+                $facultys = Faculty::all();
+                $course_array[] = array('Faculty Id','Name','Phone no','Email','Course Name');
+                foreach($facultys as $faculty){
+                    $course_array[]  = array(
+                        $faculty->id,
+                        $faculty->name,
+                        $faculty->phoneno,
+                        $faculty->email,
+                        $faculty->course->name,
+                    );
+                }
+                $sheet->fromArray($course_array, null, 'A1', false, false);
+            });
+        })->export('xls');
+        //return view('/dashboard');
+    }
+    public function Assignexport(){
+
+        Excel::create('Assign data', function($excel) {
+
+            $excel->sheet('Sheet 1', function($sheet) {
+                $assigns = Assign::all();
+                $course_array[] = array('Assign Id','Div','Sem','Subject  Name','Faculty Name','Course Name');
+                foreach($assigns as $assign){
+                    $course_array[]  = array(
+                        $assign->id,
+                        $assign->div,
+                        $assign->sem,
+                        $assign->subject->name,
+                        $assign->faculty->name,
+                        $assign->course->name,
+                    );
+                }
+                $sheet->fromArray($course_array, null, 'A1', false, false);
+            });
+        })->export('xls');
+        //return view('/dashboard');
+    }
+    public function Studentexport(){
+
+        Excel::create('Student data', function($excel) {
+
+            $excel->sheet('Sheet 1', function($sheet) {
+                $users = User::all();
+                $course_array[] = array('User Id','Name','Course Name','Div','Sem','Email','Phone no');
+                foreach($users as $user){
+                    $course_array[]  = array(
+                        $user->id,
+                        $user->name,
+                        $user->course->name,
+                        $user->div,
+                        $user->sem,
+                        $user->email,
+                        $user->phoneno,
+                    );
+                }
+                $sheet->fromArray($course_array, null, 'A1', false, false);
+            });
+        })->export('xls');
+        //return view('/dashboard');
+    }
+
+    public function Feedbackexport(){
+
+        Excel::create('Feedback data', function($excel) {
+
+            $excel->sheet('Sheet 1', function($sheet) {
+                $feeds = Feedback::all();
+                $course_array[] = array('Id','Student Id','Subject Name','Course Name','Faculty Name','Div','Sem','Year','Q1','Q2','Q3','Q4','Q5','Q6','Q7','Q8','Q9','Q10','Q11','Q12','Q13','Q14');
+                foreach($feeds as $feed){
+                    $course_array[]  = array(
+                        $feed->id,
+                        $feed->student_id,
+                        $feed->subject->name,
+                        $feed->course->name,
+                        $feed->teacher->name,
+                        $feed->div,
+                        $feed->sem,
+                        $feed->year,
+                        $feed->Q1,
+                        $feed->Q2,
+                        $feed->Q3,
+                        $feed->Q4,
+                        $feed->Q5,
+                        $feed->Q6,
+                        $feed->Q7,
+                        $feed->Q8,
+                        $feed->Q9,
+                        $feed->Q10,
+                        $feed->Q11,
+                        $feed->Q12,
+                        $feed->Q13,
+                        $feed->Q14,
+                    );
+                }
+                $sheet->fromArray($course_array, null, 'A1', false, false);
+            });
+        })->export('xls');
+        //return view('/dashboard');
+    }
+    
 }

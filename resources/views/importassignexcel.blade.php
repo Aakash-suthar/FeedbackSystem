@@ -8,7 +8,7 @@
         <meta http-equiv="Pragma" content="no-cache" />
         <meta http-equiv="Expires" content="0" />
         <meta name="csrf-token" content="{{ csrf_token() }}">
-        <title> Import Course</title>
+        <title>Import Assign</title>
 
         <!-- Bootstrap CSS CDN -->
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
@@ -19,10 +19,10 @@
             <div align="center">
                 <div class="form-group col-sm-12" style="padding:12px">
                     <div class="col-sm-6">
-                    <form id="importform"  action="{{ url('dashboard/import') }}" style="border: 4px solid #a1a1a1;margin-top: 15px;padding: 10px;" class="form-horizontal" method="post" enctype="multipart/form-data">
+                    <form id="importform"  action="{{ url('dashboard/importa') }}" style="border: 4px solid #a1a1a1;margin-top: 15px;padding: 10px;" class="form-horizontal" method="post" enctype="multipart/form-data">
                         {!! Form::token() !!}
                         <input type="file" name="importfile" id="importfile" required/>
-                        <button style="margin-top:10px" class="btn btn-primary">Import Student Excel File</button>
+                        <button style="margin-top:10px" class="btn btn-primary">Import Assign Excel File</button>
                     </form>
                 </div>
                 <div align="center">
@@ -33,9 +33,9 @@
             </div>
         </div>
         <div class="col-sm-6">
-            <p>1. Excel file should have anhy extra row above or below the rows that contains student value.</p>
+            <p>1. Excel file should have anhy extra row above or below the rows that contains assign value.</p>
             <br>
-            <p>2. Excel file should have column name as rollno as id, name, sem, div, courseid, email and phoneno.</p>
+            <p>2. Excel file should have column name as  div, sem, course_id as course, faculty_id as faculty and subject_id as subject</p>
             <br>
             <p>3. Excel file should not have any column value as null.</p>
             <br>

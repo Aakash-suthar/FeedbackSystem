@@ -25,21 +25,21 @@
             <p style="margin:10px"><strong> 5. Strongly Agree <br> 4. Agree <br> 3.Satisfactory  <br> 2. Disagree <br> 1. Strongly Disagree.</strong></p>
         </div>   
     </div>
-        {{-- <div style="margin:10px;margin-left:0px" class="form-group col-xs-6">
-            <label> Id : </label> <button type="button" class="btn btn-primary" disabled>{{$studentid}}</button>
-        </div> --}}
         <div class="row" style="margin-top:20px;">
         <div style="margin:10px;margin-left:0px;" class="col-xs-2">
             <label> Student Name : </label> <button type="button" class="btn btn-primary" disabled>{{Auth::user()->name}}</button>
             </div>
 
         <div style="margin:10px;margin-left:0px" class="col-xs-2">
-        <label > Course : </label> <button type="button" class="btn btn-primary" disabled>{{Auth::user()->course->id}}</button>
+        <label > Course : </label> <button type="button" class="btn btn-primary" disabled>{{Auth::user()->course->name}}</button>
         </div>
 
         <div style="margin:10px;margin-left:0px" class="col-xs-2">
         <label> Sem : </label> <button type="button" class="btn btn-primary" disabled>{{Auth::user()->sem}}</button>
         </div>
+        <div style="margin:10px;margin-left:0px" class="col-xs-2">
+            <label> Div : </label> <button type="button" class="btn btn-primary" disabled>{{Auth::user()->div}}</button>
+            </div>
     </div>
         @php
         $Q = 1;
@@ -52,7 +52,7 @@
                 <th> Teacher Question</th>
                 @if(!$assign->isEmpty())
                 @foreach($assign as $s)
-                <th><pre align="center">{{$s->subject->name}}</pre>{{$s->faculty->name}}</th>
+                <th id="tcheader"><p align="left" id="tcheader">{{$s->subject->name}}</p>{{$s->faculty->name}}</th>
                 @endforeach
                 @endif
                 </thead>
@@ -63,7 +63,7 @@
                         <tr>
                             <td>{{$q->question}}</td>
                             @foreach($assign as $t)
-                            <td>{!!Form::select("S$S$Q", [''=>'','1'=>'1','2'=>'2','3'=>'3','4'=>'4','5'=>'5'],null,['class'=>'form-control','style'=>'cursor:pointer','required'=>'required'])!!}</td>                           
+                            <td id="tcheader">{!!Form::select("S$S$Q", [''=>'','1'=>'1','2'=>'2','3'=>'3','4'=>'4','5'=>'5'],null,['class'=>'form-control','style'=>'cursor:pointer','required'=>'required'])!!}</td>                           
                              @php $S = $S+1; @endphp
                             @endforeach
                             @php $S = 1; $Q=$Q+1; @endphp
@@ -78,7 +78,7 @@
                     <th>Curriculum Question</th>
                     @if(!$assign->isEmpty())
                     @foreach($assign as $s)
-                        <th>{{$s->subject->name}}</th>
+                        <th id="tcheader">{{$s->subject->name}}</th>
                     @endforeach
                     @endif
                     </thead>
@@ -88,7 +88,7 @@
                             <tr>
                                 <td>{{$q->question}}</td>
                                 @foreach($assign as $subject)
-                                <td>{!!Form::select("S$S$Q", [''=>'','1'=>'1','2'=>'2','3'=>'3','4'=>'4','5'=>'5'],null,['class'=>'form-control','style'=>'cursor:pointer','required'=>'required'])!!}</td>
+                                <td id="tcheader">{!!Form::select("S$S$Q", [''=>'','1'=>'1','2'=>'2','3'=>'3','4'=>'4','5'=>'5'],null,['class'=>'form-control','style'=>'cursor:pointer','required'=>'required'])!!}</td>
                                 @php $S = $S+1; @endphp
                                 @endforeach
                                 @php $S = 1; $Q=$Q+1; @endphp

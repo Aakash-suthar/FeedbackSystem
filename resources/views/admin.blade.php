@@ -21,9 +21,6 @@
 
     </head>
     <body>
-            {{-- @include('inc.messages')
-            @include('flash::message') --}}
-            <!-- The Modal1 -->
             <div id="myModal1" class="modal">
                 <!-- Modal content -->
                 <div class="modal-content">
@@ -77,15 +74,15 @@
                                 <label for="name" class="col-xs-12" style="margin-bottom: 10px;"> Faculty Id :*  </label>
                                 <input type="text" name="id"  class="form-control" required/>
                                 </div>
-                                 <div class="form-group col-xs-12" style="padding:12px">
+                                 <div class="form-group col-xs-12" style="padding:12px;padding-bottom: 0px;">
                                 <label for="username" class="col-xs-12" style="margin-bottom: 10px;">Name :*  </label>
                                 <input type="text" name="name" class="form-control" required/>
                                 </div>
-                                 <div class="form-group col-xs-12" style="padding:12px">
+                                 <div class="form-group col-xs-12" style="padding:12px;padding-bottom: 0px;">
                                 <label for="username" class="col-xs-12" style="margin-bottom: 10px;">Email :*  </label>
                                 <input type="text" name="email" class="form-control" required/>
                                 </div>
-                                <div class="form-group col-xs-12" style="padding:12px">
+                                <div class="form-group col-xs-12" style="padding:12px;padding-bottom: 0px;">
                                     <label for="username" class="col-xs-12" style="margin-bottom: 10px;">Password as phone no :*  </label>
                                     <input type="text" name="password" class="form-control" required/>
                                     </div>
@@ -123,15 +120,15 @@
                                   <label for="name" class="col-xs-12" style="margin-bottom: 10px;">Subject Id :*  </label>
                                   <input type="text" name="id"  class="form-control" required/>
                                   </div>
-                                   <div class="form-group col-xs-12" style="padding:12px">
+                                   <div class="form-group col-xs-12" style="padding:12px;padding-bottom: 0px;">
                                     <label for="username" class="col-xs-12" style="margin-bottom: 10px;">Name :*  </label>
                                     <input type="text" name="name" class="form-control" required/>
                                   </div>
-                                  <div class="form-group col-xs-12" style="padding:12px">
+                                  <div class="form-group col-xs-12" style="padding:12px;padding-bottom: 0px;">
                                         <label for="username" class="col-xs-12" style="margin-bottom: 10px;">Sem :*  </label>
                                         {{Form::select('sem', ['1'=>'1','2'=>'2','3'=>'3','4' => '4', '5' => '5','6'=>'6'],null,['class'=>'form-control','style'=>'cursor:pointer;'])}}
                                     </div>
-                                      <div class="form-group col-xs-12" style="padding:12px">
+                                      <div class="form-group col-xs-12" style="padding:12px;padding-bottom: 0px;">
                                             <label for="username" class="col-xs-12" style="margin-bottom: 10px;">Course Id :*  </label>
                                             <select name="course_id" class="form-control" style="cursor:pointer;padding-left:5px;">
                                                 @if(!$courses->isEmpty())
@@ -162,7 +159,7 @@
           
               </div>
                 <!-- The Modal 4-->
-             <div id="myModal4" class="modal">
+            <div id="myModal4" class="modal">
                 <!-- Modal content -->
                 <div class="modal-content">
                         <div class="modal-header">
@@ -200,6 +197,66 @@
         
             </div>
 
+            <div id="myModal5" class="modal">
+                <!-- Modal content -->
+                <div class="modal-content">
+                        <div class="modal-header">
+                          <span id="gg5" class="close">&times;</span>
+                          <h2 align="center">Assign</h2>
+                        </div>
+                        <div class="modal-body row">
+                                {!! Form::open(['id'=>'form5','method'=>'POST','class'=>'form-vertical','autocomplete'=>'off']) !!}  
+                                <div class="form-group col-xs-12" style="padding:12px">
+                                    <label for="username" class="col-xs-12" style="margin-bottom: 10px;">Course Id :*  </label>
+                                    <select name="course_id" id="courseselect" class="form-control" style="cursor:pointer;padding-left:5px;">
+                                        @if(!$courses->isEmpty())
+                                                @foreach($courses as $course)
+                                                    <option value="{{$course->id}}">{{$course->name}}</option>
+                                                @endforeach
+                                            @endif
+                                        </select>  
+                                </div>
+                                <div class="form-group col-xs-12" style="padding:8px">
+                                    <label for="username" class="col-xs-12" style="margin-bottom: 5px;">Sem :*  </label>
+                                    {{Form::select('sem', ['1'=>'1','2'=>'2','3'=>'3','4' => '4', '5' => '5','6'=>'6'],null,['class'=>'form-control','style'=>'cursor:pointer;'])}}
+                                </div>
+                                <div class="form-group col-xs-12" style="padding:8px">
+                                    <label for="username" class="col-xs-12" style="margin-bottom: 5px;">Div :*  </label>
+                                    {{Form::select('div', ['A'=>'A','B'=>'B','C'=>'C','D' => 'D', 'E' => 'E','F'=>'F'],null,['class'=>'form-control','style'=>'cursor:pointer;'])}}
+                                </div>
+                                <div class="form-group col-xs-12" style="padding:8px">
+                                    <label for="username" class="col-xs-12" style="margin-bottom: 5px;">Subject Id :*  </label>
+                                    <select name="subject_id" id="subjectselect" class="form-control" style="cursor:pointer;padding-left:5px;">
+                                        
+                                        </select>  
+                                </div>
+                                <div class="form-group col-xs-12" style="padding:8px">
+                                    <label for="username" class="col-xs-12" style="margin-bottom: 5px;">Faculty Id :*  </label>
+                                    <select name="faculty_id" id="facultyselect" class="form-control" style="cursor:pointer;padding-left:5px;">
+                                      
+                                        </select>  
+                                </div>
+                                <div class="form-group col-xs-12" style="margin-top:10px;">
+                                    <div style="margin: 0px;padding: 0px;" class="row">
+                                        <div class="col-xs-6" style="padding: 0px;">
+                                        <input type="Submit" class="btn btn-success col-xs-6" style="float: right;width: 80px;" value="Submit"/></div>
+                                        <div style="padding: 0px;margin-left: 10px;" class="col-xs-5">
+                                        <input style="margin: 0px;width: 80px" type="Reset" class="btn btn-warning col-xs-6" value="Reset"/>  
+                                        </div>
+                                         
+                                    </div>
+                                </div>
+                                <div align="center">
+                                    <span id="success5" class="text-success"></span>
+                                    <span id="danger5" class="text-danger"></span>
+                                </div>
+                                {!! Form::close() !!}
+        
+                        </div>
+                      </div>
+        
+            </div>
+
         <div class="wrapper">
             <!-- Sidebar Holder -->
             <nav id="sidebar">
@@ -213,7 +270,7 @@
 
                 <ul class="list-unstyled components">
                     <li class="active"> <a href="#home" data-toggle="pill">Home</a></li> 
-                    <li><a href="#studenttab" data-toggle="pill">Add Student</a></li> 
+                    {{-- <li><a href="#studenttab" data-toggle="pill">Add Student</a></li>  --}}
                     <li><a href="#overalltab" data-toggle="pill">Overall Report</a></li>
                     <li>
                         <a href="#pageSubmenu" data-toggle="collapse" aria-expanded="false">Actions</a>
@@ -339,12 +396,6 @@
                                                 @endif
                                             </select>
                                         </div>
-{{-- 
-                                        <div class="form-group" style="padding:10px;">
-                                            {{Form::label('', 'Sem*')}}
-                                            {{Form::select('sem', ['1'=>'1','2'=>'2','3'=>'3','4' => '4', '5' => '5','6'=>'6'],null,['id'=>'sem','class'=>'form-control','style'=>'cursor:pointer;'])}}
-                                        </div> <!--End of course select--> --}}
-
                                         <div class="form-group" style="padding:10px;">
                                                 {{Form::label('', 'Teacher*')}}
                                                 <select id="teacher" name="teacher_id" class="form-control" style="cursor:pointer;min-width:40px;padding-left:5px;padding-right:5px;">
@@ -606,72 +657,72 @@
                                             </div>
                                     </div>
                             </div>
-                            <div id="studenttab" class="tab-pane fade in">
-                                {!! Form::open(['id'=>'form5','class'=>'form-inline','autocomplete'=>'off']) !!}  
-                                <div style="padding:12px;padding-bottom: 0px;margin-bottom: 0px" class="form-group col-xs-6">
-                                <label for="name" style="margin-bottom: 10px;"> Id :*  </label>
-                                <input type="text" name="id"  class="form-control" required/>
-                                </div>
-                                 <div class="form-group col-xs-6" style="padding:12px">
-                                <label for="username" style="margin-bottom: 10px;">FirstName :*  </label>
-                                <input type="text" name="fname" class="form-control" required/>
-                                </div>
-                                <div class="form-group col-xs-6" style="padding:12px">
-                                    <label for="username" style="margin-bottom: 10px;">MiddleName :*  </label>
-                                    <input type="text" name="mname" class="form-control" required/>
-                                </div>
-                                    <div class="form-group col-xs-6" style="padding:12px">
-                                        <label for="username" style="margin-bottom: 10px;">LastName :*  </label>
-                                        <input type="text" name="lname" class="form-control" required/>
-                                    </div>
-                                    <div class="form-group col-xs-6" style="padding:12px">
-                                    <label for="username" style="margin-bottom: 10px;">Email :*  </label>
-                                    <input type="text" name="email" class="form-control" required/>
-                                    </div>
-                                    <div class="form-group col-xs-6" style="padding:12px">
-                                        <label for="username" style="margin-bottom: 10px;">Course ID :*  </label>
-                                        <input type="text" name="course_id" class="form-control" required/>
-                                        </div>
-                                        <div class="form-group" style="padding:10px;">
-                                            {{Form::label('', 'Sem*')}}
-                                            {{Form::select('sem', ['1'=>'1','2'=>'2','3'=>'3','4' => '4', '5' => '5','6'=>'6'],null,['id'=>'sem','class'=>'form-control','style'=>'cursor:pointer;'])}}
-                                        </div> <!--End of course select-->
-
-                                <div class="form-group col-xs-6" style="padding:12px">
-                                    <label for="username" style="margin-bottom: 10px;">Password as phone no :*  </label>
-                                    <input type="text" name="password" class="form-control" required/>
-                                    </div>
-                                 <div class="form-group col-xs-12" style="margin-top:10px;">
-                                    <div style="margin: 0px;padding: 0px;" class="row">
-                                        <div class="col-xs-6" style="padding: 0px;">
-                                        <input type="Submit" class="btn btn-success col-xs-6" style="float: right;width: 80px;" value="Submit"/></div>
-                                        <div style="padding: 0px;margin-left: 10px;" class="col-xs-5">
-                                        <input style="margin: 0px;width: 80px" type="Reset" class="btn btn-warning col-xs-6" value="Reset"/>  
-                                        </div>
-                                         
-                                    </div>
-                                </div>
-                                <div align="center">
-                                <span id="success5" class="text-success"></span>
-                                <span id="danger5" class="text-danger"></span>
-                                </div>
-                                {!! Form::close() !!}
-                            </div>
+                           
                             <div id="importexport"  class="tab-pane fade in">
                                 <div class="container-fluid">
-                                    <div class="col-sm-6">
-                                        <div align="center">
-                                                    <a target="_blank" style="margin-top:10px" href="dashboard/student/import" class="btn btn-primary" id="importbutton">Import Student Excel File</a>
+                                    <div class="row" style="border: solid black 1px;margin:10px;padding:20px;">
+                                        <h2>Import</h2>
+                                        <div class="col-sm-3">
+                                            <div align="center">
+                                                        <a target="_blank" style="margin-top:10px" href="dashboard/student/import" class="btn btn-primary">Import Student Excel File</a>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-3">
+                                            <div align="center">
+                                                        <a target="_blank" style="margin-top:10px" href="dashboard/faculty/import" class="btn btn-primary">Import Faculty Excel File</a>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-3">
+                                            <div align="center">
+                                                        <a target="_blank" style="margin-top:10px" href="dashboard/subject/import" class="btn btn-primary">Import Subject Excel File</a>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-3">
+                                            <div align="center">
+                                                        <a target="_blank" style="margin-top:10px" href="dashboard/assign/import" class="btn btn-primary">Import Assign Excel File</a>
+                                            </div>
                                         </div>
                                     </div>
-                                    <div class="col-sm-6"></div>
+                                    <div class="row"  style="border: solid black 1px;margin:10px;padding:20px;">
+                                            <h2>Export</h2>
+                                        <div class="col-sm-3">
+                                            <div align="center">
+                                                        <a style="margin-top:10px" href="dashboard/courseexport" class="btn btn-primary">Export Course Excel File</a>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-3">
+                                            <div align="center">
+                                                        <a style="margin-top:10px" href="dashboard/facultyexport" class="btn btn-primary">Export Faculty Excel File</a>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-3">
+                                            <div align="center">
+                                                        <a style="margin-top:10px" href="dashboard/subjectexport" class="btn btn-primary">Export Subject Excel File</a>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-3">
+                                            <div align="center">
+                                                        <a style="margin-top:10px" href="dashboard/assignexport" class="btn btn-primary">Export Assign Excel File</a>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-3"  style="margin-top:10px">
+                                                <div align="center">
+                                                            <a style="margin-top:10px" href="dashboard/feedbackexport" class="btn btn-primary">Export Feedback Excel File</a>
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-3"  style="margin-top:10px">
+                                                <div align="center">
+                                                            <a style="margin-top:10px" href="dashboard/studentexport" class="btn btn-primary">Export Student Excel File</a>
+                                                </div>
+                                            </div>
+                                    </div>
                                 </div>
                             </div>
                             <div id="assign"  class="tab-pane fade in">
                                     <div class="row">
                                             <div class="col-xs-12" >
                                                 <div class="col-sm-4">
-                                                    <button class="btn btn-lg btn-info" style="margin:10px;width:140px;height:50px;" id="">Add</button>
+                                                    <button class="btn btn-lg btn-info" style="margin:10px;width:140px;height:50px;" id="myBtn5">Add</button>
                                                 </div>
                                                 <div class="col-sm-8">
                                                     {!! Form::open(['class'=>'form-inline','id'=>'assignform','method'=>'POST','autocomplete'=>'off']) !!}
@@ -722,9 +773,9 @@
                                     </div>
                             </div>
                         </div>
-                    </div>
+                </div>
                     {{-- close tab content --}}
-             </div>
+            </div>
         </div>
 
 
@@ -775,7 +826,8 @@
             var modal1 = document.getElementById('myModal1');
             var modal2 = document.getElementById('myModal2');
             var modal3 = document.getElementById('myModal3');
-             var modal4 = document.getElementById('myModal4');
+            var modal4 = document.getElementById('myModal4');
+            var modal5 = document.getElementById('myModal5');
 
     
             // Get the button that opens the modal
@@ -783,15 +835,17 @@
             var btn2 = document.getElementById("myBtn2");
              var btn3 = document.getElementById("myBtn3");
              var btn4 = document.getElementById("myBtn4");
-
+             var btn5 = document.getElementById("myBtn5");
+             
             
     
             // Get the <span> element that closes the modal
             // var span1 = document.getElementsByClassName("close")[0];
             var span1 = document.getElementById("gg1");
             var span2 = document.getElementById("gg2");
-             var span3 = document.getElementById("gg3");
-             var span4 = document.getElementById("gg4");
+            var span3 = document.getElementById("gg3");
+            var span4 = document.getElementById("gg4");
+            var span5 = document.getElementById("gg5");
 
     
             // When the user clicks the button, open the modal 
@@ -807,6 +861,9 @@
             btn4.onclick = function() {
                 modal4.style.display = "block";
              }
+             btn5.onclick = function() {
+                modal5.style.display = "block";
+             }
             span1.onclick = function() {
                 modal1.style.display = "none";
             }
@@ -818,6 +875,9 @@
              }
              span4.onclick = function() {
                  modal4.style.display = "none";
+             }
+             span5.onclick = function() {
+                 modal5.style.display = "none";
              }
             
             
@@ -834,6 +894,9 @@
                 }
                 if (event.target == modal4) {
                     modal4.style.display = "none";
+                }
+                if (event.target == modal5) {
+                    modal5.style.display = "none";
                 }
             }
         </script>
@@ -984,37 +1047,40 @@
             });
             $("#form5").submit(function(e){
                 e.preventDefault();
-                //console.log(form5.serialize());
                 var form5 = $(this);
                 $.ajax({
-                url      : '/dashboard/addstudent',
+                url      : "/dashboard/addassign",
                 type     : 'POST',
                 cache    : false,
                 data     : form5.serialize(),
                 success  : function(data) {
-                        $("#form5").trigger("reset");
+                   //     $("#form5").trigger("reset");
+                   console.log(data);
                         $("#success5").fadeIn().html(data['success']);
                         setTimeout(() => {
                         $("#success5").fadeOut('slow');  
                         }, 2000); 
                     },
                 error: function (reject) {
-                   // var error4;
+                     var error1;
                     if( reject.status === 422 ) {
-                         var error = $.parseJSON(reject.responseText);
-                        $("#danger5").fadeIn().html(error['error']);
-                        setTimeout(() => {
-                        $("#danger5").fadeOut('slow');  
-                        }, 5000);
-                        }
+                        var errors1 = $.parseJSON(reject.responseText);
+                        $.each(errors1, function(key,val){
+                        
+                        error1  = error1 + (val[0]);
+                    })
+                    $("#danger5").fadeIn().html(error1);
+                    setTimeout(() => {
+                    $("#danger5").fadeOut('slow');  
+                    }, 5000);
                     }
+                }
                 });
                 
             });
             $("#assignform").submit(function(e){
                 e.preventDefault();
                 $("#assigntable tr").remove();
-                //console.log(form5.serialize());
                 var assignform = $(this);
                 $.ajax({
                 url      : "/dashboard/assigndata",
@@ -1029,14 +1095,12 @@
                     $('#assignloading').hide();
                 },
                 success  : function(data) {
-                  //  console.log(data);
                     var assigntable =  $('#assigntable');
                     $.each(data, function(index){
                         assigntable.append('<tr><td>'+data[index].subject+'</td><td>'+data[index].faculty+'</td><td>'+data[index].div+'</td></tr>');
                     })
                     },
                 error: function (reject) {
-                   // var error4;
                     if( reject.status === 422 ) {
                          var error = $.parseJSON(reject.responseText);
                         $("#assigndanger").fadeIn().html(error['error']);
@@ -1051,7 +1115,6 @@
             $("#subjectform").submit(function(e){
                 e.preventDefault();
                 $("#subjecttable tr").remove();
-                //console.log(form5.serialize());
                 var subjectform = $(this);
                 $.ajax({
                 url      : "/dashboard/getsubject",
@@ -1332,24 +1395,6 @@
                 }
                 }); 
             });
-            // $("#subjectrefresh").click(function(){
-            //     $("#subjecttable tr").remove();
-            //     $.ajax({
-            //     url      : "/dashboard/getsubject",
-            //     type     : 'POST',
-            //     cache    : false,
-            //     dataType: 'json',
-            //     success  : function(data) {
-            //         var table = $("#subjecttable");
-            //         $.each(data, function(index){
-            //             table.append('<tr><td>'+data[index].id+'</td><td>'+data[index].name+'</td><td>'+data[index].sem+'</td><td>'+data[index].course+'</td></tr>');
-            //         })
-            //     },
-            //     error: function (reject) {
-            //         console.log(reject);
-            //     }
-            //     }); 
-            // });
             $("#questionrefresh").click(function(){
                 $("#questiontable tr").remove();
                 $.ajax({
@@ -1468,7 +1513,36 @@
                     $('#Q2').empty();
                     $('#Q1').empty();
                 });
-                $("#course_id2").change(function(){
+                
+                $("#courseselect").change(function(){
+                    $('#subjectselect').empty();               
+                    $('#facultyselect').empty();               
+                    $.ajax({
+                        url      : "/dashboard/getsubfac",
+                        type     : 'POST',
+                        cache    : false,
+                        data     : {'course_id':$('#courseselect').val() ,
+                                    },
+                        dataType: 'json',
+                        success  : function(data) {
+                            var sub =  $('#subjectselect');
+                            var fac =  $('#facultyselect');
+                                $.each(data[0], function(index){
+                                    sub.append('<option value="'+ data[0][index].id +'">'+data[0][index].name+'</option>');
+                                })
+                                $.each(data[1], function(index){
+                                    fac.append('<option value="'+ data[1][index].id +'">'+data[1][index].name+'</option>');
+                                })
+                            },
+                        error: function (reject) {
+                            console.log(reject);
+                        }
+                    }); 
+                });
+                $("#coursesubject").change(function(){
+                    $('#subject2').empty();               
+                });
+                $("#semsubject").change(function(){
                     $('#subject2').empty();               
                 });
                 $("#sem").change(function(){

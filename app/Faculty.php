@@ -18,7 +18,7 @@ class Faculty extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'id','name', 'email', 'password','course_id'
+        'id','name', 'email', 'password','course_id','phoneno'
     ];
     
     public function course(){

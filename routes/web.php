@@ -81,15 +81,36 @@ Route::get('/management/localmanagement','ParentController@Local');
         Route::post('/getcurriculumdata','AdminController@Getcurriculumdata');
         Route::post('/curriculumdata','AdminController@Getcurriculum');
         Route::post('/getsubject2','AdminController@Getsubject2');
-        Route::post('/addstudent','AdminController@Addstudent');
+        // Route::post('/addstudent','AdminController@Addstudent');
 
         Route::get('/course/{id}','AdminController@Editcourse');
         Route::post('/course/submit','AdminController@Editcoursesubmit');
         Route::get('/student/import','AdminController@Importstudent');
         Route::post('/import','AdminController@ImportExcel');
 
+        Route::get('/faculty/import','AdminController@Importfaculty');
+        Route::post('/importf','AdminController@ImportExcelf');
+
+        Route::get('/subject/import','AdminController@Importsubject');
+        Route::post('/imports','AdminController@ImportExcels');
+       
+        Route::get('/assign/import','AdminController@Importassign');
+        Route::post('/importa','AdminController@ImportExcela');
+       
         Route::post('/assigndata','AdminController@AssignData');
-        
+
+        Route::post('/getsubfac','AdminController@Getsubfac');
+
+        Route::post('/addassign','AdminController@Addassign');
+
+        // export to excel Route
+        Route::get('/courseexport','AdminController@Coursexport');
+        Route::get('/studentexport','AdminController@Studentexport');
+        Route::get('/feedbackexport','AdminController@Feedbackexport');
+        Route::get('/facultyexport','AdminController@Facultyexport');
+        Route::get('/subjectexport','AdminController@Subjectexport');
+        Route::get('/assignexport','AdminController@Assignexport');
+
     });
 // Route::get('/',function(){
 //     // $title = 'hello';

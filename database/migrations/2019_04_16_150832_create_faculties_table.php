@@ -19,6 +19,7 @@ class CreateFacultiesTable extends Migration
             $table->string('name');
             $table->string('email')->unique();
             $table->string('password');
+            $table->string('phoneno');
             $table->string('course_id');
             $table->foreign('course_id')->references('id')->on('courses');
             $table->rememberToken();
