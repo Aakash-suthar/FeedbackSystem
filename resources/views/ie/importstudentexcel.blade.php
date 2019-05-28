@@ -35,7 +35,7 @@
         <div class="col-sm-6">
             <p>1. Excel file should have anhy extra row above or below the rows that contains student value.</p>
             <br>
-            <p>2. Excel file should have column name as rollno as id, name, sem, div, courseid, email and phoneno.</p>
+            <p>2. Excel file should have column name as rollno as id, name, sem, div, course, email and phoneno.</p>
             <br>
             <p>3. Excel file should not have any column value as null.</p>
             <br>

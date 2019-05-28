@@ -10,7 +10,7 @@ class Subject extends Model
     public  $primaryKey = 'id';
     public $incrementing = false;
     protected $fillable = [
-        'id', 'name','sem','course_id',
+        'id', 'name','sem','course_id','year'
     ];
     // public function faculty(){
     //     return $this->belongsTo('App\Faculty');      

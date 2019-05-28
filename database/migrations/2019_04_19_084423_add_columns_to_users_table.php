@@ -21,6 +21,7 @@ class AddColumnsToUsersTable extends Migration
             $table->string('sem');
             $table->string('course_id');
             $table->string('subject_id');
+            $table->string('year');
             $table->foreign('course_id')->references('id')->on('courses');
             $table->foreign('subject_id')->references('id')->on('subjects');
             $table->foreign('faculty_id')->references('id')->on('faculties');

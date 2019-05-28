@@ -11,7 +11,7 @@ class Assign extends Model
     public $timestamps = false;
     
     protected $fillable = [
-     'subject_id','sem','course_id','div','faculty_id'
+     'subject_id','sem','course_id','div','faculty_id','year'
     ];
     public function faculty(){
         return $this->belongsTo('App\Faculty','faculty_id');      

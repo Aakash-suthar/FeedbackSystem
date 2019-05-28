@@ -116,6 +116,7 @@
                           </div>
                           <div class="modal-body row">
                                   {!! Form::open(['id'=>'form3','class'=>'form-vertical','autocomplete'=>'off']) !!}  
+                                  {{Form::hidden('year', date('Y'))}}
                                   <div style="padding:12px;padding-bottom: 0px;margin-bottom: 0px" class="form-group col-xs-12">
                                   <label for="name" class="col-xs-12" style="margin-bottom: 10px;">Subject Id :*  </label>
                                   <input type="text" name="id"  class="form-control" required/>
@@ -206,6 +207,7 @@
                         </div>
                         <div class="modal-body row">
                                 {!! Form::open(['id'=>'form5','method'=>'POST','class'=>'form-vertical','autocomplete'=>'off']) !!}  
+                                {{Form::hidden('year', date('Y'))}}
                                 <div class="form-group col-xs-12" style="padding:12px">
                                     <label for="username" class="col-xs-12" style="margin-bottom: 10px;">Course Id :*  </label>
                                     <select name="course_id" id="courseselect" class="form-control" style="cursor:pointer;padding-left:5px;">
@@ -275,6 +277,7 @@
                     <li>
                         <a href="#pageSubmenu" data-toggle="collapse" aria-expanded="false">Actions</a>
                         <ul class="collapse list-unstyled" id="pageSubmenu">
+                            <li><a href="#students" data-toggle="pill">Student details</a></li>
                             <li><a href="#course" data-toggle="pill">Courses</a></li>
                             <li><a href="#faculty" data-toggle="pill">Facultys</a></li>
                             <li><a href="#subject" data-toggle="pill">Subjects</a></li>
@@ -379,8 +382,6 @@
                                         </div>
                                     </div>
                                 </div>
-                            </div>
-                            <div id="actions" class="tab-pane fade in">
                             </div>
                             <div id="reports"  class="tab-pane fade in">
                                 <div class="container-fluid">
@@ -585,12 +586,17 @@
                                         <div class="form-group" style="padding:10px;">
                                             {{Form::label('', 'Sem*')}}
                                             {{Form::select('sem', ['1'=>'1','2'=>'2','3'=>'3','4' => '4', '5' => '5','6'=>'6'],null,['class'=>'form-control','style'=>'cursor:pointer;'])}}
-                                        </div> <!--End of course select-->
-                                        {{-- <div class="form-group" style="padding:10px;">
-                                                {{Form::label('', 'Div*')}}
-                                                {{Form::select('div', ['A'=>'A','B'=>'B','C'=>'C','D' => 'D', 'E' => 'E','F'=>'F'],null,['class'=>'form-control','style'=>'cursor:pointer;'])}}
-                                            </div> <!--End of course select--> --}}
-    
+                                        </div>
+                                        {{-- <div class="form-group " style="padding:12px">
+                                                <label for="username" style="margin-bottom: 10px;">Year :*  </label>
+                                                <select name="year" class="form-control" style="cursor:pointer;padding-left:5px;">
+                                                    @if(!$years->isEmpty())
+                                                            @foreach($years as $y)
+                                                                <option value="{{$y->year}}">{{$y->year}}</option>
+                                                            @endforeach
+                                                        @endif
+                                                    </select>  
+                                            </div> --}}
                                         <button type="submit" class="btn btn-default">Submit</button>
 
                                         <div class="form-group" id="subjectloading" style="display:none;padding:10px;">
@@ -771,6 +777,58 @@
                                                 </table>
                                             </div>
                                     </div>
+                            </div>
+                            <div id="students"  class="tab-pane fade in">
+                                   <div class="row">
+                                            <div class="col-xs-12" >
+                                                    {!! Form::open(['class'=>'form-inline','id'=>'studentform','method'=>'POST','autocomplete'=>'off']) !!}
+                                                    <div class="form-group" style="padding:10px;">
+                                                        {{Form::label('', 'Course*')}}
+                                                        <select name="course_id" class="form-control" style="cursor:pointer;padding-left:5px;">
+                                                            
+                                                        @if(!$courses->isEmpty())
+                                                                @foreach($courses as $course)
+                                                                    <option value="{{$course->id}}">{{$course->name}}</option>
+                                                                @endforeach
+                                                            @endif
+                                                        </select>
+                                                    </div>
+            
+                                                    <div class="form-group" style="padding:10px;">
+                                                        {{Form::label('', 'Sem*')}}
+                                                        {{Form::select('sem', ['1'=>'1','2'=>'2','3'=>'3','4' => '4', '5' => '5','6'=>'6'],null,['class'=>'form-control','style'=>'cursor:pointer;'])}}
+                                                    </div> <!--End of course select-->
+                                                     <div class="form-group" style="padding:10px;">
+                                                            {{Form::label('', 'Div*')}}
+                                                            {{Form::select('div', ['A'=>'A','B'=>'B','C'=>'C','D' => 'D', 'E' => 'E','F'=>'F'],null,['class'=>'form-control','style'=>'cursor:pointer;'])}}
+                                                        </div> <!--End of course select-->
+                
+                                                    <button type="submit" class="btn btn-default">Submit</button>
+            
+                                                    <div class="form-group" id="studentloading" style="display:none;padding:10px;">
+                                                        <i class="fa fa-spinner fa-spin" style="font-size:44px;" ></i>
+                                                    </div>
+                                                    <div  class="form-group">
+                                                            <span id="studentdanger" class="text-danger"></span>
+                                                        </div>
+                                                {!! Form::close() !!}<!--End of Form-->
+                                                {{-- <button class="btn btn-lg btn-warning" id="courserefresh" style="margin:10px;width:140px;height:50px;">Refresh</button> --}}
+                                            </div>
+                                            <div class="col-xs-12">
+                                                    <table  class="table table-bordered">
+                                                            <thead>
+                                                              <tr>
+                                                                <th scope="col">ID</th>
+                                                                <th scope="col">Name</th>
+                                                                <th scope="col">Mail</th>
+                                                                <th scope="col">Phone no</th>
+                                                              </tr>
+                                                            </thead>
+                                                            <tbody id="studenttable">
+                                                            </tbody>
+                                                    </table>
+                                            </div>
+                                   </div>
                             </div>
                         </div>
                 </div>
@@ -1142,6 +1200,42 @@
                         $("#subjectdanger").fadeIn().html(error['error']);
                         setTimeout(() => {
                         $("#subjectdanger").fadeOut('slow');  
+                        }, 5000);
+                        }
+                    }
+                });
+                
+            });
+            $("#studentform").submit(function(e){
+                e.preventDefault();
+                $("#studenttable tr").remove();
+                var subjectform = $(this);
+                $.ajax({
+                url      : "/dashboard/getstudent",
+                type     : 'POST',
+                cache    : false,
+                data     : subjectform.serialize(),
+                dataType: 'json',
+                beforeSend: function(){
+                    $('#studentloading').show();
+                },
+                complete: function(){
+                    $('#studentloading').hide();
+                },
+                success  : function(data) {
+                  //  console.log(data);
+                  var table = $("#studenttable");
+                    $.each(data, function(index){
+                        table.append('<tr><td>'+data[index].id+'</td><td>'+data[index].name+'</td><td>'+data[index].email+'</td><td>'+data[index].phoneno+'</td></tr>');
+                    })
+                    },
+                error: function (reject) {
+                   // var error4;
+                    if( reject.status === 422 ) {
+                         var error = $.parseJSON(reject.responseText);
+                        $("#studenttdanger").fadeIn().html(error['error']);
+                        setTimeout(() => {
+                        $("#studenttdanger").fadeOut('slow');  
                         }, 5000);
                         }
                     }

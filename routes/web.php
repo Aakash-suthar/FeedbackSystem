@@ -98,6 +98,7 @@ Route::get('/management/localmanagement','ParentController@Local');
         Route::post('/importa','AdminController@ImportExcela');
        
         Route::post('/assigndata','AdminController@AssignData');
+        Route::post('/getstudent','AdminController@Getstudent');
 
         Route::post('/getsubfac','AdminController@Getsubfac');
 

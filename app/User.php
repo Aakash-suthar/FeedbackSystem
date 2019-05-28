@@ -17,7 +17,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password','sem' ,'course_id','phoneno','div'
+        'name', 'email', 'password','sem' ,'course_id','phoneno','div','year'
     ];
     public function course(){
         return $this->belongsTo('App\Course');      

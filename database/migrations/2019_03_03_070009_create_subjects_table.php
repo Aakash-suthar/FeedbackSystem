@@ -19,6 +19,7 @@ class CreateSubjectsTable extends Migration
             $table->string('name');
             $table->string('sem');
             $table->string('course_id');
+            $table->string('year');
            // $table->foreign('faculty_id')->references('id')->on('faculties');
             $table->foreign('course_id')->references('id')->on('courses');
             $table->timestamps();
